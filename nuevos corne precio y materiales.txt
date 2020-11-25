@@ -1,0 +1,8 @@
+14 - case
+30 - kaps
+30 - switches
+10 - rgb leds
+2 pro micro
+trrs cable
+usb cable
+2 oled
