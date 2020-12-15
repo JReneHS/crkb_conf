@@ -19,7 +19,7 @@
 //#define RETRO_TAPPING
 #define IGNORE_MOD_TAP_INTERRUPT
 
-#define OLED_FONT_H "keyboards/crkbd/keymaps/dvorak_dev/glcdfont.c"
+#define OLED_FONT_H "keyboards/crkbd/keymaps/rene_prog_dvorak/glcdfont.c"
 // #define OLED_FONT_WIDTH 5
 // #define OLED_FONT_HEIGHT 7
 
