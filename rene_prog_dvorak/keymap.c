@@ -47,6 +47,7 @@ enum {
     TD_CAPLOCK,
     TD_QUOT,
     TD_ALT,
+    TD_BACKF,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -70,7 +71,7 @@ TD(TD_CAPLOCK), KC_A,   KC_O,    KC_E,    KC_U,    KC_I,                        
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     KC_P4,      KC_P5,   KC_P6,   KC_DLR, KC_AMPR, KC_HASH,                      KC_LEFT , KC_DOWN, KC_UP, KC_RGHT, TD(TD_BSLS), KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    KC_P1,    KC_P2,    KC_P3,   KC_P0,   KC_TILD, KC_ESC,                       KC_APP , KC_ASTR, KC_CIRC, KC_EXLM,TD(TD_MINS), KC_RCTL,
+    KC_P1,    KC_P2,    KC_P3,  KC_P0, TD(TD_BACKF), KC_ESC,                       KC_APP , KC_ASTR, KC_CIRC, KC_EXLM,TD(TD_MINS), KC_RCTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         KC_LGUI, KC_TRNS, KC_SPC,        KC_ENT, RAISE, TD(TD_ALT)
                                       //|--------------------------|  |--------------------------|
@@ -101,6 +102,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SCLN] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, LSFT(KC_SCLN)),
     [TD_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_COMM, LSFT(KC_COMM)),
     [TD_DOT] = ACTION_TAP_DANCE_DOUBLE(KC_DOT, LSFT(KC_DOT)),
+    [TD_BACKF] = ACTION_TAP_DANCE_DOUBLE(KC_GRV, LSFT(KC_GRV)),
     [TD_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
     [TD_CAPLOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
     [TD_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_LALT),
