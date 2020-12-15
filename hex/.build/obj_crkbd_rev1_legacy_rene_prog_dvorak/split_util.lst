@@ -1,0 +1,684 @@
+   1               		.file	"split_util.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.text.waitForUsb,"ax",@progbits
+  11               	.global	waitForUsb
+  13               	waitForUsb:
+  14               	.LFB14:
+  15               		.file 1 "keyboards/crkbd/rev1/legacy/split_util.c"
+   1:keyboards/crkbd/rev1/legacy/split_util.c **** /*
+   2:keyboards/crkbd/rev1/legacy/split_util.c **** Copyright 2019 @foostan
+   3:keyboards/crkbd/rev1/legacy/split_util.c **** Copyright 2020 Drashna Jaelre <@drashna>
+   4:keyboards/crkbd/rev1/legacy/split_util.c **** 
+   5:keyboards/crkbd/rev1/legacy/split_util.c **** This program is free software: you can redistribute it and/or modify
+   6:keyboards/crkbd/rev1/legacy/split_util.c **** it under the terms of the GNU General Public License as published by
+   7:keyboards/crkbd/rev1/legacy/split_util.c **** the Free Software Foundation, either version 2 of the License, or
+   8:keyboards/crkbd/rev1/legacy/split_util.c **** (at your option) any later version.
+   9:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  10:keyboards/crkbd/rev1/legacy/split_util.c **** This program is distributed in the hope that it will be useful,
+  11:keyboards/crkbd/rev1/legacy/split_util.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  12:keyboards/crkbd/rev1/legacy/split_util.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  13:keyboards/crkbd/rev1/legacy/split_util.c **** GNU General Public License for more details.
+  14:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  15:keyboards/crkbd/rev1/legacy/split_util.c **** You should have received a copy of the GNU General Public License
+  16:keyboards/crkbd/rev1/legacy/split_util.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  17:keyboards/crkbd/rev1/legacy/split_util.c **** */
+  18:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  19:keyboards/crkbd/rev1/legacy/split_util.c **** #include <avr/io.h>
+  20:keyboards/crkbd/rev1/legacy/split_util.c **** #include <avr/wdt.h>
+  21:keyboards/crkbd/rev1/legacy/split_util.c **** #include <avr/power.h>
+  22:keyboards/crkbd/rev1/legacy/split_util.c **** #include <avr/interrupt.h>
+  23:keyboards/crkbd/rev1/legacy/split_util.c **** #include <util/delay.h>
+  24:keyboards/crkbd/rev1/legacy/split_util.c **** #include <avr/eeprom.h>
+  25:keyboards/crkbd/rev1/legacy/split_util.c **** #include "split_util.h"
+  26:keyboards/crkbd/rev1/legacy/split_util.c **** #include "matrix.h"
+  27:keyboards/crkbd/rev1/legacy/split_util.c **** #include "keyboard.h"
+  28:keyboards/crkbd/rev1/legacy/split_util.c **** #include "wait.h"
+  29:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  30:keyboards/crkbd/rev1/legacy/split_util.c **** #ifdef EE_HANDS
+  31:keyboards/crkbd/rev1/legacy/split_util.c **** #    include "eeconfig.h"
+  32:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+  33:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  34:keyboards/crkbd/rev1/legacy/split_util.c **** #ifdef USE_MATRIX_I2C
+  35:keyboards/crkbd/rev1/legacy/split_util.c **** #  include "i2c_master.h"
+  36:keyboards/crkbd/rev1/legacy/split_util.c **** #else
+  37:keyboards/crkbd/rev1/legacy/split_util.c **** #  include "split_scomm.h"
+  38:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+  39:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  40:keyboards/crkbd/rev1/legacy/split_util.c **** #ifndef SPLIT_USB_TIMEOUT
+  41:keyboards/crkbd/rev1/legacy/split_util.c **** #    define SPLIT_USB_TIMEOUT 2000
+  42:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+  43:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  44:keyboards/crkbd/rev1/legacy/split_util.c **** #ifndef SPLIT_USB_TIMEOUT_POLL
+  45:keyboards/crkbd/rev1/legacy/split_util.c **** #    define SPLIT_USB_TIMEOUT_POLL 10
+  46:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+  47:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  48:keyboards/crkbd/rev1/legacy/split_util.c **** volatile bool isLeftHand = true;
+  49:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  50:keyboards/crkbd/rev1/legacy/split_util.c **** bool waitForUsb(void) {
+  16               		.loc 1 50 23 view -0
+  17               		.cfi_startproc
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20               	/* stack size = 0 */
+  21               	.L__stack_usage = 0
+  51:keyboards/crkbd/rev1/legacy/split_util.c ****     for (uint8_t i = 0; i < (SPLIT_USB_TIMEOUT / SPLIT_USB_TIMEOUT_POLL); i++) {
+  22               		.loc 1 51 5 view .LVU1
+  23               	.LBB7:
+  24               		.loc 1 51 10 view .LVU2
+  25               	.LVL0:
+  26               		.loc 1 51 25 view .LVU3
+  27               	.LBE7:
+  50:keyboards/crkbd/rev1/legacy/split_util.c ****     for (uint8_t i = 0; i < (SPLIT_USB_TIMEOUT / SPLIT_USB_TIMEOUT_POLL); i++) {
+  28               		.loc 1 50 23 is_stmt 0 view .LVU4
+  29 0000 88EC      		ldi r24,lo8(-56)
+  30               	.LVL1:
+  31               	.L3:
+  32               	.LBB10:
+  52:keyboards/crkbd/rev1/legacy/split_util.c ****         // This will return true if a USB connection has been established
+  53:keyboards/crkbd/rev1/legacy/split_util.c ****         if (UDADDR & _BV(ADDEN)) {
+  33               		.loc 1 53 9 is_stmt 1 view .LVU5
+  34               		.loc 1 53 13 is_stmt 0 view .LVU6
+  35 0002 9091 E300 		lds r25,227
+  36               		.loc 1 53 12 view .LVU7
+  37 0006 97FD      		sbrc r25,7
+  38 0008 00C0      		rjmp .L4
+  54:keyboards/crkbd/rev1/legacy/split_util.c ****             return true;
+  55:keyboards/crkbd/rev1/legacy/split_util.c ****         }
+  56:keyboards/crkbd/rev1/legacy/split_util.c ****         wait_ms(SPLIT_USB_TIMEOUT_POLL);
+  39               		.loc 1 56 9 is_stmt 1 view .LVU8
+  40               	.LVL2:
+  41               	.LBB8:
+  42               	.LBI8:
+  43               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\util\\delay.h"
+   1:c:\msys64\mingw64\avr\include\util\delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:c:\msys64\mingw64\avr\include\util\delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:c:\msys64\mingw64\avr\include\util\delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:c:\msys64\mingw64\avr\include\util\delay.h ****    All rights reserved.
+   5:c:\msys64\mingw64\avr\include\util\delay.h **** 
+   6:c:\msys64\mingw64\avr\include\util\delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:c:\msys64\mingw64\avr\include\util\delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:c:\msys64\mingw64\avr\include\util\delay.h **** 
+   9:c:\msys64\mingw64\avr\include\util\delay.h ****    * Redistributions of source code must retain the above copyright
+  10:c:\msys64\mingw64\avr\include\util\delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  12:c:\msys64\mingw64\avr\include\util\delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:c:\msys64\mingw64\avr\include\util\delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:c:\msys64\mingw64\avr\include\util\delay.h ****      the documentation and/or other materials provided with the
+  15:c:\msys64\mingw64\avr\include\util\delay.h ****      distribution.
+  16:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  17:c:\msys64\mingw64\avr\include\util\delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:c:\msys64\mingw64\avr\include\util\delay.h ****      contributors may be used to endorse or promote products derived
+  19:c:\msys64\mingw64\avr\include\util\delay.h ****      from this software without specific prior written permission.
+  20:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  21:c:\msys64\mingw64\avr\include\util\delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:c:\msys64\mingw64\avr\include\util\delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:c:\msys64\mingw64\avr\include\util\delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:c:\msys64\mingw64\avr\include\util\delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:c:\msys64\mingw64\avr\include\util\delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:c:\msys64\mingw64\avr\include\util\delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:c:\msys64\mingw64\avr\include\util\delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:c:\msys64\mingw64\avr\include\util\delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:c:\msys64\mingw64\avr\include\util\delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:c:\msys64\mingw64\avr\include\util\delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:c:\msys64\mingw64\avr\include\util\delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  33:c:\msys64\mingw64\avr\include\util\delay.h **** /* $Id: delay.h.in 2506 2016-02-08 10:05:45Z joerg_wunsch $ */
+  34:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  35:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef _UTIL_DELAY_H_
+  36:c:\msys64\mingw64\avr\include\util\delay.h **** #define _UTIL_DELAY_H_ 1
+  37:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  38:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef __DOXYGEN__
+  39:c:\msys64\mingw64\avr\include\util\delay.h **** #  ifndef __HAS_DELAY_CYCLES
+  40:c:\msys64\mingw64\avr\include\util\delay.h **** #    define __HAS_DELAY_CYCLES 1
+  41:c:\msys64\mingw64\avr\include\util\delay.h **** #  endif
+  42:c:\msys64\mingw64\avr\include\util\delay.h **** #endif  /* __DOXYGEN__ */
+  43:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  44:c:\msys64\mingw64\avr\include\util\delay.h **** #include <inttypes.h>
+  45:c:\msys64\mingw64\avr\include\util\delay.h **** #include <util/delay_basic.h>
+  46:c:\msys64\mingw64\avr\include\util\delay.h **** #include <math.h>
+  47:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  48:c:\msys64\mingw64\avr\include\util\delay.h **** /** \file */
+  49:c:\msys64\mingw64\avr\include\util\delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  50:c:\msys64\mingw64\avr\include\util\delay.h ****     \code
+  51:c:\msys64\mingw64\avr\include\util\delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  52:c:\msys64\mingw64\avr\include\util\delay.h ****     //#define F_CPU 14.7456E6
+  53:c:\msys64\mingw64\avr\include\util\delay.h ****     #include <util/delay.h>
+  54:c:\msys64\mingw64\avr\include\util\delay.h ****     \endcode
+  55:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  56:c:\msys64\mingw64\avr\include\util\delay.h ****     \note As an alternative method, it is possible to pass the
+  57:c:\msys64\mingw64\avr\include\util\delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  58:c:\msys64\mingw64\avr\include\util\delay.h ****     Obviously, in that case, no \c \#define statement should be
+  59:c:\msys64\mingw64\avr\include\util\delay.h ****     used.
+  60:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  61:c:\msys64\mingw64\avr\include\util\delay.h ****     The functions in this header file are wrappers around the basic
+  62:c:\msys64\mingw64\avr\include\util\delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  63:c:\msys64\mingw64\avr\include\util\delay.h ****     convenience functions where actual time values can be specified
+  64:c:\msys64\mingw64\avr\include\util\delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  65:c:\msys64\mingw64\avr\include\util\delay.h ****     that compile-time constant expressions will be eliminated by
+  66:c:\msys64\mingw64\avr\include\util\delay.h ****     compiler optimization so floating-point expressions can be used
+  67:c:\msys64\mingw64\avr\include\util\delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  68:c:\msys64\mingw64\avr\include\util\delay.h ****     frequency passed by the macro F_CPU.
+  69:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  70:c:\msys64\mingw64\avr\include\util\delay.h ****     \note In order for these functions to work as intended, compiler
+  71:c:\msys64\mingw64\avr\include\util\delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  72:c:\msys64\mingw64\avr\include\util\delay.h ****     <em>must</em> be an expression that is a known constant at
+  73:c:\msys64\mingw64\avr\include\util\delay.h ****     compile-time.  If these requirements are not met, the resulting
+  74:c:\msys64\mingw64\avr\include\util\delay.h ****     delay will be much longer (and basically unpredictable), and
+  75:c:\msys64\mingw64\avr\include\util\delay.h ****     applications that otherwise do not use floating-point calculations
+  76:c:\msys64\mingw64\avr\include\util\delay.h ****     will experience severe code bloat by the floating-point library
+  77:c:\msys64\mingw64\avr\include\util\delay.h ****     routines linked into the application.
+  78:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  79:c:\msys64\mingw64\avr\include\util\delay.h ****     The functions available allow the specification of microsecond, and
+  80:c:\msys64\mingw64\avr\include\util\delay.h ****     millisecond delays directly, using the application-supplied macro
+  81:c:\msys64\mingw64\avr\include\util\delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  82:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  83:c:\msys64\mingw64\avr\include\util\delay.h **** */
+  84:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  85:c:\msys64\mingw64\avr\include\util\delay.h **** #if !defined(__DOXYGEN__)
+  86:c:\msys64\mingw64\avr\include\util\delay.h **** static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+  87:c:\msys64\mingw64\avr\include\util\delay.h **** static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+  88:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+  89:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  90:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef F_CPU
+  91:c:\msys64\mingw64\avr\include\util\delay.h **** /* prevent compiler error by supplying a default */
+  92:c:\msys64\mingw64\avr\include\util\delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  93:c:\msys64\mingw64\avr\include\util\delay.h **** /** \ingroup util_delay
+  94:c:\msys64\mingw64\avr\include\util\delay.h ****     \def F_CPU
+  95:c:\msys64\mingw64\avr\include\util\delay.h ****     \brief CPU frequency in Hz
+  96:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  97:c:\msys64\mingw64\avr\include\util\delay.h ****     The macro F_CPU specifies the CPU frequency to be considered by
+  98:c:\msys64\mingw64\avr\include\util\delay.h ****     the delay macros.  This macro is normally supplied by the
+  99:c:\msys64\mingw64\avr\include\util\delay.h ****     environment (e.g. from within a project header, or the project's
+ 100:c:\msys64\mingw64\avr\include\util\delay.h ****     Makefile).  The value 1 MHz here is only provided as a "vanilla"
+ 101:c:\msys64\mingw64\avr\include\util\delay.h ****     fallback if no such user-provided definition could be found.
+ 102:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 103:c:\msys64\mingw64\avr\include\util\delay.h ****     In terms of the delay functions, the CPU frequency can be given as
+ 104:c:\msys64\mingw64\avr\include\util\delay.h ****     a floating-point constant (e.g. 3.6864E6 for 3.6864 MHz).
+ 105:c:\msys64\mingw64\avr\include\util\delay.h ****     However, the macros in <util/setbaud.h> require it to be an
+ 106:c:\msys64\mingw64\avr\include\util\delay.h ****     integer value.
+ 107:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 108:c:\msys64\mingw64\avr\include\util\delay.h **** # define F_CPU 1000000UL
+ 109:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 110:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 111:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef __OPTIMIZE__
+ 112:c:\msys64\mingw64\avr\include\util\delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+ 113:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 114:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 115:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 116:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 117:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 118:c:\msys64\mingw64\avr\include\util\delay.h **** #  include <math.h>
+ 119:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 120:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 121:c:\msys64\mingw64\avr\include\util\delay.h **** /**
+ 122:c:\msys64\mingw64\avr\include\util\delay.h ****    \ingroup util_delay
+ 123:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 124:c:\msys64\mingw64\avr\include\util\delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 125:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 126:c:\msys64\mingw64\avr\include\util\delay.h ****    The macro F_CPU is supposed to be defined to a
+ 127:c:\msys64\mingw64\avr\include\util\delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 128:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 129:c:\msys64\mingw64\avr\include\util\delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 130:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 131:c:\msys64\mingw64\avr\include\util\delay.h ****    When the user request delay which exceed the maximum possible one,
+ 132:c:\msys64\mingw64\avr\include\util\delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 133:c:\msys64\mingw64\avr\include\util\delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 134:c:\msys64\mingw64\avr\include\util\delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 135:c:\msys64\mingw64\avr\include\util\delay.h ****    user will not be informed about decreased resolution.
+ 136:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 137:c:\msys64\mingw64\avr\include\util\delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 138:c:\msys64\mingw64\avr\include\util\delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 139:c:\msys64\mingw64\avr\include\util\delay.h ****    values greater than the maximal possible delay, overflows results in
+ 140:c:\msys64\mingw64\avr\include\util\delay.h ****    no delay i.e., 0ms.
+ 141:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 142:c:\msys64\mingw64\avr\include\util\delay.h ****    Conversion of \c __ms into clock cycles may not always result in
+ 143:c:\msys64\mingw64\avr\include\util\delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 144:c:\msys64\mingw64\avr\include\util\delay.h ****    integer. This ensures that the user gets at least \c __ms
+ 145:c:\msys64\mingw64\avr\include\util\delay.h ****    microseconds of delay.
+ 146:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 147:c:\msys64\mingw64\avr\include\util\delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 148:c:\msys64\mingw64\avr\include\util\delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 149:c:\msys64\mingw64\avr\include\util\delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 150:c:\msys64\mingw64\avr\include\util\delay.h ****    respectively.
+ 151:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 152:c:\msys64\mingw64\avr\include\util\delay.h ****    \note
+ 153:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 154:c:\msys64\mingw64\avr\include\util\delay.h ****    The implementation of _delay_ms() based on
+ 155:c:\msys64\mingw64\avr\include\util\delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 156:c:\msys64\mingw64\avr\include\util\delay.h ****    implementations.  In order to get functionality backward compatible
+ 157:c:\msys64\mingw64\avr\include\util\delay.h ****    with previous versions, the macro \c "__DELAY_BACKWARD_COMPATIBLE__"
+ 158:c:\msys64\mingw64\avr\include\util\delay.h ****    must be defined before including this header file. Also, the
+ 159:c:\msys64\mingw64\avr\include\util\delay.h ****    backward compatible algorithm will be chosen if the code is
+ 160:c:\msys64\mingw64\avr\include\util\delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 161:c:\msys64\mingw64\avr\include\util\delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 162:c:\msys64\mingw64\avr\include\util\delay.h ****    not available to the compiler then.
+ 163:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 164:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 165:c:\msys64\mingw64\avr\include\util\delay.h **** void
+ 166:c:\msys64\mingw64\avr\include\util\delay.h **** _delay_ms(double __ms)
+  44               		.loc 2 166 1 view .LVU9
+  45               	.LBB9:
+ 167:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 168:c:\msys64\mingw64\avr\include\util\delay.h **** 	double __tmp ;
+  46               		.loc 2 168 2 view .LVU10
+ 169:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 170:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 171:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 172:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint32_t __ticks_dc;
+  47               		.loc 2 172 2 view .LVU11
+ 173:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+  48               		.loc 2 173 2 view .LVU12
+ 174:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+  49               		.loc 2 174 2 view .LVU13
+ 175:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 176:c:\msys64\mingw64\avr\include\util\delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 177:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 178:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 179:c:\msys64\mingw64\avr\include\util\delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 180:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 181:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 182:c:\msys64\mingw64\avr\include\util\delay.h **** 	#else
+ 183:c:\msys64\mingw64\avr\include\util\delay.h **** 		//round up by default
+ 184:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+  50               		.loc 2 184 3 view .LVU14
+ 185:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 186:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 187:c:\msys64\mingw64\avr\include\util\delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+  51               		.loc 2 187 2 view .LVU15
+  52 000a EFE3      		ldi r30,lo8(-25537)
+  53 000c FCE9      		ldi r31,hi8(-25537)
+  54 000e 3197      	1:	sbiw r30,1
+  55 0010 01F4      		brne 1b
+  56 0012 00C0      		rjmp .
+  57 0014 0000      		nop
+  58               	.LVL3:
+  59               		.loc 2 187 2 is_stmt 0 view .LVU16
+  60               	.LBE9:
+  61               	.LBE8:
+  51:keyboards/crkbd/rev1/legacy/split_util.c ****         // This will return true if a USB connection has been established
+  62               		.loc 1 51 75 is_stmt 1 view .LVU17
+  51:keyboards/crkbd/rev1/legacy/split_util.c ****         // This will return true if a USB connection has been established
+  63               		.loc 1 51 25 view .LVU18
+  64 0016 8150      		subi r24,lo8(-(-1))
+  65               	.LVL4:
+  51:keyboards/crkbd/rev1/legacy/split_util.c ****         // This will return true if a USB connection has been established
+  66               		.loc 1 51 5 is_stmt 0 view .LVU19
+  67 0018 01F4      		brne .L3
+  68               	.LBE10:
+  57:keyboards/crkbd/rev1/legacy/split_util.c ****     }
+  58:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  59:keyboards/crkbd/rev1/legacy/split_util.c ****     // Avoid NO_USB_STARTUP_CHECK - Disable USB as the previous checks seem to enable it somehow
+  60:keyboards/crkbd/rev1/legacy/split_util.c ****     (USBCON &= ~(_BV(USBE) | _BV(OTGPADE)));
+  69               		.loc 1 60 5 is_stmt 1 view .LVU20
+  70               		.loc 1 60 13 is_stmt 0 view .LVU21
+  71 001a 8091 D800 		lds r24,216
+  72               	.LVL5:
+  73               		.loc 1 60 13 view .LVU22
+  74 001e 8F76      		andi r24,lo8(111)
+  75 0020 8093 D800 		sts 216,r24
+  61:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  62:keyboards/crkbd/rev1/legacy/split_util.c ****     return false;
+  76               		.loc 1 62 5 is_stmt 1 view .LVU23
+  77               		.loc 1 62 12 is_stmt 0 view .LVU24
+  78 0024 80E0      		ldi r24,0
+  79 0026 0895      		ret
+  80               	.LVL6:
+  81               	.L4:
+  82               	.LBB11:
+  54:keyboards/crkbd/rev1/legacy/split_util.c ****         }
+  83               		.loc 1 54 20 view .LVU25
+  84 0028 81E0      		ldi r24,lo8(1)
+  85               	.LVL7:
+  86               	/* epilogue start */
+  54:keyboards/crkbd/rev1/legacy/split_util.c ****         }
+  87               		.loc 1 54 20 view .LVU26
+  88               	.LBE11:
+  63:keyboards/crkbd/rev1/legacy/split_util.c **** }
+  89               		.loc 1 63 1 view .LVU27
+  90 002a 0895      		ret
+  91               		.cfi_endproc
+  92               	.LFE14:
+  94               		.section	.text.has_usb,"ax",@progbits
+  95               		.weak	has_usb
+  97               	has_usb:
+  98               	.LFB16:
+  64:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  65:keyboards/crkbd/rev1/legacy/split_util.c **** __attribute__((weak)) bool is_keyboard_left(void) {
+  66:keyboards/crkbd/rev1/legacy/split_util.c **** #if defined(SPLIT_HAND_PIN)
+  67:keyboards/crkbd/rev1/legacy/split_util.c ****     // Test pin SPLIT_HAND_PIN for High/Low, if low it's right hand
+  68:keyboards/crkbd/rev1/legacy/split_util.c ****     setPinInput(SPLIT_HAND_PIN);
+  69:keyboards/crkbd/rev1/legacy/split_util.c ****     return readPin(SPLIT_HAND_PIN);
+  70:keyboards/crkbd/rev1/legacy/split_util.c **** #elif defined(EE_HANDS)
+  71:keyboards/crkbd/rev1/legacy/split_util.c ****     return eeconfig_read_handedness();
+  72:keyboards/crkbd/rev1/legacy/split_util.c **** #elif defined(MASTER_RIGHT)
+  73:keyboards/crkbd/rev1/legacy/split_util.c ****     return !has_usb();
+  74:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+  75:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  76:keyboards/crkbd/rev1/legacy/split_util.c ****     return has_usb();
+  77:keyboards/crkbd/rev1/legacy/split_util.c **** }
+  78:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  79:keyboards/crkbd/rev1/legacy/split_util.c **** __attribute__((weak)) bool has_usb(void) {
+  99               		.loc 1 79 42 is_stmt 1 view -0
+ 100               		.cfi_startproc
+ 101               	/* prologue: function */
+ 102               	/* frame size = 0 */
+ 103               	/* stack size = 0 */
+ 104               	.L__stack_usage = 0
+  80:keyboards/crkbd/rev1/legacy/split_util.c ****     static enum { UNKNOWN, MASTER, SLAVE } usbstate = UNKNOWN;
+ 105               		.loc 1 80 5 view .LVU29
+  81:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  82:keyboards/crkbd/rev1/legacy/split_util.c ****     // only check once, as this is called often
+  83:keyboards/crkbd/rev1/legacy/split_util.c ****     if (usbstate == UNKNOWN) {
+ 106               		.loc 1 83 5 view .LVU30
+ 107               		.loc 1 83 8 is_stmt 0 view .LVU31
+ 108 0000 8091 0000 		lds r24,usbstate.1898
+ 109 0004 8111      		cpse r24,__zero_reg__
+ 110 0006 00C0      		rjmp .L7
+  84:keyboards/crkbd/rev1/legacy/split_util.c **** #if defined(SPLIT_USB_DETECT)
+  85:keyboards/crkbd/rev1/legacy/split_util.c ****         usbstate = waitForUsb() ? MASTER : SLAVE;
+  86:keyboards/crkbd/rev1/legacy/split_util.c **** #elif defined(__AVR__)
+  87:keyboards/crkbd/rev1/legacy/split_util.c ****         USBCON |= (1 << OTGPADE);  // enables VBUS pad
+ 111               		.loc 1 87 9 is_stmt 1 view .LVU32
+ 112               		.loc 1 87 16 is_stmt 0 view .LVU33
+ 113 0008 8091 D800 		lds r24,216
+ 114 000c 8061      		ori r24,lo8(16)
+ 115 000e 8093 D800 		sts 216,r24
+  88:keyboards/crkbd/rev1/legacy/split_util.c ****         wait_us(5);
+ 116               		.loc 1 88 9 is_stmt 1 view .LVU34
+ 117               	.LVL8:
+ 118               	.LBB12:
+ 119               	.LBI12:
+ 188:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 189:c:\msys64\mingw64\avr\include\util\delay.h **** #else
+ 190:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint16_t __ticks;
+ 191:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 4e3) * __ms;
+ 192:c:\msys64\mingw64\avr\include\util\delay.h **** 	if (__tmp < 1.0)
+ 193:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = 1;
+ 194:c:\msys64\mingw64\avr\include\util\delay.h **** 	else if (__tmp > 65535)
+ 195:c:\msys64\mingw64\avr\include\util\delay.h **** 	{
+ 196:c:\msys64\mingw64\avr\include\util\delay.h **** 		//	__ticks = requested delay in 1/10 ms
+ 197:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = (uint16_t) (__ms * 10.0);
+ 198:c:\msys64\mingw64\avr\include\util\delay.h **** 		while(__ticks)
+ 199:c:\msys64\mingw64\avr\include\util\delay.h **** 		{
+ 200:c:\msys64\mingw64\avr\include\util\delay.h **** 			// wait 1/10 ms
+ 201:c:\msys64\mingw64\avr\include\util\delay.h **** 			_delay_loop_2(((F_CPU) / 4e3) / 10);
+ 202:c:\msys64\mingw64\avr\include\util\delay.h **** 			__ticks --;
+ 203:c:\msys64\mingw64\avr\include\util\delay.h **** 		}
+ 204:c:\msys64\mingw64\avr\include\util\delay.h **** 		return;
+ 205:c:\msys64\mingw64\avr\include\util\delay.h **** 	}
+ 206:c:\msys64\mingw64\avr\include\util\delay.h **** 	else
+ 207:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = (uint16_t)__tmp;
+ 208:c:\msys64\mingw64\avr\include\util\delay.h **** 	_delay_loop_2(__ticks);
+ 209:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 210:c:\msys64\mingw64\avr\include\util\delay.h **** }
+ 211:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 212:c:\msys64\mingw64\avr\include\util\delay.h **** /**
+ 213:c:\msys64\mingw64\avr\include\util\delay.h ****    \ingroup util_delay
+ 214:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 215:c:\msys64\mingw64\avr\include\util\delay.h ****    Perform a delay of \c __us microseconds, using _delay_loop_1().
+ 216:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 217:c:\msys64\mingw64\avr\include\util\delay.h ****    The macro F_CPU is supposed to be defined to a
+ 218:c:\msys64\mingw64\avr\include\util\delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 219:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 220:c:\msys64\mingw64\avr\include\util\delay.h ****    The maximal possible delay is 768 us / F_CPU in MHz.
+ 221:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 222:c:\msys64\mingw64\avr\include\util\delay.h ****    If the user requests a delay greater than the maximal possible one,
+ 223:c:\msys64\mingw64\avr\include\util\delay.h ****    _delay_us() will automatically call _delay_ms() instead.  The user
+ 224:c:\msys64\mingw64\avr\include\util\delay.h ****    will not be informed about this case.
+ 225:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 226:c:\msys64\mingw64\avr\include\util\delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 227:c:\msys64\mingw64\avr\include\util\delay.h ****    support, maximal possible delay is 4294967.295 us/ F_CPU in MHz. For
+ 228:c:\msys64\mingw64\avr\include\util\delay.h ****    values greater than the maximal possible delay, overflow results in
+ 229:c:\msys64\mingw64\avr\include\util\delay.h ****    no delay i.e., 0us.
+ 230:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 231:c:\msys64\mingw64\avr\include\util\delay.h ****    Conversion of \c __us into clock cycles may not always result in
+ 232:c:\msys64\mingw64\avr\include\util\delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 233:c:\msys64\mingw64\avr\include\util\delay.h ****    integer. This ensures that the user gets at least \c __us
+ 234:c:\msys64\mingw64\avr\include\util\delay.h ****    microseconds of delay.
+ 235:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 236:c:\msys64\mingw64\avr\include\util\delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 237:c:\msys64\mingw64\avr\include\util\delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 238:c:\msys64\mingw64\avr\include\util\delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 239:c:\msys64\mingw64\avr\include\util\delay.h ****    respectively.
+ 240:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 241:c:\msys64\mingw64\avr\include\util\delay.h ****    \note
+ 242:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 243:c:\msys64\mingw64\avr\include\util\delay.h ****    The implementation of _delay_ms() based on
+ 244:c:\msys64\mingw64\avr\include\util\delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 245:c:\msys64\mingw64\avr\include\util\delay.h ****    implementations.  In order to get functionality backward compatible
+ 246:c:\msys64\mingw64\avr\include\util\delay.h ****    with previous versions, the macro \c __DELAY_BACKWARD_COMPATIBLE__
+ 247:c:\msys64\mingw64\avr\include\util\delay.h ****    must be defined before including this header file. Also, the
+ 248:c:\msys64\mingw64\avr\include\util\delay.h ****    backward compatible algorithm will be chosen if the code is
+ 249:c:\msys64\mingw64\avr\include\util\delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 250:c:\msys64\mingw64\avr\include\util\delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 251:c:\msys64\mingw64\avr\include\util\delay.h ****    not available to the compiler then.
+ 252:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 253:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 254:c:\msys64\mingw64\avr\include\util\delay.h **** void
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** _delay_us(double __us)
+ 120               		.loc 2 255 1 view .LVU35
+ 121               	.LBB13:
+ 256:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** 	double __tmp ;
+ 122               		.loc 2 257 2 view .LVU36
+ 258:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 259:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 260:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint32_t __ticks_dc;
+ 123               		.loc 2 261 2 view .LVU37
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 124               		.loc 2 262 2 view .LVU38
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 125               		.loc 2 263 2 view .LVU39
+ 264:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 265:c:\msys64\mingw64\avr\include\util\delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 266:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 267:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 268:c:\msys64\mingw64\avr\include\util\delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 269:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 270:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 271:c:\msys64\mingw64\avr\include\util\delay.h **** 	#else
+ 272:c:\msys64\mingw64\avr\include\util\delay.h **** 		//round up by default
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 126               		.loc 2 273 3 view .LVU40
+ 274:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 275:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 276:c:\msys64\mingw64\avr\include\util\delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 127               		.loc 2 276 2 view .LVU41
+ 128 0012 8AE1      		ldi r24,lo8(26)
+ 129 0014 8A95      	1:	dec r24
+ 130 0016 01F4      		brne 1b
+ 131 0018 00C0      		rjmp .
+ 132               	.LVL9:
+ 133               		.loc 2 276 2 is_stmt 0 view .LVU42
+ 134               	.LBE13:
+ 135               	.LBE12:
+  89:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  90:keyboards/crkbd/rev1/legacy/split_util.c ****         usbstate = (USBSTA & (1 << VBUS)) ? MASTER : SLAVE;  // checks state of VBUS
+ 136               		.loc 1 90 9 is_stmt 1 view .LVU43
+ 137               		.loc 1 90 21 is_stmt 0 view .LVU44
+ 138 001a 9091 D900 		lds r25,217
+ 139               		.loc 1 90 52 view .LVU45
+ 140 001e 892F      		mov r24,r25
+ 141 0020 8170      		andi r24,lo8(1)
+ 142 0022 90FF      		sbrs r25,0
+ 143 0024 82E0      		ldi r24,lo8(2)
+ 144               	.L8:
+ 145               		.loc 1 90 18 discriminator 4 view .LVU46
+ 146 0026 8093 0000 		sts usbstate.1898,r24
+ 147               	.L7:
+  91:keyboards/crkbd/rev1/legacy/split_util.c **** #else
+  92:keyboards/crkbd/rev1/legacy/split_util.c ****         usbstate = MASTER;
+  93:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+  94:keyboards/crkbd/rev1/legacy/split_util.c ****     }
+  95:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  96:keyboards/crkbd/rev1/legacy/split_util.c ****     return (usbstate == MASTER);
+ 148               		.loc 1 96 5 is_stmt 1 view .LVU47
+ 149               		.loc 1 96 22 is_stmt 0 view .LVU48
+ 150 002a 81E0      		ldi r24,lo8(1)
+ 151 002c 9091 0000 		lds r25,usbstate.1898
+ 152 0030 9130      		cpi r25,lo8(1)
+ 153 0032 01F0      		breq .L9
+ 154 0034 80E0      		ldi r24,0
+ 155               	.L9:
+ 156               	/* epilogue start */
+  97:keyboards/crkbd/rev1/legacy/split_util.c **** }
+ 157               		.loc 1 97 1 view .LVU49
+ 158 0036 0895      		ret
+ 159               		.cfi_endproc
+ 160               	.LFE16:
+ 162               		.section	.text.is_keyboard_left,"ax",@progbits
+ 163               		.weak	is_keyboard_left
+ 165               	is_keyboard_left:
+ 166               	.LFB15:
+  65:keyboards/crkbd/rev1/legacy/split_util.c **** #if defined(SPLIT_HAND_PIN)
+ 167               		.loc 1 65 51 is_stmt 1 view -0
+ 168               		.cfi_startproc
+ 169               	/* prologue: function */
+ 170               	/* frame size = 0 */
+ 171               	/* stack size = 0 */
+ 172               	.L__stack_usage = 0
+  73:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+ 173               		.loc 1 73 5 view .LVU51
+  73:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+ 174               		.loc 1 73 13 is_stmt 0 view .LVU52
+ 175 0000 0E94 0000 		call has_usb
+ 176               	.LVL10:
+  77:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 177               		.loc 1 77 1 view .LVU53
+ 178 0004 91E0      		ldi r25,lo8(1)
+ 179 0006 8927      		eor r24,r25
+ 180               	/* epilogue start */
+ 181 0008 0895      		ret
+ 182               		.cfi_endproc
+ 183               	.LFE15:
+ 185               		.section	.text.split_keyboard_setup,"ax",@progbits
+ 186               	.global	split_keyboard_setup
+ 188               	split_keyboard_setup:
+ 189               	.LFB19:
+  98:keyboards/crkbd/rev1/legacy/split_util.c **** 
+  99:keyboards/crkbd/rev1/legacy/split_util.c **** static void keyboard_master_setup(void) {
+ 100:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 101:keyboards/crkbd/rev1/legacy/split_util.c **** #ifdef USE_MATRIX_I2C
+ 102:keyboards/crkbd/rev1/legacy/split_util.c ****     i2c_init();
+ 103:keyboards/crkbd/rev1/legacy/split_util.c **** #else
+ 104:keyboards/crkbd/rev1/legacy/split_util.c ****     serial_master_init();
+ 105:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+ 106:keyboards/crkbd/rev1/legacy/split_util.c **** }
+ 107:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 108:keyboards/crkbd/rev1/legacy/split_util.c **** static void keyboard_slave_setup(void) {
+ 109:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 110:keyboards/crkbd/rev1/legacy/split_util.c **** #ifdef USE_MATRIX_I2C
+ 111:keyboards/crkbd/rev1/legacy/split_util.c ****     i2c_slave_init(SLAVE_I2C_ADDRESS);
+ 112:keyboards/crkbd/rev1/legacy/split_util.c **** #else
+ 113:keyboards/crkbd/rev1/legacy/split_util.c ****     serial_slave_init();
+ 114:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+ 115:keyboards/crkbd/rev1/legacy/split_util.c **** }
+ 116:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 117:keyboards/crkbd/rev1/legacy/split_util.c **** // this code runs before the usb and keyboard is initialized
+ 118:keyboards/crkbd/rev1/legacy/split_util.c **** void split_keyboard_setup(void) {
+ 190               		.loc 1 118 33 is_stmt 1 view -0
+ 191               		.cfi_startproc
+ 192               	/* prologue: function */
+ 193               	/* frame size = 0 */
+ 194               	/* stack size = 0 */
+ 195               	.L__stack_usage = 0
+ 119:keyboards/crkbd/rev1/legacy/split_util.c ****     isLeftHand = is_keyboard_left();
+ 196               		.loc 1 119 5 view .LVU55
+ 197               		.loc 1 119 18 is_stmt 0 view .LVU56
+ 198 0000 0E94 0000 		call is_keyboard_left
+ 199               	.LVL11:
+ 200               		.loc 1 119 16 view .LVU57
+ 201 0004 8093 0000 		sts isLeftHand,r24
+ 120:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 121:keyboards/crkbd/rev1/legacy/split_util.c ****    if (has_usb()) {
+ 202               		.loc 1 121 4 is_stmt 1 view .LVU58
+ 203               		.loc 1 121 8 is_stmt 0 view .LVU59
+ 204 0008 0E94 0000 		call has_usb
+ 205               	.LVL12:
+ 206               		.loc 1 121 7 view .LVU60
+ 207 000c 8823      		tst r24
+ 208 000e 01F0      		breq .L15
+ 122:keyboards/crkbd/rev1/legacy/split_util.c ****       keyboard_master_setup();
+ 209               		.loc 1 122 7 is_stmt 1 view .LVU61
+ 210               	.LBB18:
+ 211               	.LBI18:
+  99:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 212               		.loc 1 99 13 view .LVU62
+ 213               	.LBB19:
+ 104:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+ 214               		.loc 1 104 5 view .LVU63
+ 215 0010 0E94 0000 		call serial_master_init
+ 216               	.LVL13:
+ 217               	.L16:
+ 218               	.LBE19:
+ 219               	.LBE18:
+ 123:keyboards/crkbd/rev1/legacy/split_util.c ****    } else {
+ 124:keyboards/crkbd/rev1/legacy/split_util.c ****       keyboard_slave_setup();
+ 125:keyboards/crkbd/rev1/legacy/split_util.c ****    }
+ 126:keyboards/crkbd/rev1/legacy/split_util.c ****    sei();
+ 220               		.loc 1 126 4 view .LVU64
+ 221               	/* #APP */
+ 222               	 ;  126 "keyboards/crkbd/rev1/legacy/split_util.c" 1
+ 223 0014 7894      		sei
+ 224               	 ;  0 "" 2
+ 225               	/* #NOAPP */
+ 226               	/* epilogue start */
+ 127:keyboards/crkbd/rev1/legacy/split_util.c **** }
+ 227               		.loc 1 127 1 is_stmt 0 view .LVU65
+ 228 0016 0895      		ret
+ 229               	.L15:
+ 124:keyboards/crkbd/rev1/legacy/split_util.c ****    }
+ 230               		.loc 1 124 7 is_stmt 1 view .LVU66
+ 231               	.LBB20:
+ 232               	.LBI20:
+ 108:keyboards/crkbd/rev1/legacy/split_util.c **** 
+ 233               		.loc 1 108 13 view .LVU67
+ 234               	.LBB21:
+ 113:keyboards/crkbd/rev1/legacy/split_util.c **** #endif
+ 235               		.loc 1 113 5 view .LVU68
+ 236 0018 0E94 0000 		call serial_slave_init
+ 237               	.LVL14:
+ 238 001c 00C0      		rjmp .L16
+ 239               	.LBE21:
+ 240               	.LBE20:
+ 241               		.cfi_endproc
+ 242               	.LFE19:
+ 244               		.section	.bss.usbstate.1898,"aw",@nobits
+ 247               	usbstate.1898:
+ 248 0000 00        		.zero	1
+ 249               	.global	isLeftHand
+ 250               		.section	.data.isLeftHand,"aw"
+ 253               	isLeftHand:
+ 254 0000 01        		.byte	1
+ 255               		.text
+ 256               	.Letext0:
+ 257               		.file 3 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
+ 258               		.file 4 "keyboards/crkbd/rev1/legacy/split_util.h"
+ 259               		.file 5 "keyboards/crkbd/rev1/legacy/split_scomm.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 split_util.c
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:13     .text.waitForUsb:0000000000000000 waitForUsb
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:97     .text.has_usb:0000000000000000 has_usb
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:247    .bss.usbstate.1898:0000000000000000 usbstate.1898
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:165    .text.is_keyboard_left:0000000000000000 is_keyboard_left
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:188    .text.split_keyboard_setup:0000000000000000 split_keyboard_setup
+C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:253    .data.isLeftHand:0000000000000000 isLeftHand
+
+UNDEFINED SYMBOLS
+serial_master_init
+serial_slave_init
+__do_copy_data
+__do_clear_bss

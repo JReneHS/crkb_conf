@@ -1,0 +1,1 @@
+-Wl,--gc-sections -Wl,-Map=.build/crkbd_rev1_legacy_rene_prog_dvorak.map,--cref     -lm 

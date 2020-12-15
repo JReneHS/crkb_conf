@@ -1,0 +1,2431 @@
+   1               		.file	"matrix.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.text.unselect_rows,"ax",@progbits
+  12               	unselect_rows:
+  13               	.LFB138:
+  14               		.file 1 "keyboards/crkbd/rev1/legacy/matrix.c"
+   1:keyboards/crkbd/rev1/legacy/matrix.c **** /*
+   2:keyboards/crkbd/rev1/legacy/matrix.c **** Copyright 2012 Jun Wako <wakojun@gmail.com>
+   3:keyboards/crkbd/rev1/legacy/matrix.c **** 
+   4:keyboards/crkbd/rev1/legacy/matrix.c **** This program is free software: you can redistribute it and/or modify
+   5:keyboards/crkbd/rev1/legacy/matrix.c **** it under the terms of the GNU General Public License as published by
+   6:keyboards/crkbd/rev1/legacy/matrix.c **** the Free Software Foundation, either version 2 of the License, or
+   7:keyboards/crkbd/rev1/legacy/matrix.c **** (at your option) any later version.
+   8:keyboards/crkbd/rev1/legacy/matrix.c **** 
+   9:keyboards/crkbd/rev1/legacy/matrix.c **** This program is distributed in the hope that it will be useful,
+  10:keyboards/crkbd/rev1/legacy/matrix.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:keyboards/crkbd/rev1/legacy/matrix.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:keyboards/crkbd/rev1/legacy/matrix.c **** GNU General Public License for more details.
+  13:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  14:keyboards/crkbd/rev1/legacy/matrix.c **** You should have received a copy of the GNU General Public License
+  15:keyboards/crkbd/rev1/legacy/matrix.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:keyboards/crkbd/rev1/legacy/matrix.c **** */
+  17:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  18:keyboards/crkbd/rev1/legacy/matrix.c **** /*
+  19:keyboards/crkbd/rev1/legacy/matrix.c ****  * scan matrix
+  20:keyboards/crkbd/rev1/legacy/matrix.c ****  */
+  21:keyboards/crkbd/rev1/legacy/matrix.c **** #include <stdint.h>
+  22:keyboards/crkbd/rev1/legacy/matrix.c **** #include <stdbool.h>
+  23:keyboards/crkbd/rev1/legacy/matrix.c **** #include <string.h>
+  24:keyboards/crkbd/rev1/legacy/matrix.c **** #include <avr/io.h>
+  25:keyboards/crkbd/rev1/legacy/matrix.c **** #include <avr/wdt.h>
+  26:keyboards/crkbd/rev1/legacy/matrix.c **** #include <avr/interrupt.h>
+  27:keyboards/crkbd/rev1/legacy/matrix.c **** #include <util/delay.h>
+  28:keyboards/crkbd/rev1/legacy/matrix.c **** #include "print.h"
+  29:keyboards/crkbd/rev1/legacy/matrix.c **** #include "debug.h"
+  30:keyboards/crkbd/rev1/legacy/matrix.c **** #include "util.h"
+  31:keyboards/crkbd/rev1/legacy/matrix.c **** #include "matrix.h"
+  32:keyboards/crkbd/rev1/legacy/matrix.c **** #include "split_util.h"
+  33:keyboards/crkbd/rev1/legacy/matrix.c **** #include "quantum.h"
+  34:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  35:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef USE_MATRIX_I2C
+  36:keyboards/crkbd/rev1/legacy/matrix.c **** #  include "i2c.h"
+  37:keyboards/crkbd/rev1/legacy/matrix.c **** #else // USE_SERIAL
+  38:keyboards/crkbd/rev1/legacy/matrix.c **** #  include "split_scomm.h"
+  39:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+  40:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  41:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef DEBOUNCE
+  42:keyboards/crkbd/rev1/legacy/matrix.c **** #  define DEBOUNCE	5
+  43:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+  44:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  45:keyboards/crkbd/rev1/legacy/matrix.c **** #define ERROR_DISCONNECT_COUNT 5
+  46:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  47:keyboards/crkbd/rev1/legacy/matrix.c **** static uint8_t debouncing = DEBOUNCE;
+  48:keyboards/crkbd/rev1/legacy/matrix.c **** static const int ROWS_PER_HAND = MATRIX_ROWS/2;
+  49:keyboards/crkbd/rev1/legacy/matrix.c **** static uint8_t error_count = 0;
+  50:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t is_master = 0 ;
+  51:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  52:keyboards/crkbd/rev1/legacy/matrix.c **** static const uint8_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
+  53:keyboards/crkbd/rev1/legacy/matrix.c **** static const uint8_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
+  54:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  55:keyboards/crkbd/rev1/legacy/matrix.c **** /* matrix state(1:on, 0:off) */
+  56:keyboards/crkbd/rev1/legacy/matrix.c **** static matrix_row_t matrix[MATRIX_ROWS];
+  57:keyboards/crkbd/rev1/legacy/matrix.c **** static matrix_row_t matrix_debouncing[MATRIX_ROWS];
+  58:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  59:keyboards/crkbd/rev1/legacy/matrix.c **** static matrix_row_t read_cols(void);
+  60:keyboards/crkbd/rev1/legacy/matrix.c **** static void init_cols(void);
+  61:keyboards/crkbd/rev1/legacy/matrix.c **** static void unselect_rows(void);
+  62:keyboards/crkbd/rev1/legacy/matrix.c **** static void select_row(uint8_t row);
+  63:keyboards/crkbd/rev1/legacy/matrix.c **** static uint8_t matrix_master_scan(void);
+  64:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  65:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  66:keyboards/crkbd/rev1/legacy/matrix.c **** __attribute__ ((weak))
+  67:keyboards/crkbd/rev1/legacy/matrix.c **** void matrix_init_kb(void) {
+  68:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_init_user();
+  69:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  70:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  71:keyboards/crkbd/rev1/legacy/matrix.c **** __attribute__ ((weak))
+  72:keyboards/crkbd/rev1/legacy/matrix.c **** void matrix_scan_kb(void) {
+  73:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_scan_user();
+  74:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  75:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  76:keyboards/crkbd/rev1/legacy/matrix.c **** __attribute__ ((weak))
+  77:keyboards/crkbd/rev1/legacy/matrix.c **** void matrix_init_user(void) {
+  78:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  79:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  80:keyboards/crkbd/rev1/legacy/matrix.c **** __attribute__ ((weak))
+  81:keyboards/crkbd/rev1/legacy/matrix.c **** void matrix_scan_user(void) {
+  82:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  83:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  84:keyboards/crkbd/rev1/legacy/matrix.c **** inline
+  85:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t matrix_rows(void)
+  86:keyboards/crkbd/rev1/legacy/matrix.c **** {
+  87:keyboards/crkbd/rev1/legacy/matrix.c ****     return MATRIX_ROWS;
+  88:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  89:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  90:keyboards/crkbd/rev1/legacy/matrix.c **** inline
+  91:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t matrix_cols(void)
+  92:keyboards/crkbd/rev1/legacy/matrix.c **** {
+  93:keyboards/crkbd/rev1/legacy/matrix.c ****     return MATRIX_COLS;
+  94:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  95:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  96:keyboards/crkbd/rev1/legacy/matrix.c **** void tx_rx_leds_init(void)
+  97:keyboards/crkbd/rev1/legacy/matrix.c **** {
+  98:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+  99:keyboards/crkbd/rev1/legacy/matrix.c ****     setPinOutput(B0);
+ 100:keyboards/crkbd/rev1/legacy/matrix.c ****     setPinOutput(D5);
+ 101:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinHigh(B0);
+ 102:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinHigh(D5);
+ 103:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 104:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 105:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 106:keyboards/crkbd/rev1/legacy/matrix.c **** void tx_led_on(void)
+ 107:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 108:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 109:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinLow(D5);
+ 110:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 111:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 112:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 113:keyboards/crkbd/rev1/legacy/matrix.c **** void tx_led_off(void)
+ 114:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 115:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 116:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinHigh(D5);
+ 117:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 118:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 119:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 120:keyboards/crkbd/rev1/legacy/matrix.c **** void rx_led_on(void)
+ 121:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 122:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 123:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinLow(B0);
+ 124:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 125:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 126:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 127:keyboards/crkbd/rev1/legacy/matrix.c **** void rx_led_off(void)
+ 128:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 129:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 130:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinHigh(B0);
+ 131:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 132:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 133:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 134:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 135:keyboards/crkbd/rev1/legacy/matrix.c **** void matrix_init(void)
+ 136:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 137:keyboards/crkbd/rev1/legacy/matrix.c ****     split_keyboard_setup();
+ 138:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 139:keyboards/crkbd/rev1/legacy/matrix.c ****     // initialize row and col
+ 140:keyboards/crkbd/rev1/legacy/matrix.c ****     unselect_rows();
+ 141:keyboards/crkbd/rev1/legacy/matrix.c ****     init_cols();
+ 142:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 143:keyboards/crkbd/rev1/legacy/matrix.c ****     tx_rx_leds_init();
+ 144:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 145:keyboards/crkbd/rev1/legacy/matrix.c ****     // initialize matrix state: all keys off
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t i=0; i < MATRIX_ROWS; i++) {
+ 147:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 148:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix_debouncing[i] = 0;
+ 149:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 150:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 151:keyboards/crkbd/rev1/legacy/matrix.c ****     is_master = has_usb();
+ 152:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 153:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_init_quantum();
+ 154:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 155:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 156:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t _matrix_scan(void)
+ 157:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 158:keyboards/crkbd/rev1/legacy/matrix.c ****     bool changed = false;
+ 159:keyboards/crkbd/rev1/legacy/matrix.c ****     // Right hand is stored after the left in the matirx so, we need to offset it
+ 160:keyboards/crkbd/rev1/legacy/matrix.c ****     int offset = isLeftHand ? 0 : (ROWS_PER_HAND);
+ 161:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t i = 0; i < ROWS_PER_HAND; i++) {
+ 163:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 164:keyboards/crkbd/rev1/legacy/matrix.c ****         _delay_us(30);  // without this wait read unstable value.
+ 165:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix_row_t cols = read_cols();
+ 166:keyboards/crkbd/rev1/legacy/matrix.c ****         if (matrix_debouncing[i+offset] != cols) {
+ 167:keyboards/crkbd/rev1/legacy/matrix.c ****             changed = true;
+ 168:keyboards/crkbd/rev1/legacy/matrix.c ****             matrix_debouncing[i+offset] = cols;
+ 169:keyboards/crkbd/rev1/legacy/matrix.c ****             debouncing = DEBOUNCE;
+ 170:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 171:keyboards/crkbd/rev1/legacy/matrix.c ****         unselect_rows();
+ 172:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 173:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 174:keyboards/crkbd/rev1/legacy/matrix.c ****     if (debouncing) {
+ 175:keyboards/crkbd/rev1/legacy/matrix.c ****         if (--debouncing) {
+ 176:keyboards/crkbd/rev1/legacy/matrix.c ****             _delay_ms(1);
+ 177:keyboards/crkbd/rev1/legacy/matrix.c ****         } else {
+ 178:keyboards/crkbd/rev1/legacy/matrix.c ****             for (uint8_t i = 0; i < ROWS_PER_HAND; i++) {
+ 179:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[i+offset] = matrix_debouncing[i+offset];
+ 180:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 181:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 182:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 183:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 184:keyboards/crkbd/rev1/legacy/matrix.c ****     return changed;
+ 185:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 186:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 187:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef USE_MATRIX_I2C
+ 188:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 189:keyboards/crkbd/rev1/legacy/matrix.c **** // Get rows from other half over i2c
+ 190:keyboards/crkbd/rev1/legacy/matrix.c **** int i2c_transaction(void) {
+ 191:keyboards/crkbd/rev1/legacy/matrix.c ****     int slaveOffset = (isLeftHand) ? (ROWS_PER_HAND) : 0;
+ 192:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 193:keyboards/crkbd/rev1/legacy/matrix.c ****     int err = i2c_master_start(SLAVE_I2C_ADDRESS + I2C_WRITE);
+ 194:keyboards/crkbd/rev1/legacy/matrix.c ****     if (err) goto i2c_error;
+ 195:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 196:keyboards/crkbd/rev1/legacy/matrix.c ****     // start of matrix stored at 0x00
+ 197:keyboards/crkbd/rev1/legacy/matrix.c ****     err = i2c_master_write(0x00);
+ 198:keyboards/crkbd/rev1/legacy/matrix.c ****     if (err) goto i2c_error;
+ 199:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 200:keyboards/crkbd/rev1/legacy/matrix.c ****     // Start read
+ 201:keyboards/crkbd/rev1/legacy/matrix.c ****     err = i2c_master_start(SLAVE_I2C_ADDRESS + I2C_READ);
+ 202:keyboards/crkbd/rev1/legacy/matrix.c ****     if (err) goto i2c_error;
+ 203:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 204:keyboards/crkbd/rev1/legacy/matrix.c ****     if (!err) {
+ 205:keyboards/crkbd/rev1/legacy/matrix.c ****         int i;
+ 206:keyboards/crkbd/rev1/legacy/matrix.c ****         for (i = 0; i < ROWS_PER_HAND-1; ++i) {
+ 207:keyboards/crkbd/rev1/legacy/matrix.c ****             matrix[slaveOffset+i] = i2c_master_read(I2C_ACK);
+ 208:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 209:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[slaveOffset+i] = i2c_master_read(I2C_NACK);
+ 210:keyboards/crkbd/rev1/legacy/matrix.c ****         i2c_master_stop();
+ 211:keyboards/crkbd/rev1/legacy/matrix.c ****     } else {
+ 212:keyboards/crkbd/rev1/legacy/matrix.c **** i2c_error: // the cable is disconnceted, or something else went wrong
+ 213:keyboards/crkbd/rev1/legacy/matrix.c ****         i2c_reset_state();
+ 214:keyboards/crkbd/rev1/legacy/matrix.c ****         return err;
+ 215:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 216:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 217:keyboards/crkbd/rev1/legacy/matrix.c ****     return 0;
+ 218:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 219:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 220:keyboards/crkbd/rev1/legacy/matrix.c **** #else // USE_SERIAL
+ 221:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 222:keyboards/crkbd/rev1/legacy/matrix.c **** int serial_transaction(int master_changed) {
+ 223:keyboards/crkbd/rev1/legacy/matrix.c ****     int slaveOffset = (isLeftHand) ? (ROWS_PER_HAND) : 0;
+ 224:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 225:keyboards/crkbd/rev1/legacy/matrix.c ****     int ret=serial_update_buffers(master_changed);
+ 226:keyboards/crkbd/rev1/legacy/matrix.c **** #else
+ 227:keyboards/crkbd/rev1/legacy/matrix.c ****     int ret=serial_update_buffers();
+ 228:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 229:keyboards/crkbd/rev1/legacy/matrix.c ****     if (ret ) {
+ 230:keyboards/crkbd/rev1/legacy/matrix.c ****         if(ret==2) rx_led_on();
+ 231:keyboards/crkbd/rev1/legacy/matrix.c ****         return 1;
+ 232:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 233:keyboards/crkbd/rev1/legacy/matrix.c ****     rx_led_off();
+ 234:keyboards/crkbd/rev1/legacy/matrix.c ****     memcpy(&matrix[slaveOffset],
+ 235:keyboards/crkbd/rev1/legacy/matrix.c ****         (void *)serial_slave_buffer, SERIAL_SLAVE_BUFFER_LENGTH);
+ 236:keyboards/crkbd/rev1/legacy/matrix.c ****     return 0;
+ 237:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 238:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 239:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 240:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t matrix_scan(void)
+ 241:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 242:keyboards/crkbd/rev1/legacy/matrix.c ****     bool changed = false;
+ 243:keyboards/crkbd/rev1/legacy/matrix.c ****     if (is_master) {
+ 244:keyboards/crkbd/rev1/legacy/matrix.c ****         changed |= matrix_master_scan();
+ 245:keyboards/crkbd/rev1/legacy/matrix.c ****     }else{
+ 246:keyboards/crkbd/rev1/legacy/matrix.c ****         changed |= matrix_slave_scan();
+ 247:keyboards/crkbd/rev1/legacy/matrix.c ****         int offset = (isLeftHand) ? ROWS_PER_HAND : 0;
+ 248:keyboards/crkbd/rev1/legacy/matrix.c ****         memcpy(&matrix[offset],
+ 249:keyboards/crkbd/rev1/legacy/matrix.c ****                (void *)serial_master_buffer, SERIAL_MASTER_BUFFER_LENGTH);
+ 250:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix_scan_quantum();
+ 251:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 252:keyboards/crkbd/rev1/legacy/matrix.c ****     return (uint8_t) changed;
+ 253:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 254:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 255:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 256:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t matrix_master_scan(void) {
+ 257:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 258:keyboards/crkbd/rev1/legacy/matrix.c ****     int ret = _matrix_scan();
+ 259:keyboards/crkbd/rev1/legacy/matrix.c ****     int mchanged = 1;
+ 260:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 261:keyboards/crkbd/rev1/legacy/matrix.c ****     int offset = (isLeftHand) ? 0 : ROWS_PER_HAND;
+ 262:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 263:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef USE_MATRIX_I2C
+ 264:keyboards/crkbd/rev1/legacy/matrix.c **** //    for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 265:keyboards/crkbd/rev1/legacy/matrix.c ****         /* i2c_slave_buffer[i] = matrix[offset+i]; */
+ 266:keyboards/crkbd/rev1/legacy/matrix.c **** //        i2c_slave_buffer[i] = matrix[offset+i];
+ 267:keyboards/crkbd/rev1/legacy/matrix.c **** //    }
+ 268:keyboards/crkbd/rev1/legacy/matrix.c **** #else // USE_SERIAL
+ 269:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 270:keyboards/crkbd/rev1/legacy/matrix.c ****     mchanged = memcmp((void *)serial_master_buffer,
+ 271:keyboards/crkbd/rev1/legacy/matrix.c **** 		      &matrix[offset], SERIAL_MASTER_BUFFER_LENGTH);
+ 272:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 273:keyboards/crkbd/rev1/legacy/matrix.c ****     memcpy((void *)serial_master_buffer,
+ 274:keyboards/crkbd/rev1/legacy/matrix.c **** 	   &matrix[offset], SERIAL_MASTER_BUFFER_LENGTH);
+ 275:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 276:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 277:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef USE_MATRIX_I2C
+ 278:keyboards/crkbd/rev1/legacy/matrix.c ****     if( i2c_transaction() ) {
+ 279:keyboards/crkbd/rev1/legacy/matrix.c **** #else // USE_SERIAL
+ 280:keyboards/crkbd/rev1/legacy/matrix.c ****     if( serial_transaction(mchanged) ) {
+ 281:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 282:keyboards/crkbd/rev1/legacy/matrix.c ****         // turn on the indicator led when halves are disconnected
+ 283:keyboards/crkbd/rev1/legacy/matrix.c ****         tx_led_on();
+ 284:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 285:keyboards/crkbd/rev1/legacy/matrix.c ****         error_count++;
+ 286:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 287:keyboards/crkbd/rev1/legacy/matrix.c ****         if (error_count > ERROR_DISCONNECT_COUNT) {
+ 288:keyboards/crkbd/rev1/legacy/matrix.c ****             // reset other half if disconnected
+ 289:keyboards/crkbd/rev1/legacy/matrix.c ****             int slaveOffset = (isLeftHand) ? (ROWS_PER_HAND) : 0;
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****             for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 292:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 293:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 294:keyboards/crkbd/rev1/legacy/matrix.c ****     } else {
+ 295:keyboards/crkbd/rev1/legacy/matrix.c ****         // turn off the indicator led on no error
+ 296:keyboards/crkbd/rev1/legacy/matrix.c ****         tx_led_off();
+ 297:keyboards/crkbd/rev1/legacy/matrix.c ****         error_count = 0;
+ 298:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 299:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_scan_quantum();
+ 300:keyboards/crkbd/rev1/legacy/matrix.c ****     return ret;
+ 301:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 302:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 303:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t matrix_slave_scan(void) {
+ 304:keyboards/crkbd/rev1/legacy/matrix.c ****     int ret = _matrix_scan();
+ 305:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 306:keyboards/crkbd/rev1/legacy/matrix.c ****     int offset = (isLeftHand) ? 0 : ROWS_PER_HAND;
+ 307:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 308:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef USE_MATRIX_I2C
+ 309:keyboards/crkbd/rev1/legacy/matrix.c ****     for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 310:keyboards/crkbd/rev1/legacy/matrix.c ****         /* i2c_slave_buffer[i] = matrix[offset+i]; */
+ 311:keyboards/crkbd/rev1/legacy/matrix.c ****         i2c_slave_buffer[i] = matrix[offset+i];
+ 312:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 313:keyboards/crkbd/rev1/legacy/matrix.c **** #else // USE_SERIAL
+ 314:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 315:keyboards/crkbd/rev1/legacy/matrix.c ****     int change = 0;
+ 316:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****     for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 318:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 319:keyboards/crkbd/rev1/legacy/matrix.c ****         if( serial_slave_buffer[i] != matrix[offset+i] )
+ 320:keyboards/crkbd/rev1/legacy/matrix.c ****         change = 1;
+ 321:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 322:keyboards/crkbd/rev1/legacy/matrix.c ****         serial_slave_buffer[i] = matrix[offset+i];
+ 323:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 324:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 325:keyboards/crkbd/rev1/legacy/matrix.c ****     slave_buffer_change_count += change;
+ 326:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 327:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 328:keyboards/crkbd/rev1/legacy/matrix.c ****     return ret;
+ 329:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 330:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 331:keyboards/crkbd/rev1/legacy/matrix.c **** bool matrix_is_modified(void)
+ 332:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 333:keyboards/crkbd/rev1/legacy/matrix.c ****     if (debouncing) return false;
+ 334:keyboards/crkbd/rev1/legacy/matrix.c ****     return true;
+ 335:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 336:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 337:keyboards/crkbd/rev1/legacy/matrix.c **** inline
+ 338:keyboards/crkbd/rev1/legacy/matrix.c **** bool matrix_is_on(uint8_t row, uint8_t col)
+ 339:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 340:keyboards/crkbd/rev1/legacy/matrix.c ****     return (matrix[row] & ((matrix_row_t)1<<col));
+ 341:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 342:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 343:keyboards/crkbd/rev1/legacy/matrix.c **** inline
+ 344:keyboards/crkbd/rev1/legacy/matrix.c **** matrix_row_t matrix_get_row(uint8_t row)
+ 345:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 346:keyboards/crkbd/rev1/legacy/matrix.c ****     return matrix[row];
+ 347:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 348:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 349:keyboards/crkbd/rev1/legacy/matrix.c **** void matrix_print(void)
+ 350:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 351:keyboards/crkbd/rev1/legacy/matrix.c ****     print("\nr/c 0123456789ABCDEF\n");
+ 352:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+ 353:keyboards/crkbd/rev1/legacy/matrix.c ****         phex(row); print(": ");
+ 354:keyboards/crkbd/rev1/legacy/matrix.c ****         pbin_reverse16(matrix_get_row(row));
+ 355:keyboards/crkbd/rev1/legacy/matrix.c ****         print("\n");
+ 356:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 357:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 358:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 359:keyboards/crkbd/rev1/legacy/matrix.c **** uint8_t matrix_key_count(void)
+ 360:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 361:keyboards/crkbd/rev1/legacy/matrix.c ****     uint8_t count = 0;
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+ 363:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 364:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 365:keyboards/crkbd/rev1/legacy/matrix.c ****     return count;
+ 366:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 367:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 368:keyboards/crkbd/rev1/legacy/matrix.c **** static void  init_cols(void)
+ 369:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < MATRIX_COLS; x++) {
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 372:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 373:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 374:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 375:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 376:keyboards/crkbd/rev1/legacy/matrix.c **** static matrix_row_t read_cols(void)
+ 377:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 378:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_row_t result = 0;
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < MATRIX_COLS; x++) {
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 381:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 382:keyboards/crkbd/rev1/legacy/matrix.c ****     return result;
+ 383:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 384:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 385:keyboards/crkbd/rev1/legacy/matrix.c **** static void unselect_rows(void)
+ 386:keyboards/crkbd/rev1/legacy/matrix.c **** {
+  15               		.loc 1 386 1 view -0
+  16               		.cfi_startproc
+  17 0000 CF93      		push r28
+  18               	.LCFI0:
+  19               		.cfi_def_cfa_offset 3
+  20               		.cfi_offset 28, -2
+  21 0002 DF93      		push r29
+  22               	.LCFI1:
+  23               		.cfi_def_cfa_offset 4
+  24               		.cfi_offset 29, -3
+  25               	/* prologue: function */
+  26               	/* frame size = 0 */
+  27               	/* stack size = 2 */
+  28               	.L__stack_usage = 2
+ 387:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < ROWS_PER_HAND; x++) {
+  29               		.loc 1 387 5 view .LVU1
+  30               	.LBB9:
+  31               		.loc 1 387 9 view .LVU2
+  32               	.LVL0:
+  33               		.loc 1 387 20 view .LVU3
+  34 0004 A0E0      		ldi r26,lo8(row_pins)
+  35 0006 B0E0      		ldi r27,hi8(row_pins)
+  36 0008 40E0      		ldi r20,lo8(row_pins+4)
+  37 000a 50E0      		ldi r21,hi8(row_pins+4)
+ 388:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((row_pins[x] >> 4) + 1) &=  ~_BV(row_pins[x] & 0xF);
+  38               		.loc 1 388 47 is_stmt 0 view .LVU4
+  39 000c C1E0      		ldi r28,lo8(1)
+  40 000e D0E0      		ldi r29,0
+  41               	.LVL1:
+  42               	.L2:
+  43               		.loc 1 388 9 is_stmt 1 discriminator 3 view .LVU5
+  44 0010 8D91      		ld r24,X+
+  45               	.LVL2:
+  46               		.loc 1 388 9 is_stmt 0 discriminator 3 view .LVU6
+  47 0012 E82F      		mov r30,r24
+  48 0014 E295      		swap r30
+  49 0016 EF70      		andi r30,lo8(15)
+  50 0018 F0E0      		ldi r31,0
+  51               		.loc 1 388 42 discriminator 3 view .LVU7
+  52 001a 61A1      		ldd r22,Z+33
+  53               		.loc 1 388 47 discriminator 3 view .LVU8
+  54 001c 8F70      		andi r24,lo8(15)
+  55 001e 9E01      		movw r18,r28
+  56 0020 00C0      		rjmp 2f
+  57               		1:
+  58 0022 220F      		lsl r18
+  59               		2:
+  60 0024 8A95      		dec r24
+  61 0026 02F4      		brpl 1b
+  62               		.loc 1 388 42 discriminator 3 view .LVU9
+  63 0028 922F      		mov r25,r18
+  64 002a 9095      		com r25
+  65 002c 9623      		and r25,r22
+  66 002e 91A3      		std Z+33,r25
+ 389:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((row_pins[x] >> 4) + 2) |= _BV(row_pins[x] & 0xF);
+  67               		.loc 1 389 9 is_stmt 1 discriminator 3 view .LVU10
+  68               		.loc 1 389 42 is_stmt 0 discriminator 3 view .LVU11
+  69 0030 82A1      		ldd r24,Z+34
+  70 0032 822B      		or r24,r18
+  71 0034 82A3      		std Z+34,r24
+ 387:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < ROWS_PER_HAND; x++) {
+  72               		.loc 1 387 39 is_stmt 1 discriminator 3 view .LVU12
+  73               	.LVL3:
+ 387:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < ROWS_PER_HAND; x++) {
+  74               		.loc 1 387 20 discriminator 3 view .LVU13
+ 387:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < ROWS_PER_HAND; x++) {
+  75               		.loc 1 387 5 is_stmt 0 discriminator 3 view .LVU14
+  76 0036 4A17      		cp r20,r26
+  77 0038 5B07      		cpc r21,r27
+  78 003a 01F4      		brne .L2
+  79               	/* epilogue start */
+  80               	.LBE9:
+ 390:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 391:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  81               		.loc 1 391 1 view .LVU15
+  82 003c DF91      		pop r29
+  83 003e CF91      		pop r28
+  84 0040 0895      		ret
+  85               		.cfi_endproc
+  86               	.LFE138:
+  88               		.section	.text.matrix_init_user,"ax",@progbits
+  89               		.weak	matrix_init_user
+  91               	matrix_init_user:
+  92               	.LFB116:
+  77:keyboards/crkbd/rev1/legacy/matrix.c **** }
+  93               		.loc 1 77 29 is_stmt 1 view -0
+  94               		.cfi_startproc
+  95               	/* prologue: function */
+  96               	/* frame size = 0 */
+  97               	/* stack size = 0 */
+  98               	.L__stack_usage = 0
+  78:keyboards/crkbd/rev1/legacy/matrix.c **** 
+  99               		.loc 1 78 1 view .LVU17
+ 100               	/* epilogue start */
+ 101 0000 0895      		ret
+ 102               		.cfi_endproc
+ 103               	.LFE116:
+ 105               		.set	matrix_init_user.localalias.0,matrix_init_user
+ 106               		.section	.text.matrix_init_kb,"ax",@progbits
+ 107               		.weak	matrix_init_kb
+ 109               	matrix_init_kb:
+ 110               	.LFB114:
+  67:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_init_user();
+ 111               		.loc 1 67 27 view -0
+ 112               		.cfi_startproc
+ 113               	/* prologue: function */
+ 114               	/* frame size = 0 */
+ 115               	/* stack size = 0 */
+ 116               	.L__stack_usage = 0
+  68:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 117               		.loc 1 68 5 view .LVU19
+ 118 0000 0C94 0000 		jmp matrix_init_user
+ 119               	.LVL4:
+ 120               		.cfi_endproc
+ 121               	.LFE114:
+ 123               		.section	.text.matrix_scan_user,"ax",@progbits
+ 124               		.weak	matrix_scan_user
+ 126               	matrix_scan_user:
+ 127               	.LFB141:
+ 128               		.cfi_startproc
+ 129               	/* prologue: function */
+ 130               	/* frame size = 0 */
+ 131               	/* stack size = 0 */
+ 132               	.L__stack_usage = 0
+ 133               	/* epilogue start */
+ 134 0000 0895      		ret
+ 135               		.cfi_endproc
+ 136               	.LFE141:
+ 138               		.section	.text.matrix_scan_kb,"ax",@progbits
+ 139               		.weak	matrix_scan_kb
+ 141               	matrix_scan_kb:
+ 142               	.LFB115:
+  72:keyboards/crkbd/rev1/legacy/matrix.c ****     matrix_scan_user();
+ 143               		.loc 1 72 27 view -0
+ 144               		.cfi_startproc
+ 145               	/* prologue: function */
+ 146               	/* frame size = 0 */
+ 147               	/* stack size = 0 */
+ 148               	.L__stack_usage = 0
+  73:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 149               		.loc 1 73 5 view .LVU21
+ 150 0000 0C94 0000 		jmp matrix_scan_user
+ 151               	.LVL5:
+ 152               		.cfi_endproc
+ 153               	.LFE115:
+ 155               		.section	.text.matrix_rows,"ax",@progbits
+ 156               	.global	matrix_rows
+ 158               	matrix_rows:
+ 159               	.LFB118:
+  86:keyboards/crkbd/rev1/legacy/matrix.c ****     return MATRIX_ROWS;
+ 160               		.loc 1 86 1 view -0
+ 161               		.cfi_startproc
+ 162               	/* prologue: function */
+ 163               	/* frame size = 0 */
+ 164               	/* stack size = 0 */
+ 165               	.L__stack_usage = 0
+  87:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 166               		.loc 1 87 5 view .LVU23
+  88:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 167               		.loc 1 88 1 is_stmt 0 view .LVU24
+ 168 0000 88E0      		ldi r24,lo8(8)
+ 169               	/* epilogue start */
+ 170 0002 0895      		ret
+ 171               		.cfi_endproc
+ 172               	.LFE118:
+ 174               		.section	.text.matrix_cols,"ax",@progbits
+ 175               	.global	matrix_cols
+ 177               	matrix_cols:
+ 178               	.LFB119:
+  92:keyboards/crkbd/rev1/legacy/matrix.c ****     return MATRIX_COLS;
+ 179               		.loc 1 92 1 is_stmt 1 view -0
+ 180               		.cfi_startproc
+ 181               	/* prologue: function */
+ 182               	/* frame size = 0 */
+ 183               	/* stack size = 0 */
+ 184               	.L__stack_usage = 0
+  93:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 185               		.loc 1 93 5 view .LVU26
+  94:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 186               		.loc 1 94 1 is_stmt 0 view .LVU27
+ 187 0000 86E0      		ldi r24,lo8(6)
+ 188               	/* epilogue start */
+ 189 0002 0895      		ret
+ 190               		.cfi_endproc
+ 191               	.LFE119:
+ 193               		.section	.text.tx_rx_leds_init,"ax",@progbits
+ 194               	.global	tx_rx_leds_init
+ 196               	tx_rx_leds_init:
+ 197               	.LFB120:
+  97:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 198               		.loc 1 97 1 is_stmt 1 view -0
+ 199               		.cfi_startproc
+ 200               	/* prologue: function */
+ 201               	/* frame size = 0 */
+ 202               	/* stack size = 0 */
+ 203               	.L__stack_usage = 0
+  99:keyboards/crkbd/rev1/legacy/matrix.c ****     setPinOutput(D5);
+ 204               		.loc 1 99 5 view .LVU29
+ 205 0000 209A      		sbi 0x4,0
+ 100:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinHigh(B0);
+ 206               		.loc 1 100 5 view .LVU30
+ 207 0002 559A      		sbi 0xa,5
+ 101:keyboards/crkbd/rev1/legacy/matrix.c ****     writePinHigh(D5);
+ 208               		.loc 1 101 5 view .LVU31
+ 209 0004 289A      		sbi 0x5,0
+ 102:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 210               		.loc 1 102 5 view .LVU32
+ 211 0006 5D9A      		sbi 0xb,5
+ 212               	/* epilogue start */
+ 104:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 213               		.loc 1 104 1 is_stmt 0 view .LVU33
+ 214 0008 0895      		ret
+ 215               		.cfi_endproc
+ 216               	.LFE120:
+ 218               		.section	.text.tx_led_on,"ax",@progbits
+ 219               	.global	tx_led_on
+ 221               	tx_led_on:
+ 222               	.LFB121:
+ 107:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 223               		.loc 1 107 1 is_stmt 1 view -0
+ 224               		.cfi_startproc
+ 225               	/* prologue: function */
+ 226               	/* frame size = 0 */
+ 227               	/* stack size = 0 */
+ 228               	.L__stack_usage = 0
+ 109:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 229               		.loc 1 109 5 view .LVU35
+ 230 0000 5D98      		cbi 0xb,5
+ 231               	/* epilogue start */
+ 111:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 232               		.loc 1 111 1 is_stmt 0 view .LVU36
+ 233 0002 0895      		ret
+ 234               		.cfi_endproc
+ 235               	.LFE121:
+ 237               		.section	.text.tx_led_off,"ax",@progbits
+ 238               	.global	tx_led_off
+ 240               	tx_led_off:
+ 241               	.LFB122:
+ 114:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 242               		.loc 1 114 1 is_stmt 1 view -0
+ 243               		.cfi_startproc
+ 244               	/* prologue: function */
+ 245               	/* frame size = 0 */
+ 246               	/* stack size = 0 */
+ 247               	.L__stack_usage = 0
+ 116:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 248               		.loc 1 116 5 view .LVU38
+ 249 0000 5D9A      		sbi 0xb,5
+ 250               	/* epilogue start */
+ 118:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 251               		.loc 1 118 1 is_stmt 0 view .LVU39
+ 252 0002 0895      		ret
+ 253               		.cfi_endproc
+ 254               	.LFE122:
+ 256               		.section	.text.rx_led_on,"ax",@progbits
+ 257               	.global	rx_led_on
+ 259               	rx_led_on:
+ 260               	.LFB123:
+ 121:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 261               		.loc 1 121 1 is_stmt 1 view -0
+ 262               		.cfi_startproc
+ 263               	/* prologue: function */
+ 264               	/* frame size = 0 */
+ 265               	/* stack size = 0 */
+ 266               	.L__stack_usage = 0
+ 123:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 267               		.loc 1 123 5 view .LVU41
+ 268 0000 2898      		cbi 0x5,0
+ 269               	/* epilogue start */
+ 125:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 270               		.loc 1 125 1 is_stmt 0 view .LVU42
+ 271 0002 0895      		ret
+ 272               		.cfi_endproc
+ 273               	.LFE123:
+ 275               		.section	.text.rx_led_off,"ax",@progbits
+ 276               	.global	rx_led_off
+ 278               	rx_led_off:
+ 279               	.LFB124:
+ 128:keyboards/crkbd/rev1/legacy/matrix.c **** #ifndef NO_DEBUG_LEDS
+ 280               		.loc 1 128 1 is_stmt 1 view -0
+ 281               		.cfi_startproc
+ 282               	/* prologue: function */
+ 283               	/* frame size = 0 */
+ 284               	/* stack size = 0 */
+ 285               	.L__stack_usage = 0
+ 130:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 286               		.loc 1 130 5 view .LVU44
+ 287 0000 289A      		sbi 0x5,0
+ 288               	/* epilogue start */
+ 132:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 289               		.loc 1 132 1 is_stmt 0 view .LVU45
+ 290 0002 0895      		ret
+ 291               		.cfi_endproc
+ 292               	.LFE124:
+ 294               		.section	.text.matrix_init,"ax",@progbits
+ 295               	.global	matrix_init
+ 297               	matrix_init:
+ 298               	.LFB125:
+ 136:keyboards/crkbd/rev1/legacy/matrix.c ****     split_keyboard_setup();
+ 299               		.loc 1 136 1 is_stmt 1 view -0
+ 300               		.cfi_startproc
+ 301               	/* prologue: function */
+ 302               	/* frame size = 0 */
+ 303               	/* stack size = 0 */
+ 304               	.L__stack_usage = 0
+ 137:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 305               		.loc 1 137 5 view .LVU47
+ 306 0000 0E94 0000 		call split_keyboard_setup
+ 307               	.LVL6:
+ 140:keyboards/crkbd/rev1/legacy/matrix.c ****     init_cols();
+ 308               		.loc 1 140 5 view .LVU48
+ 309 0004 0E94 0000 		call unselect_rows
+ 310               	.LVL7:
+ 141:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 311               		.loc 1 141 5 view .LVU49
+ 312               	.LBB14:
+ 313               	.LBI14:
+ 368:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 314               		.loc 1 368 14 view .LVU50
+ 315               	.LBE14:
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 316               		.loc 1 370 5 view .LVU51
+ 317               	.LBB16:
+ 318               	.LBB15:
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 319               		.loc 1 370 9 view .LVU52
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 320               		.loc 1 370 20 view .LVU53
+ 321 0008 A0E0      		ldi r26,lo8(col_pins)
+ 322 000a B0E0      		ldi r27,hi8(col_pins)
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 323               		.loc 1 371 47 is_stmt 0 view .LVU54
+ 324 000c 61E0      		ldi r22,lo8(1)
+ 325 000e 70E0      		ldi r23,0
+ 326               	.LVL8:
+ 327               	.L16:
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 328               		.loc 1 371 9 is_stmt 1 view .LVU55
+ 329 0010 8D91      		ld r24,X+
+ 330               	.LVL9:
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 331               		.loc 1 371 9 is_stmt 0 view .LVU56
+ 332 0012 E82F      		mov r30,r24
+ 333 0014 E295      		swap r30
+ 334 0016 EF70      		andi r30,lo8(15)
+ 335 0018 F0E0      		ldi r31,0
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 336               		.loc 1 371 42 view .LVU57
+ 337 001a 41A1      		ldd r20,Z+33
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 338               		.loc 1 371 47 view .LVU58
+ 339 001c 8F70      		andi r24,lo8(15)
+ 340 001e 9B01      		movw r18,r22
+ 341 0020 00C0      		rjmp 2f
+ 342               		1:
+ 343 0022 220F      		lsl r18
+ 344               		2:
+ 345 0024 8A95      		dec r24
+ 346 0026 02F4      		brpl 1b
+ 371:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 2) |= _BV(col_pins[x] & 0xF);
+ 347               		.loc 1 371 42 view .LVU59
+ 348 0028 922F      		mov r25,r18
+ 349 002a 9095      		com r25
+ 350 002c 9423      		and r25,r20
+ 351 002e 91A3      		std Z+33,r25
+ 372:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 352               		.loc 1 372 9 is_stmt 1 view .LVU60
+ 372:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 353               		.loc 1 372 42 is_stmt 0 view .LVU61
+ 354 0030 82A1      		ldd r24,Z+34
+ 355 0032 822B      		or r24,r18
+ 356 0034 82A3      		std Z+34,r24
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 357               		.loc 1 370 37 is_stmt 1 view .LVU62
+ 358               	.LVL10:
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 359               		.loc 1 370 20 view .LVU63
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 360               		.loc 1 370 5 is_stmt 0 view .LVU64
+ 361 0036 80E0      		ldi r24,hi8(col_pins+6)
+ 362 0038 A030      		cpi r26,lo8(col_pins+6)
+ 363 003a B807      		cpc r27,r24
+ 364 003c 01F4      		brne .L16
+ 365               	.LVL11:
+ 370:keyboards/crkbd/rev1/legacy/matrix.c ****         _SFR_IO8((col_pins[x] >> 4) + 1) &=  ~_BV(col_pins[x] & 0xF);
+ 366               		.loc 1 370 5 view .LVU65
+ 367               	.LBE15:
+ 368               	.LBE16:
+ 143:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 369               		.loc 1 143 5 is_stmt 1 view .LVU66
+ 370 003e 0E94 0000 		call tx_rx_leds_init
+ 371               	.LVL12:
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 372               		.loc 1 146 5 view .LVU67
+ 373               	.LBB17:
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 374               		.loc 1 146 10 view .LVU68
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 375               		.loc 1 146 23 view .LVU69
+ 376 0042 E0E0      		ldi r30,lo8(matrix)
+ 377 0044 F0E0      		ldi r31,hi8(matrix)
+ 378 0046 A0E0      		ldi r26,lo8(matrix_debouncing)
+ 379 0048 B0E0      		ldi r27,hi8(matrix_debouncing)
+ 380               	.LVL13:
+ 381               	.L17:
+ 147:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix_debouncing[i] = 0;
+ 382               		.loc 1 147 9 discriminator 3 view .LVU70
+ 147:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix_debouncing[i] = 0;
+ 383               		.loc 1 147 19 is_stmt 0 discriminator 3 view .LVU71
+ 384 004a 1192      		st Z+,__zero_reg__
+ 385               	.LVL14:
+ 148:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 386               		.loc 1 148 9 is_stmt 1 discriminator 3 view .LVU72
+ 148:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 387               		.loc 1 148 30 is_stmt 0 discriminator 3 view .LVU73
+ 388 004c 1D92      		st X+,__zero_reg__
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 389               		.loc 1 146 40 is_stmt 1 discriminator 3 view .LVU74
+ 390               	.LVL15:
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 391               		.loc 1 146 23 discriminator 3 view .LVU75
+ 146:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix[i] = 0;
+ 392               		.loc 1 146 5 is_stmt 0 discriminator 3 view .LVU76
+ 393 004e 80E0      		ldi r24,hi8(matrix+8)
+ 394 0050 E030      		cpi r30,lo8(matrix+8)
+ 395 0052 F807      		cpc r31,r24
+ 396 0054 01F4      		brne .L17
+ 397               	.LBE17:
+ 151:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 398               		.loc 1 151 5 is_stmt 1 view .LVU77
+ 151:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 399               		.loc 1 151 17 is_stmt 0 view .LVU78
+ 400 0056 0E94 0000 		call has_usb
+ 401               	.LVL16:
+ 151:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 402               		.loc 1 151 15 view .LVU79
+ 403 005a 8093 0000 		sts is_master,r24
+ 153:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 404               		.loc 1 153 5 is_stmt 1 view .LVU80
+ 405 005e 0C94 0000 		jmp matrix_init_quantum
+ 406               	.LVL17:
+ 407               		.cfi_endproc
+ 408               	.LFE125:
+ 410               		.section	.text._matrix_scan,"ax",@progbits
+ 411               	.global	_matrix_scan
+ 413               	_matrix_scan:
+ 414               	.LFB126:
+ 157:keyboards/crkbd/rev1/legacy/matrix.c ****     bool changed = false;
+ 415               		.loc 1 157 1 view -0
+ 416               		.cfi_startproc
+ 417 0000 8F92      		push r8
+ 418               	.LCFI2:
+ 419               		.cfi_def_cfa_offset 3
+ 420               		.cfi_offset 8, -2
+ 421 0002 9F92      		push r9
+ 422               	.LCFI3:
+ 423               		.cfi_def_cfa_offset 4
+ 424               		.cfi_offset 9, -3
+ 425 0004 AF92      		push r10
+ 426               	.LCFI4:
+ 427               		.cfi_def_cfa_offset 5
+ 428               		.cfi_offset 10, -4
+ 429 0006 BF92      		push r11
+ 430               	.LCFI5:
+ 431               		.cfi_def_cfa_offset 6
+ 432               		.cfi_offset 11, -5
+ 433 0008 CF92      		push r12
+ 434               	.LCFI6:
+ 435               		.cfi_def_cfa_offset 7
+ 436               		.cfi_offset 12, -6
+ 437 000a DF92      		push r13
+ 438               	.LCFI7:
+ 439               		.cfi_def_cfa_offset 8
+ 440               		.cfi_offset 13, -7
+ 441 000c EF92      		push r14
+ 442               	.LCFI8:
+ 443               		.cfi_def_cfa_offset 9
+ 444               		.cfi_offset 14, -8
+ 445 000e FF92      		push r15
+ 446               	.LCFI9:
+ 447               		.cfi_def_cfa_offset 10
+ 448               		.cfi_offset 15, -9
+ 449 0010 0F93      		push r16
+ 450               	.LCFI10:
+ 451               		.cfi_def_cfa_offset 11
+ 452               		.cfi_offset 16, -10
+ 453 0012 1F93      		push r17
+ 454               	.LCFI11:
+ 455               		.cfi_def_cfa_offset 12
+ 456               		.cfi_offset 17, -11
+ 457 0014 CF93      		push r28
+ 458               	.LCFI12:
+ 459               		.cfi_def_cfa_offset 13
+ 460               		.cfi_offset 28, -12
+ 461 0016 DF93      		push r29
+ 462               	.LCFI13:
+ 463               		.cfi_def_cfa_offset 14
+ 464               		.cfi_offset 29, -13
+ 465               	/* prologue: function */
+ 466               	/* frame size = 0 */
+ 467               	/* stack size = 12 */
+ 468               	.L__stack_usage = 12
+ 158:keyboards/crkbd/rev1/legacy/matrix.c ****     // Right hand is stored after the left in the matirx so, we need to offset it
+ 469               		.loc 1 158 5 view .LVU82
+ 470               	.LVL18:
+ 160:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 471               		.loc 1 160 5 view .LVU83
+ 160:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 472               		.loc 1 160 29 is_stmt 0 view .LVU84
+ 473 0018 8091 0000 		lds r24,isLeftHand
+ 160:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 474               		.loc 1 160 33 view .LVU85
+ 475 001c C4E0      		ldi r28,lo8(4)
+ 476 001e D0E0      		ldi r29,0
+ 477 0020 8823      		tst r24
+ 478 0022 01F0      		breq .L21
+ 479 0024 D0E0      		ldi r29,0
+ 480 0026 C0E0      		ldi r28,0
+ 481               	.L21:
+ 482               	.LVL19:
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 483               		.loc 1 162 5 is_stmt 1 discriminator 4 view .LVU86
+ 484               	.LBB30:
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 485               		.loc 1 162 10 discriminator 4 view .LVU87
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 486               		.loc 1 162 25 discriminator 4 view .LVU88
+ 487 0028 80E0      		ldi r24,lo8(row_pins)
+ 488 002a C82E      		mov r12,r24
+ 489 002c 80E0      		ldi r24,hi8(row_pins)
+ 490 002e D82E      		mov r13,r24
+ 491 0030 AE01      		movw r20,r28
+ 492 0032 4050      		subi r20,lo8(-(matrix_debouncing))
+ 493 0034 5040      		sbci r21,hi8(-(matrix_debouncing))
+ 494 0036 7A01      		movw r14,r20
+ 495               	.LBE30:
+ 160:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 496               		.loc 1 160 33 is_stmt 0 discriminator 4 view .LVU89
+ 497 0038 8A01      		movw r16,r20
+ 158:keyboards/crkbd/rev1/legacy/matrix.c ****     // Right hand is stored after the left in the matirx so, we need to offset it
+ 498               		.loc 1 158 10 discriminator 4 view .LVU90
+ 499 003a 912C      		mov r9,__zero_reg__
+ 500               	.LBB46:
+ 501               	.LBB31:
+ 502               	.LBB32:
+ 503               	.LBB33:
+ 392:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 393:keyboards/crkbd/rev1/legacy/matrix.c **** static void select_row(uint8_t row)
+ 394:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 395:keyboards/crkbd/rev1/legacy/matrix.c ****     _SFR_IO8((row_pins[row] >> 4) + 1) |=  _BV(row_pins[row] & 0xF);
+ 504               		.loc 1 395 44 discriminator 4 view .LVU91
+ 505 003c AA24      		clr r10
+ 506 003e A394      		inc r10
+ 507 0040 B12C      		mov r11,__zero_reg__
+ 508               	.LBE33:
+ 509               	.LBE32:
+ 169:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 510               		.loc 1 169 24 discriminator 4 view .LVU92
+ 511 0042 25E0      		ldi r18,lo8(5)
+ 512 0044 822E      		mov r8,r18
+ 513               	.LVL20:
+ 514               	.L25:
+ 163:keyboards/crkbd/rev1/legacy/matrix.c ****         _delay_us(30);  // without this wait read unstable value.
+ 515               		.loc 1 163 9 is_stmt 1 view .LVU93
+ 516               	.LBB35:
+ 517               	.LBI32:
+ 393:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 518               		.loc 1 393 13 view .LVU94
+ 519               	.LBB34:
+ 520               		.loc 1 395 5 view .LVU95
+ 521 0046 F601      		movw r30,r12
+ 522 0048 8191      		ld r24,Z+
+ 523 004a 6F01      		movw r12,r30
+ 524               	.LVL21:
+ 525               		.loc 1 395 5 is_stmt 0 view .LVU96
+ 526 004c E82F      		mov r30,r24
+ 527 004e E295      		swap r30
+ 528 0050 EF70      		andi r30,lo8(15)
+ 529 0052 F0E0      		ldi r31,0
+ 530               		.loc 1 395 40 view .LVU97
+ 531 0054 21A1      		ldd r18,Z+33
+ 532               		.loc 1 395 44 view .LVU98
+ 533 0056 8F70      		andi r24,lo8(15)
+ 534 0058 A501      		movw r20,r10
+ 535 005a 00C0      		rjmp 2f
+ 536               		1:
+ 537 005c 440F      		lsl r20
+ 538 005e 551F      		rol r21
+ 539               		2:
+ 540 0060 8A95      		dec r24
+ 541 0062 02F4      		brpl 1b
+ 542 0064 CA01      		movw r24,r20
+ 543               		.loc 1 395 40 view .LVU99
+ 544 0066 922F      		mov r25,r18
+ 545 0068 982B      		or r25,r24
+ 546 006a 91A3      		std Z+33,r25
+ 396:keyboards/crkbd/rev1/legacy/matrix.c ****     _SFR_IO8((row_pins[row] >> 4) + 2) &= ~_BV(row_pins[row] & 0xF);
+ 547               		.loc 1 396 5 is_stmt 1 view .LVU100
+ 548               		.loc 1 396 40 is_stmt 0 view .LVU101
+ 549 006c 92A1      		ldd r25,Z+34
+ 550 006e 8095      		com r24
+ 551 0070 8923      		and r24,r25
+ 552 0072 82A3      		std Z+34,r24
+ 553               	.LVL22:
+ 554               		.loc 1 396 40 view .LVU102
+ 555               	.LBE34:
+ 556               	.LBE35:
+ 164:keyboards/crkbd/rev1/legacy/matrix.c ****         matrix_row_t cols = read_cols();
+ 557               		.loc 1 164 9 is_stmt 1 view .LVU103
+ 558               	.LBB36:
+ 559               	.LBI36:
+ 560               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\util\\delay.h"
+   1:c:\msys64\mingw64\avr\include\util\delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:c:\msys64\mingw64\avr\include\util\delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:c:\msys64\mingw64\avr\include\util\delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:c:\msys64\mingw64\avr\include\util\delay.h ****    All rights reserved.
+   5:c:\msys64\mingw64\avr\include\util\delay.h **** 
+   6:c:\msys64\mingw64\avr\include\util\delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:c:\msys64\mingw64\avr\include\util\delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:c:\msys64\mingw64\avr\include\util\delay.h **** 
+   9:c:\msys64\mingw64\avr\include\util\delay.h ****    * Redistributions of source code must retain the above copyright
+  10:c:\msys64\mingw64\avr\include\util\delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  12:c:\msys64\mingw64\avr\include\util\delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:c:\msys64\mingw64\avr\include\util\delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:c:\msys64\mingw64\avr\include\util\delay.h ****      the documentation and/or other materials provided with the
+  15:c:\msys64\mingw64\avr\include\util\delay.h ****      distribution.
+  16:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  17:c:\msys64\mingw64\avr\include\util\delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:c:\msys64\mingw64\avr\include\util\delay.h ****      contributors may be used to endorse or promote products derived
+  19:c:\msys64\mingw64\avr\include\util\delay.h ****      from this software without specific prior written permission.
+  20:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  21:c:\msys64\mingw64\avr\include\util\delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:c:\msys64\mingw64\avr\include\util\delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:c:\msys64\mingw64\avr\include\util\delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:c:\msys64\mingw64\avr\include\util\delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:c:\msys64\mingw64\avr\include\util\delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:c:\msys64\mingw64\avr\include\util\delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:c:\msys64\mingw64\avr\include\util\delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:c:\msys64\mingw64\avr\include\util\delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:c:\msys64\mingw64\avr\include\util\delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:c:\msys64\mingw64\avr\include\util\delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:c:\msys64\mingw64\avr\include\util\delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  33:c:\msys64\mingw64\avr\include\util\delay.h **** /* $Id: delay.h.in 2506 2016-02-08 10:05:45Z joerg_wunsch $ */
+  34:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  35:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef _UTIL_DELAY_H_
+  36:c:\msys64\mingw64\avr\include\util\delay.h **** #define _UTIL_DELAY_H_ 1
+  37:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  38:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef __DOXYGEN__
+  39:c:\msys64\mingw64\avr\include\util\delay.h **** #  ifndef __HAS_DELAY_CYCLES
+  40:c:\msys64\mingw64\avr\include\util\delay.h **** #    define __HAS_DELAY_CYCLES 1
+  41:c:\msys64\mingw64\avr\include\util\delay.h **** #  endif
+  42:c:\msys64\mingw64\avr\include\util\delay.h **** #endif  /* __DOXYGEN__ */
+  43:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  44:c:\msys64\mingw64\avr\include\util\delay.h **** #include <inttypes.h>
+  45:c:\msys64\mingw64\avr\include\util\delay.h **** #include <util/delay_basic.h>
+  46:c:\msys64\mingw64\avr\include\util\delay.h **** #include <math.h>
+  47:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  48:c:\msys64\mingw64\avr\include\util\delay.h **** /** \file */
+  49:c:\msys64\mingw64\avr\include\util\delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  50:c:\msys64\mingw64\avr\include\util\delay.h ****     \code
+  51:c:\msys64\mingw64\avr\include\util\delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  52:c:\msys64\mingw64\avr\include\util\delay.h ****     //#define F_CPU 14.7456E6
+  53:c:\msys64\mingw64\avr\include\util\delay.h ****     #include <util/delay.h>
+  54:c:\msys64\mingw64\avr\include\util\delay.h ****     \endcode
+  55:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  56:c:\msys64\mingw64\avr\include\util\delay.h ****     \note As an alternative method, it is possible to pass the
+  57:c:\msys64\mingw64\avr\include\util\delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  58:c:\msys64\mingw64\avr\include\util\delay.h ****     Obviously, in that case, no \c \#define statement should be
+  59:c:\msys64\mingw64\avr\include\util\delay.h ****     used.
+  60:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  61:c:\msys64\mingw64\avr\include\util\delay.h ****     The functions in this header file are wrappers around the basic
+  62:c:\msys64\mingw64\avr\include\util\delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  63:c:\msys64\mingw64\avr\include\util\delay.h ****     convenience functions where actual time values can be specified
+  64:c:\msys64\mingw64\avr\include\util\delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  65:c:\msys64\mingw64\avr\include\util\delay.h ****     that compile-time constant expressions will be eliminated by
+  66:c:\msys64\mingw64\avr\include\util\delay.h ****     compiler optimization so floating-point expressions can be used
+  67:c:\msys64\mingw64\avr\include\util\delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  68:c:\msys64\mingw64\avr\include\util\delay.h ****     frequency passed by the macro F_CPU.
+  69:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  70:c:\msys64\mingw64\avr\include\util\delay.h ****     \note In order for these functions to work as intended, compiler
+  71:c:\msys64\mingw64\avr\include\util\delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  72:c:\msys64\mingw64\avr\include\util\delay.h ****     <em>must</em> be an expression that is a known constant at
+  73:c:\msys64\mingw64\avr\include\util\delay.h ****     compile-time.  If these requirements are not met, the resulting
+  74:c:\msys64\mingw64\avr\include\util\delay.h ****     delay will be much longer (and basically unpredictable), and
+  75:c:\msys64\mingw64\avr\include\util\delay.h ****     applications that otherwise do not use floating-point calculations
+  76:c:\msys64\mingw64\avr\include\util\delay.h ****     will experience severe code bloat by the floating-point library
+  77:c:\msys64\mingw64\avr\include\util\delay.h ****     routines linked into the application.
+  78:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  79:c:\msys64\mingw64\avr\include\util\delay.h ****     The functions available allow the specification of microsecond, and
+  80:c:\msys64\mingw64\avr\include\util\delay.h ****     millisecond delays directly, using the application-supplied macro
+  81:c:\msys64\mingw64\avr\include\util\delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  82:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  83:c:\msys64\mingw64\avr\include\util\delay.h **** */
+  84:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  85:c:\msys64\mingw64\avr\include\util\delay.h **** #if !defined(__DOXYGEN__)
+  86:c:\msys64\mingw64\avr\include\util\delay.h **** static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+  87:c:\msys64\mingw64\avr\include\util\delay.h **** static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+  88:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+  89:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  90:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef F_CPU
+  91:c:\msys64\mingw64\avr\include\util\delay.h **** /* prevent compiler error by supplying a default */
+  92:c:\msys64\mingw64\avr\include\util\delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  93:c:\msys64\mingw64\avr\include\util\delay.h **** /** \ingroup util_delay
+  94:c:\msys64\mingw64\avr\include\util\delay.h ****     \def F_CPU
+  95:c:\msys64\mingw64\avr\include\util\delay.h ****     \brief CPU frequency in Hz
+  96:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  97:c:\msys64\mingw64\avr\include\util\delay.h ****     The macro F_CPU specifies the CPU frequency to be considered by
+  98:c:\msys64\mingw64\avr\include\util\delay.h ****     the delay macros.  This macro is normally supplied by the
+  99:c:\msys64\mingw64\avr\include\util\delay.h ****     environment (e.g. from within a project header, or the project's
+ 100:c:\msys64\mingw64\avr\include\util\delay.h ****     Makefile).  The value 1 MHz here is only provided as a "vanilla"
+ 101:c:\msys64\mingw64\avr\include\util\delay.h ****     fallback if no such user-provided definition could be found.
+ 102:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 103:c:\msys64\mingw64\avr\include\util\delay.h ****     In terms of the delay functions, the CPU frequency can be given as
+ 104:c:\msys64\mingw64\avr\include\util\delay.h ****     a floating-point constant (e.g. 3.6864E6 for 3.6864 MHz).
+ 105:c:\msys64\mingw64\avr\include\util\delay.h ****     However, the macros in <util/setbaud.h> require it to be an
+ 106:c:\msys64\mingw64\avr\include\util\delay.h ****     integer value.
+ 107:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 108:c:\msys64\mingw64\avr\include\util\delay.h **** # define F_CPU 1000000UL
+ 109:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 110:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 111:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef __OPTIMIZE__
+ 112:c:\msys64\mingw64\avr\include\util\delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+ 113:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 114:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 115:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 116:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 117:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 118:c:\msys64\mingw64\avr\include\util\delay.h **** #  include <math.h>
+ 119:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 120:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 121:c:\msys64\mingw64\avr\include\util\delay.h **** /**
+ 122:c:\msys64\mingw64\avr\include\util\delay.h ****    \ingroup util_delay
+ 123:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 124:c:\msys64\mingw64\avr\include\util\delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 125:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 126:c:\msys64\mingw64\avr\include\util\delay.h ****    The macro F_CPU is supposed to be defined to a
+ 127:c:\msys64\mingw64\avr\include\util\delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 128:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 129:c:\msys64\mingw64\avr\include\util\delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 130:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 131:c:\msys64\mingw64\avr\include\util\delay.h ****    When the user request delay which exceed the maximum possible one,
+ 132:c:\msys64\mingw64\avr\include\util\delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 133:c:\msys64\mingw64\avr\include\util\delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 134:c:\msys64\mingw64\avr\include\util\delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 135:c:\msys64\mingw64\avr\include\util\delay.h ****    user will not be informed about decreased resolution.
+ 136:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 137:c:\msys64\mingw64\avr\include\util\delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 138:c:\msys64\mingw64\avr\include\util\delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 139:c:\msys64\mingw64\avr\include\util\delay.h ****    values greater than the maximal possible delay, overflows results in
+ 140:c:\msys64\mingw64\avr\include\util\delay.h ****    no delay i.e., 0ms.
+ 141:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 142:c:\msys64\mingw64\avr\include\util\delay.h ****    Conversion of \c __ms into clock cycles may not always result in
+ 143:c:\msys64\mingw64\avr\include\util\delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 144:c:\msys64\mingw64\avr\include\util\delay.h ****    integer. This ensures that the user gets at least \c __ms
+ 145:c:\msys64\mingw64\avr\include\util\delay.h ****    microseconds of delay.
+ 146:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 147:c:\msys64\mingw64\avr\include\util\delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 148:c:\msys64\mingw64\avr\include\util\delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 149:c:\msys64\mingw64\avr\include\util\delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 150:c:\msys64\mingw64\avr\include\util\delay.h ****    respectively.
+ 151:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 152:c:\msys64\mingw64\avr\include\util\delay.h ****    \note
+ 153:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 154:c:\msys64\mingw64\avr\include\util\delay.h ****    The implementation of _delay_ms() based on
+ 155:c:\msys64\mingw64\avr\include\util\delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 156:c:\msys64\mingw64\avr\include\util\delay.h ****    implementations.  In order to get functionality backward compatible
+ 157:c:\msys64\mingw64\avr\include\util\delay.h ****    with previous versions, the macro \c "__DELAY_BACKWARD_COMPATIBLE__"
+ 158:c:\msys64\mingw64\avr\include\util\delay.h ****    must be defined before including this header file. Also, the
+ 159:c:\msys64\mingw64\avr\include\util\delay.h ****    backward compatible algorithm will be chosen if the code is
+ 160:c:\msys64\mingw64\avr\include\util\delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 161:c:\msys64\mingw64\avr\include\util\delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 162:c:\msys64\mingw64\avr\include\util\delay.h ****    not available to the compiler then.
+ 163:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 164:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 165:c:\msys64\mingw64\avr\include\util\delay.h **** void
+ 166:c:\msys64\mingw64\avr\include\util\delay.h **** _delay_ms(double __ms)
+ 167:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 168:c:\msys64\mingw64\avr\include\util\delay.h **** 	double __tmp ;
+ 169:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 170:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 171:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 172:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint32_t __ticks_dc;
+ 173:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 174:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 175:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 176:c:\msys64\mingw64\avr\include\util\delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 177:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 178:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 179:c:\msys64\mingw64\avr\include\util\delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 180:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 181:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 182:c:\msys64\mingw64\avr\include\util\delay.h **** 	#else
+ 183:c:\msys64\mingw64\avr\include\util\delay.h **** 		//round up by default
+ 184:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 185:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 186:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 187:c:\msys64\mingw64\avr\include\util\delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 188:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 189:c:\msys64\mingw64\avr\include\util\delay.h **** #else
+ 190:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint16_t __ticks;
+ 191:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 4e3) * __ms;
+ 192:c:\msys64\mingw64\avr\include\util\delay.h **** 	if (__tmp < 1.0)
+ 193:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = 1;
+ 194:c:\msys64\mingw64\avr\include\util\delay.h **** 	else if (__tmp > 65535)
+ 195:c:\msys64\mingw64\avr\include\util\delay.h **** 	{
+ 196:c:\msys64\mingw64\avr\include\util\delay.h **** 		//	__ticks = requested delay in 1/10 ms
+ 197:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = (uint16_t) (__ms * 10.0);
+ 198:c:\msys64\mingw64\avr\include\util\delay.h **** 		while(__ticks)
+ 199:c:\msys64\mingw64\avr\include\util\delay.h **** 		{
+ 200:c:\msys64\mingw64\avr\include\util\delay.h **** 			// wait 1/10 ms
+ 201:c:\msys64\mingw64\avr\include\util\delay.h **** 			_delay_loop_2(((F_CPU) / 4e3) / 10);
+ 202:c:\msys64\mingw64\avr\include\util\delay.h **** 			__ticks --;
+ 203:c:\msys64\mingw64\avr\include\util\delay.h **** 		}
+ 204:c:\msys64\mingw64\avr\include\util\delay.h **** 		return;
+ 205:c:\msys64\mingw64\avr\include\util\delay.h **** 	}
+ 206:c:\msys64\mingw64\avr\include\util\delay.h **** 	else
+ 207:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = (uint16_t)__tmp;
+ 208:c:\msys64\mingw64\avr\include\util\delay.h **** 	_delay_loop_2(__ticks);
+ 209:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 210:c:\msys64\mingw64\avr\include\util\delay.h **** }
+ 211:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 212:c:\msys64\mingw64\avr\include\util\delay.h **** /**
+ 213:c:\msys64\mingw64\avr\include\util\delay.h ****    \ingroup util_delay
+ 214:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 215:c:\msys64\mingw64\avr\include\util\delay.h ****    Perform a delay of \c __us microseconds, using _delay_loop_1().
+ 216:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 217:c:\msys64\mingw64\avr\include\util\delay.h ****    The macro F_CPU is supposed to be defined to a
+ 218:c:\msys64\mingw64\avr\include\util\delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 219:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 220:c:\msys64\mingw64\avr\include\util\delay.h ****    The maximal possible delay is 768 us / F_CPU in MHz.
+ 221:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 222:c:\msys64\mingw64\avr\include\util\delay.h ****    If the user requests a delay greater than the maximal possible one,
+ 223:c:\msys64\mingw64\avr\include\util\delay.h ****    _delay_us() will automatically call _delay_ms() instead.  The user
+ 224:c:\msys64\mingw64\avr\include\util\delay.h ****    will not be informed about this case.
+ 225:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 226:c:\msys64\mingw64\avr\include\util\delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 227:c:\msys64\mingw64\avr\include\util\delay.h ****    support, maximal possible delay is 4294967.295 us/ F_CPU in MHz. For
+ 228:c:\msys64\mingw64\avr\include\util\delay.h ****    values greater than the maximal possible delay, overflow results in
+ 229:c:\msys64\mingw64\avr\include\util\delay.h ****    no delay i.e., 0us.
+ 230:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 231:c:\msys64\mingw64\avr\include\util\delay.h ****    Conversion of \c __us into clock cycles may not always result in
+ 232:c:\msys64\mingw64\avr\include\util\delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 233:c:\msys64\mingw64\avr\include\util\delay.h ****    integer. This ensures that the user gets at least \c __us
+ 234:c:\msys64\mingw64\avr\include\util\delay.h ****    microseconds of delay.
+ 235:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 236:c:\msys64\mingw64\avr\include\util\delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 237:c:\msys64\mingw64\avr\include\util\delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 238:c:\msys64\mingw64\avr\include\util\delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 239:c:\msys64\mingw64\avr\include\util\delay.h ****    respectively.
+ 240:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 241:c:\msys64\mingw64\avr\include\util\delay.h ****    \note
+ 242:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 243:c:\msys64\mingw64\avr\include\util\delay.h ****    The implementation of _delay_ms() based on
+ 244:c:\msys64\mingw64\avr\include\util\delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 245:c:\msys64\mingw64\avr\include\util\delay.h ****    implementations.  In order to get functionality backward compatible
+ 246:c:\msys64\mingw64\avr\include\util\delay.h ****    with previous versions, the macro \c __DELAY_BACKWARD_COMPATIBLE__
+ 247:c:\msys64\mingw64\avr\include\util\delay.h ****    must be defined before including this header file. Also, the
+ 248:c:\msys64\mingw64\avr\include\util\delay.h ****    backward compatible algorithm will be chosen if the code is
+ 249:c:\msys64\mingw64\avr\include\util\delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 250:c:\msys64\mingw64\avr\include\util\delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 251:c:\msys64\mingw64\avr\include\util\delay.h ****    not available to the compiler then.
+ 252:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 253:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 254:c:\msys64\mingw64\avr\include\util\delay.h **** void
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** _delay_us(double __us)
+ 561               		.loc 2 255 1 view .LVU104
+ 562               	.LBB37:
+ 256:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** 	double __tmp ;
+ 563               		.loc 2 257 2 view .LVU105
+ 258:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 259:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 260:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint32_t __ticks_dc;
+ 564               		.loc 2 261 2 view .LVU106
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 565               		.loc 2 262 2 view .LVU107
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 566               		.loc 2 263 2 view .LVU108
+ 264:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 265:c:\msys64\mingw64\avr\include\util\delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 266:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 267:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 268:c:\msys64\mingw64\avr\include\util\delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 269:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 270:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 271:c:\msys64\mingw64\avr\include\util\delay.h **** 	#else
+ 272:c:\msys64\mingw64\avr\include\util\delay.h **** 		//round up by default
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 567               		.loc 2 273 3 view .LVU109
+ 274:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 275:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 276:c:\msys64\mingw64\avr\include\util\delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 568               		.loc 2 276 2 view .LVU110
+ 569 0074 50EA      		ldi r21,lo8(-96)
+ 570 0076 5A95      	1:	dec r21
+ 571 0078 01F4      		brne 1b
+ 572               	.LVL23:
+ 573               		.loc 2 276 2 is_stmt 0 view .LVU111
+ 574               	.LBE37:
+ 575               	.LBE36:
+ 165:keyboards/crkbd/rev1/legacy/matrix.c ****         if (matrix_debouncing[i+offset] != cols) {
+ 576               		.loc 1 165 9 is_stmt 1 view .LVU112
+ 577               	.LBB38:
+ 578               	.LBI38:
+ 376:keyboards/crkbd/rev1/legacy/matrix.c **** {
+ 579               		.loc 1 376 21 view .LVU113
+ 580               	.LBB39:
+ 581               	.LBB40:
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 582               		.loc 1 379 20 view .LVU114
+ 583 007a E0E0      		ldi r30,lo8(col_pins)
+ 584 007c F0E0      		ldi r31,hi8(col_pins)
+ 585               	.LBE40:
+ 378:keyboards/crkbd/rev1/legacy/matrix.c ****     for(int x = 0; x < MATRIX_COLS; x++) {
+ 586               		.loc 1 378 18 is_stmt 0 view .LVU115
+ 587 007e 20E0      		ldi r18,0
+ 588               	.LBB41:
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 589               		.loc 1 379 13 view .LVU116
+ 590 0080 50E0      		ldi r21,0
+ 591 0082 40E0      		ldi r20,0
+ 592               	.LVL24:
+ 593               	.L23:
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 594               		.loc 1 380 9 is_stmt 1 view .LVU117
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 595               		.loc 1 380 20 is_stmt 0 view .LVU118
+ 596 0084 3191      		ld r19,Z+
+ 597 0086 A32F      		mov r26,r19
+ 598 0088 A295      		swap r26
+ 599 008a AF70      		andi r26,lo8(15)
+ 600 008c B0E0      		ldi r27,0
+ 601 008e 9096      		adiw r26,32
+ 602 0090 8C91      		ld r24,X
+ 603 0092 90E0      		ldi r25,0
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 604               		.loc 1 380 49 view .LVU119
+ 605 0094 3F70      		andi r19,lo8(15)
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 606               		.loc 1 380 73 view .LVU120
+ 607 0096 00C0      		rjmp 2f
+ 608               		1:
+ 609 0098 9595      		asr r25
+ 610 009a 8795      		ror r24
+ 611               		2:
+ 612 009c 3A95      		dec r19
+ 613 009e 02F4      		brpl 1b
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 614               		.loc 1 380 77 view .LVU121
+ 615 00a0 80FD      		sbrc r24,0
+ 616 00a2 00C0      		rjmp .L31
+ 617 00a4 C501      		movw r24,r10
+ 618 00a6 042E      		mov r0,r20
+ 619 00a8 00C0      		rjmp 2f
+ 620               		1:
+ 621 00aa 880F      		lsl r24
+ 622               		2:
+ 623 00ac 0A94      		dec r0
+ 624 00ae 02F4      		brpl 1b
+ 625               	.L22:
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 626               		.loc 1 380 16 view .LVU122
+ 627 00b0 282B      		or r18,r24
+ 628               	.LVL25:
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 629               		.loc 1 379 37 is_stmt 1 view .LVU123
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 630               		.loc 1 379 38 is_stmt 0 view .LVU124
+ 631 00b2 4F5F      		subi r20,-1
+ 632 00b4 5F4F      		sbci r21,-1
+ 633               	.LVL26:
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 634               		.loc 1 379 20 is_stmt 1 view .LVU125
+ 379:keyboards/crkbd/rev1/legacy/matrix.c ****         result |= (_SFR_IO8(col_pins[x] >> 4) & _BV(col_pins[x] & 0xF)) ? 0 : (1 << x);
+ 635               		.loc 1 379 5 is_stmt 0 view .LVU126
+ 636 00b6 4630      		cpi r20,6
+ 637 00b8 5105      		cpc r21,__zero_reg__
+ 638 00ba 01F4      		brne .L23
+ 639               	.LBE41:
+ 382:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 640               		.loc 1 382 5 is_stmt 1 view .LVU127
+ 641               	.LVL27:
+ 382:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 642               		.loc 1 382 5 is_stmt 0 view .LVU128
+ 643               	.LBE39:
+ 644               	.LBE38:
+ 166:keyboards/crkbd/rev1/legacy/matrix.c ****             changed = true;
+ 645               		.loc 1 166 9 is_stmt 1 view .LVU129
+ 166:keyboards/crkbd/rev1/legacy/matrix.c ****             changed = true;
+ 646               		.loc 1 166 12 is_stmt 0 view .LVU130
+ 647 00bc F801      		movw r30,r16
+ 648 00be 8081      		ld r24,Z
+ 649 00c0 8217      		cp r24,r18
+ 650 00c2 01F0      		breq .L24
+ 167:keyboards/crkbd/rev1/legacy/matrix.c ****             matrix_debouncing[i+offset] = cols;
+ 651               		.loc 1 167 13 is_stmt 1 view .LVU131
+ 652               	.LVL28:
+ 168:keyboards/crkbd/rev1/legacy/matrix.c ****             debouncing = DEBOUNCE;
+ 653               		.loc 1 168 13 view .LVU132
+ 168:keyboards/crkbd/rev1/legacy/matrix.c ****             debouncing = DEBOUNCE;
+ 654               		.loc 1 168 41 is_stmt 0 view .LVU133
+ 655 00c4 2083      		st Z,r18
+ 169:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 656               		.loc 1 169 13 is_stmt 1 view .LVU134
+ 169:keyboards/crkbd/rev1/legacy/matrix.c ****         }
+ 657               		.loc 1 169 24 is_stmt 0 view .LVU135
+ 658 00c6 8092 0000 		sts debouncing,r8
+ 167:keyboards/crkbd/rev1/legacy/matrix.c ****             matrix_debouncing[i+offset] = cols;
+ 659               		.loc 1 167 21 view .LVU136
+ 660 00ca 9924      		clr r9
+ 661 00cc 9394      		inc r9
+ 662               	.LVL29:
+ 663               	.L24:
+ 171:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 664               		.loc 1 171 9 is_stmt 1 discriminator 2 view .LVU137
+ 665 00ce 0E94 0000 		call unselect_rows
+ 666               	.LVL30:
+ 171:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 667               		.loc 1 171 9 is_stmt 0 discriminator 2 view .LVU138
+ 668               	.LBE31:
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 669               		.loc 1 162 44 is_stmt 1 discriminator 2 view .LVU139
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 670               		.loc 1 162 25 discriminator 2 view .LVU140
+ 671 00d2 0F5F      		subi r16,-1
+ 672 00d4 1F4F      		sbci r17,-1
+ 162:keyboards/crkbd/rev1/legacy/matrix.c ****         select_row(i);
+ 673               		.loc 1 162 5 is_stmt 0 discriminator 2 view .LVU141
+ 674 00d6 F0E0      		ldi r31,lo8(row_pins+4)
+ 675 00d8 CF16      		cp r12,r31
+ 676 00da F0E0      		ldi r31,hi8(row_pins+4)
+ 677 00dc DF06      		cpc r13,r31
+ 678 00de 01F0      		breq .+2
+ 679 00e0 00C0      		rjmp .L25
+ 680               	.LBE46:
+ 174:keyboards/crkbd/rev1/legacy/matrix.c ****         if (--debouncing) {
+ 681               		.loc 1 174 5 is_stmt 1 view .LVU142
+ 174:keyboards/crkbd/rev1/legacy/matrix.c ****         if (--debouncing) {
+ 682               		.loc 1 174 9 is_stmt 0 view .LVU143
+ 683 00e2 8091 0000 		lds r24,debouncing
+ 174:keyboards/crkbd/rev1/legacy/matrix.c ****         if (--debouncing) {
+ 684               		.loc 1 174 8 view .LVU144
+ 685 00e6 8823      		tst r24
+ 686 00e8 01F0      		breq .L28
+ 175:keyboards/crkbd/rev1/legacy/matrix.c ****             _delay_ms(1);
+ 687               		.loc 1 175 9 is_stmt 1 view .LVU145
+ 175:keyboards/crkbd/rev1/legacy/matrix.c ****             _delay_ms(1);
+ 688               		.loc 1 175 13 is_stmt 0 view .LVU146
+ 689 00ea 8150      		subi r24,lo8(-(-1))
+ 175:keyboards/crkbd/rev1/legacy/matrix.c ****             _delay_ms(1);
+ 690               		.loc 1 175 12 view .LVU147
+ 691 00ec 8093 0000 		sts debouncing,r24
+ 692 00f0 8823      		tst r24
+ 693 00f2 01F0      		breq .L27
+ 176:keyboards/crkbd/rev1/legacy/matrix.c ****         } else {
+ 694               		.loc 1 176 13 is_stmt 1 view .LVU148
+ 695               	.LVL31:
+ 696               	.LBB47:
+ 697               	.LBI47:
+ 166:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 698               		.loc 2 166 1 view .LVU149
+ 699               	.LBB48:
+ 168:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 700               		.loc 2 168 2 view .LVU150
+ 172:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 701               		.loc 2 172 2 view .LVU151
+ 173:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 702               		.loc 2 173 2 view .LVU152
+ 174:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 703               		.loc 2 174 2 view .LVU153
+ 184:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 704               		.loc 2 184 3 view .LVU154
+ 187:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 705               		.loc 2 187 2 view .LVU155
+ 706 00f4 8FE9      		ldi r24,lo8(3999)
+ 707 00f6 9FE0      		ldi r25,hi8(3999)
+ 708 00f8 0197      	1:	sbiw r24,1
+ 709 00fa 01F4      		brne 1b
+ 710 00fc 00C0      		rjmp .
+ 711 00fe 0000      		nop
+ 712               	.LVL32:
+ 713               	.L28:
+ 187:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 714               		.loc 2 187 2 is_stmt 0 view .LVU156
+ 715               	.LBE48:
+ 716               	.LBE47:
+ 184:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 717               		.loc 1 184 5 is_stmt 1 view .LVU157
+ 185:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 718               		.loc 1 185 1 is_stmt 0 view .LVU158
+ 719 0100 892D      		mov r24,r9
+ 720               	/* epilogue start */
+ 721 0102 DF91      		pop r29
+ 722 0104 CF91      		pop r28
+ 723 0106 1F91      		pop r17
+ 724 0108 0F91      		pop r16
+ 725 010a FF90      		pop r15
+ 726 010c EF90      		pop r14
+ 727 010e DF90      		pop r13
+ 728 0110 CF90      		pop r12
+ 729               	.LVL33:
+ 185:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 730               		.loc 1 185 1 view .LVU159
+ 731 0112 BF90      		pop r11
+ 732 0114 AF90      		pop r10
+ 733 0116 9F90      		pop r9
+ 734               	.LVL34:
+ 185:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 735               		.loc 1 185 1 view .LVU160
+ 736 0118 8F90      		pop r8
+ 737 011a 0895      		ret
+ 738               	.LVL35:
+ 739               	.L31:
+ 740               	.LBB49:
+ 741               	.LBB45:
+ 742               	.LBB44:
+ 743               	.LBB43:
+ 744               	.LBB42:
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 745               		.loc 1 380 77 view .LVU161
+ 746 011c 80E0      		ldi r24,0
+ 747 011e 00C0      		rjmp .L22
+ 748               	.LVL36:
+ 749               	.L27:
+ 380:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 750               		.loc 1 380 77 view .LVU162
+ 751 0120 C050      		subi r28,lo8(-(matrix))
+ 752 0122 D040      		sbci r29,hi8(-(matrix))
+ 753               	.LBE42:
+ 754               	.LBE43:
+ 755               	.LBE44:
+ 756               	.LBE45:
+ 757               	.LBE49:
+ 175:keyboards/crkbd/rev1/legacy/matrix.c ****             _delay_ms(1);
+ 758               		.loc 1 175 12 view .LVU163
+ 759 0124 84E0      		ldi r24,lo8(4)
+ 760               	.L29:
+ 761               	.LVL37:
+ 762               	.LBB50:
+ 179:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 763               		.loc 1 179 17 is_stmt 1 discriminator 3 view .LVU164
+ 179:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 764               		.loc 1 179 53 is_stmt 0 discriminator 3 view .LVU165
+ 765 0126 F701      		movw r30,r14
+ 766 0128 9191      		ld r25,Z+
+ 767 012a 7F01      		movw r14,r30
+ 179:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 768               		.loc 1 179 34 discriminator 3 view .LVU166
+ 769 012c 9993      		st Y+,r25
+ 178:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[i+offset] = matrix_debouncing[i+offset];
+ 770               		.loc 1 178 52 is_stmt 1 discriminator 3 view .LVU167
+ 178:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[i+offset] = matrix_debouncing[i+offset];
+ 771               		.loc 1 178 33 discriminator 3 view .LVU168
+ 772 012e 8150      		subi r24,lo8(-(-1))
+ 178:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[i+offset] = matrix_debouncing[i+offset];
+ 773               		.loc 1 178 13 is_stmt 0 discriminator 3 view .LVU169
+ 774 0130 01F4      		brne .L29
+ 775 0132 00C0      		rjmp .L28
+ 776               	.LBE50:
+ 777               		.cfi_endproc
+ 778               	.LFE126:
+ 780               		.section	.text.serial_transaction,"ax",@progbits
+ 781               	.global	serial_transaction
+ 783               	serial_transaction:
+ 784               	.LVL38:
+ 785               	.LFB127:
+ 222:keyboards/crkbd/rev1/legacy/matrix.c ****     int slaveOffset = (isLeftHand) ? (ROWS_PER_HAND) : 0;
+ 786               		.loc 1 222 44 is_stmt 1 view -0
+ 787               		.cfi_startproc
+ 222:keyboards/crkbd/rev1/legacy/matrix.c ****     int slaveOffset = (isLeftHand) ? (ROWS_PER_HAND) : 0;
+ 788               		.loc 1 222 44 is_stmt 0 view .LVU171
+ 789 0000 0F93      		push r16
+ 790               	.LCFI14:
+ 791               		.cfi_def_cfa_offset 3
+ 792               		.cfi_offset 16, -2
+ 793 0002 1F93      		push r17
+ 794               	.LCFI15:
+ 795               		.cfi_def_cfa_offset 4
+ 796               		.cfi_offset 17, -3
+ 797 0004 CF93      		push r28
+ 798               	.LCFI16:
+ 799               		.cfi_def_cfa_offset 5
+ 800               		.cfi_offset 28, -4
+ 801 0006 DF93      		push r29
+ 802               	.LCFI17:
+ 803               		.cfi_def_cfa_offset 6
+ 804               		.cfi_offset 29, -5
+ 805               	/* prologue: function */
+ 806               	/* frame size = 0 */
+ 807               	/* stack size = 4 */
+ 808               	.L__stack_usage = 4
+ 223:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 809               		.loc 1 223 5 is_stmt 1 view .LVU172
+ 223:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 810               		.loc 1 223 36 is_stmt 0 view .LVU173
+ 811 0008 2091 0000 		lds r18,isLeftHand
+ 223:keyboards/crkbd/rev1/legacy/matrix.c **** #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 812               		.loc 1 223 54 view .LVU174
+ 813 000c 10E0      		ldi r17,0
+ 814 000e 00E0      		ldi r16,0
+ 815 0010 2223      		tst r18
+ 816 0012 01F0      		breq .L39
+ 817 0014 04E0      		ldi r16,lo8(4)
+ 818 0016 10E0      		ldi r17,0
+ 819               	.L39:
+ 820               	.LVL39:
+ 225:keyboards/crkbd/rev1/legacy/matrix.c **** #else
+ 821               		.loc 1 225 5 is_stmt 1 discriminator 4 view .LVU175
+ 225:keyboards/crkbd/rev1/legacy/matrix.c **** #else
+ 822               		.loc 1 225 13 is_stmt 0 discriminator 4 view .LVU176
+ 823 0018 0E94 0000 		call serial_update_buffers
+ 824               	.LVL40:
+ 225:keyboards/crkbd/rev1/legacy/matrix.c **** #else
+ 825               		.loc 1 225 13 discriminator 4 view .LVU177
+ 826 001c EC01      		movw r28,r24
+ 827               	.LVL41:
+ 229:keyboards/crkbd/rev1/legacy/matrix.c ****         if(ret==2) rx_led_on();
+ 828               		.loc 1 229 5 is_stmt 1 discriminator 4 view .LVU178
+ 229:keyboards/crkbd/rev1/legacy/matrix.c ****         if(ret==2) rx_led_on();
+ 829               		.loc 1 229 8 is_stmt 0 discriminator 4 view .LVU179
+ 830 001e 0097      		sbiw r24,0
+ 831 0020 01F0      		breq .L40
+ 230:keyboards/crkbd/rev1/legacy/matrix.c ****         return 1;
+ 832               		.loc 1 230 9 is_stmt 1 view .LVU180
+ 230:keyboards/crkbd/rev1/legacy/matrix.c ****         return 1;
+ 833               		.loc 1 230 11 is_stmt 0 view .LVU181
+ 834 0022 0297      		sbiw r24,2
+ 835 0024 01F4      		brne .L43
+ 230:keyboards/crkbd/rev1/legacy/matrix.c ****         return 1;
+ 836               		.loc 1 230 20 is_stmt 1 discriminator 1 view .LVU182
+ 837 0026 0E94 0000 		call rx_led_on
+ 838               	.LVL42:
+ 839               	.L43:
+ 231:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 840               		.loc 1 231 16 is_stmt 0 view .LVU183
+ 841 002a C1E0      		ldi r28,lo8(1)
+ 842 002c D0E0      		ldi r29,0
+ 843               	.LVL43:
+ 231:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 844               		.loc 1 231 16 view .LVU184
+ 845 002e 00C0      		rjmp .L38
+ 846               	.LVL44:
+ 847               	.L40:
+ 233:keyboards/crkbd/rev1/legacy/matrix.c ****     memcpy(&matrix[slaveOffset],
+ 848               		.loc 1 233 5 is_stmt 1 view .LVU185
+ 849 0030 0E94 0000 		call rx_led_off
+ 850               	.LVL45:
+ 234:keyboards/crkbd/rev1/legacy/matrix.c ****         (void *)serial_slave_buffer, SERIAL_SLAVE_BUFFER_LENGTH);
+ 851               		.loc 1 234 5 view .LVU186
+ 234:keyboards/crkbd/rev1/legacy/matrix.c ****         (void *)serial_slave_buffer, SERIAL_SLAVE_BUFFER_LENGTH);
+ 852               		.loc 1 234 12 is_stmt 0 view .LVU187
+ 853 0034 F801      		movw r30,r16
+ 854 0036 E050      		subi r30,lo8(-(matrix))
+ 855 0038 F040      		sbci r31,hi8(-(matrix))
+ 234:keyboards/crkbd/rev1/legacy/matrix.c ****         (void *)serial_slave_buffer, SERIAL_SLAVE_BUFFER_LENGTH);
+ 856               		.loc 1 234 5 view .LVU188
+ 857 003a 8091 0000 		lds r24,serial_slave_buffer
+ 858 003e 9091 0000 		lds r25,serial_slave_buffer+1
+ 859 0042 A091 0000 		lds r26,serial_slave_buffer+2
+ 860 0046 B091 0000 		lds r27,serial_slave_buffer+3
+ 861 004a 8083      		st Z,r24
+ 862 004c 9183      		std Z+1,r25
+ 863 004e A283      		std Z+2,r26
+ 864 0050 B383      		std Z+3,r27
+ 236:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 865               		.loc 1 236 5 is_stmt 1 view .LVU189
+ 866               	.LVL46:
+ 867               	.L38:
+ 237:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 868               		.loc 1 237 1 is_stmt 0 view .LVU190
+ 869 0052 CE01      		movw r24,r28
+ 870               	/* epilogue start */
+ 871 0054 DF91      		pop r29
+ 872 0056 CF91      		pop r28
+ 873 0058 1F91      		pop r17
+ 874 005a 0F91      		pop r16
+ 875               	.LVL47:
+ 237:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 876               		.loc 1 237 1 view .LVU191
+ 877 005c 0895      		ret
+ 878               		.cfi_endproc
+ 879               	.LFE127:
+ 881               		.section	.text.matrix_slave_scan,"ax",@progbits
+ 882               	.global	matrix_slave_scan
+ 884               	matrix_slave_scan:
+ 885               	.LFB130:
+ 303:keyboards/crkbd/rev1/legacy/matrix.c ****     int ret = _matrix_scan();
+ 886               		.loc 1 303 33 is_stmt 1 view -0
+ 887               		.cfi_startproc
+ 888               	/* prologue: function */
+ 889               	/* frame size = 0 */
+ 890               	/* stack size = 0 */
+ 891               	.L__stack_usage = 0
+ 304:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 892               		.loc 1 304 5 view .LVU193
+ 304:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 893               		.loc 1 304 15 is_stmt 0 view .LVU194
+ 894 0000 0E94 0000 		call _matrix_scan
+ 895               	.LVL48:
+ 306:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 896               		.loc 1 306 5 is_stmt 1 view .LVU195
+ 306:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 897               		.loc 1 306 31 is_stmt 0 view .LVU196
+ 898 0004 9091 0000 		lds r25,isLeftHand
+ 306:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 899               		.loc 1 306 35 view .LVU197
+ 900 0008 E4E0      		ldi r30,lo8(4)
+ 901 000a F0E0      		ldi r31,0
+ 902 000c 9923      		tst r25
+ 903 000e 01F0      		breq .L45
+ 904 0010 F0E0      		ldi r31,0
+ 905 0012 E0E0      		ldi r30,0
+ 906               	.L45:
+ 907               	.LVL49:
+ 315:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 908               		.loc 1 315 5 is_stmt 1 discriminator 4 view .LVU198
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 909               		.loc 1 317 5 discriminator 4 view .LVU199
+ 910               	.LBB51:
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 911               		.loc 1 317 10 discriminator 4 view .LVU200
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 912               		.loc 1 317 21 discriminator 4 view .LVU201
+ 913 0014 E050      		subi r30,lo8(-(matrix))
+ 914 0016 F040      		sbci r31,hi8(-(matrix))
+ 915               	.LVL50:
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 916               		.loc 1 317 14 is_stmt 0 discriminator 4 view .LVU202
+ 917 0018 30E0      		ldi r19,0
+ 918 001a 20E0      		ldi r18,0
+ 919               	.LBE51:
+ 315:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 920               		.loc 1 315 9 discriminator 4 view .LVU203
+ 921 001c 40E0      		ldi r20,0
+ 922               	.LVL51:
+ 923               	.L47:
+ 924               	.LBB52:
+ 319:keyboards/crkbd/rev1/legacy/matrix.c ****         change = 1;
+ 925               		.loc 1 319 9 is_stmt 1 view .LVU204
+ 319:keyboards/crkbd/rev1/legacy/matrix.c ****         change = 1;
+ 926               		.loc 1 319 32 is_stmt 0 view .LVU205
+ 927 001e D901      		movw r26,r18
+ 928 0020 A050      		subi r26,lo8(-(serial_slave_buffer))
+ 929 0022 B040      		sbci r27,hi8(-(serial_slave_buffer))
+ 930 0024 5C91      		ld r21,X
+ 319:keyboards/crkbd/rev1/legacy/matrix.c ****         change = 1;
+ 931               		.loc 1 319 45 view .LVU206
+ 932 0026 9191      		ld r25,Z+
+ 319:keyboards/crkbd/rev1/legacy/matrix.c ****         change = 1;
+ 933               		.loc 1 319 11 view .LVU207
+ 934 0028 5913      		cpse r21,r25
+ 320:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 935               		.loc 1 320 16 view .LVU208
+ 936 002a 41E0      		ldi r20,lo8(1)
+ 937               	.LVL52:
+ 938               	.L46:
+ 322:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 939               		.loc 1 322 9 is_stmt 1 discriminator 2 view .LVU209
+ 322:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 940               		.loc 1 322 32 is_stmt 0 discriminator 2 view .LVU210
+ 941 002c 9C93      		st X,r25
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 942               		.loc 1 317 40 is_stmt 1 discriminator 2 view .LVU211
+ 943 002e 2F5F      		subi r18,-1
+ 944 0030 3F4F      		sbci r19,-1
+ 945               	.LVL53:
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 946               		.loc 1 317 21 discriminator 2 view .LVU212
+ 317:keyboards/crkbd/rev1/legacy/matrix.c ****   #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 947               		.loc 1 317 5 is_stmt 0 discriminator 2 view .LVU213
+ 948 0032 2430      		cpi r18,4
+ 949 0034 3105      		cpc r19,__zero_reg__
+ 950 0036 01F4      		brne .L47
+ 951               	.LBE52:
+ 325:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 952               		.loc 1 325 5 is_stmt 1 view .LVU214
+ 325:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 953               		.loc 1 325 31 is_stmt 0 view .LVU215
+ 954 0038 9091 0000 		lds r25,slave_buffer_change_count
+ 955 003c 940F      		add r25,r20
+ 956 003e 9093 0000 		sts slave_buffer_change_count,r25
+ 328:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 957               		.loc 1 328 5 is_stmt 1 view .LVU216
+ 958               	/* epilogue start */
+ 329:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 959               		.loc 1 329 1 is_stmt 0 view .LVU217
+ 960 0042 0895      		ret
+ 961               		.cfi_endproc
+ 962               	.LFE130:
+ 964               		.section	.text.matrix_scan,"ax",@progbits
+ 965               	.global	matrix_scan
+ 967               	matrix_scan:
+ 968               	.LFB128:
+ 241:keyboards/crkbd/rev1/legacy/matrix.c ****     bool changed = false;
+ 969               		.loc 1 241 1 is_stmt 1 view -0
+ 970               		.cfi_startproc
+ 971 0000 1F93      		push r17
+ 972               	.LCFI18:
+ 973               		.cfi_def_cfa_offset 3
+ 974               		.cfi_offset 17, -2
+ 975 0002 CF93      		push r28
+ 976               	.LCFI19:
+ 977               		.cfi_def_cfa_offset 4
+ 978               		.cfi_offset 28, -3
+ 979 0004 DF93      		push r29
+ 980               	.LCFI20:
+ 981               		.cfi_def_cfa_offset 5
+ 982               		.cfi_offset 29, -4
+ 983               	/* prologue: function */
+ 984               	/* frame size = 0 */
+ 985               	/* stack size = 3 */
+ 986               	.L__stack_usage = 3
+ 242:keyboards/crkbd/rev1/legacy/matrix.c ****     if (is_master) {
+ 987               		.loc 1 242 5 view .LVU219
+ 988               	.LVL54:
+ 243:keyboards/crkbd/rev1/legacy/matrix.c ****         changed |= matrix_master_scan();
+ 989               		.loc 1 243 5 view .LVU220
+ 243:keyboards/crkbd/rev1/legacy/matrix.c ****         changed |= matrix_master_scan();
+ 990               		.loc 1 243 8 is_stmt 0 view .LVU221
+ 991 0006 8091 0000 		lds r24,is_master
+ 992 000a 8823      		tst r24
+ 993 000c 01F4      		brne .+2
+ 994 000e 00C0      		rjmp .L51
+ 244:keyboards/crkbd/rev1/legacy/matrix.c ****     }else{
+ 995               		.loc 1 244 9 is_stmt 1 view .LVU222
+ 996               	.LBB58:
+ 997               	.LBI58:
+ 256:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 998               		.loc 1 256 9 view .LVU223
+ 999               	.LBB59:
+ 258:keyboards/crkbd/rev1/legacy/matrix.c ****     int mchanged = 1;
+ 1000               		.loc 1 258 5 view .LVU224
+ 258:keyboards/crkbd/rev1/legacy/matrix.c ****     int mchanged = 1;
+ 1001               		.loc 1 258 15 is_stmt 0 view .LVU225
+ 1002 0010 0E94 0000 		call _matrix_scan
+ 1003               	.LVL55:
+ 1004 0014 182F      		mov r17,r24
+ 1005               	.LVL56:
+ 259:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1006               		.loc 1 259 5 is_stmt 1 view .LVU226
+ 261:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1007               		.loc 1 261 5 view .LVU227
+ 261:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1008               		.loc 1 261 31 is_stmt 0 view .LVU228
+ 1009 0016 8091 0000 		lds r24,isLeftHand
+ 261:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1010               		.loc 1 261 35 view .LVU229
+ 1011 001a C4E0      		ldi r28,lo8(4)
+ 1012 001c D0E0      		ldi r29,0
+ 1013 001e 8823      		tst r24
+ 1014 0020 01F0      		breq .L52
+ 1015 0022 D0E0      		ldi r29,0
+ 1016 0024 C0E0      		ldi r28,0
+ 1017               	.L52:
+ 1018               	.LVL57:
+ 270:keyboards/crkbd/rev1/legacy/matrix.c **** 		      &matrix[offset], SERIAL_MASTER_BUFFER_LENGTH);
+ 1019               		.loc 1 270 5 is_stmt 1 view .LVU230
+ 271:keyboards/crkbd/rev1/legacy/matrix.c ****   #endif
+ 1020               		.loc 1 271 9 is_stmt 0 view .LVU231
+ 1021 0026 C050      		subi r28,lo8(-(matrix))
+ 1022 0028 D040      		sbci r29,hi8(-(matrix))
+ 1023               	.LVL58:
+ 270:keyboards/crkbd/rev1/legacy/matrix.c **** 		      &matrix[offset], SERIAL_MASTER_BUFFER_LENGTH);
+ 1024               		.loc 1 270 16 view .LVU232
+ 1025 002a 44E0      		ldi r20,lo8(4)
+ 1026 002c 50E0      		ldi r21,0
+ 1027 002e BE01      		movw r22,r28
+ 1028 0030 80E0      		ldi r24,lo8(serial_master_buffer)
+ 1029 0032 90E0      		ldi r25,hi8(serial_master_buffer)
+ 1030 0034 0E94 0000 		call memcmp
+ 1031               	.LVL59:
+ 273:keyboards/crkbd/rev1/legacy/matrix.c **** 	   &matrix[offset], SERIAL_MASTER_BUFFER_LENGTH);
+ 1032               		.loc 1 273 5 is_stmt 1 view .LVU233
+ 1033 0038 4881      		ld r20,Y
+ 1034 003a 5981      		ldd r21,Y+1
+ 1035 003c 6A81      		ldd r22,Y+2
+ 1036 003e 7B81      		ldd r23,Y+3
+ 1037 0040 4093 0000 		sts serial_master_buffer,r20
+ 1038 0044 5093 0000 		sts serial_master_buffer+1,r21
+ 1039 0048 6093 0000 		sts serial_master_buffer+2,r22
+ 1040 004c 7093 0000 		sts serial_master_buffer+3,r23
+ 280:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 1041               		.loc 1 280 5 view .LVU234
+ 280:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 1042               		.loc 1 280 9 is_stmt 0 view .LVU235
+ 1043 0050 0E94 0000 		call serial_transaction
+ 1044               	.LVL60:
+ 280:keyboards/crkbd/rev1/legacy/matrix.c **** #endif
+ 1045               		.loc 1 280 7 view .LVU236
+ 1046 0054 892B      		or r24,r25
+ 1047 0056 01F0      		breq .L53
+ 283:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1048               		.loc 1 283 9 is_stmt 1 view .LVU237
+ 1049 0058 0E94 0000 		call tx_led_on
+ 1050               	.LVL61:
+ 285:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1051               		.loc 1 285 9 view .LVU238
+ 285:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1052               		.loc 1 285 20 is_stmt 0 view .LVU239
+ 1053 005c 8091 0000 		lds r24,error_count
+ 1054 0060 8F5F      		subi r24,lo8(-(1))
+ 1055 0062 8093 0000 		sts error_count,r24
+ 287:keyboards/crkbd/rev1/legacy/matrix.c ****             // reset other half if disconnected
+ 1056               		.loc 1 287 9 is_stmt 1 view .LVU240
+ 287:keyboards/crkbd/rev1/legacy/matrix.c ****             // reset other half if disconnected
+ 1057               		.loc 1 287 12 is_stmt 0 view .LVU241
+ 1058 0066 8630      		cpi r24,lo8(6)
+ 1059 0068 00F0      		brlo .L54
+ 1060               	.LBB60:
+ 289:keyboards/crkbd/rev1/legacy/matrix.c ****             for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 1061               		.loc 1 289 13 is_stmt 1 view .LVU242
+ 289:keyboards/crkbd/rev1/legacy/matrix.c ****             for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 1062               		.loc 1 289 44 is_stmt 0 view .LVU243
+ 1063 006a 8091 0000 		lds r24,isLeftHand
+ 289:keyboards/crkbd/rev1/legacy/matrix.c ****             for (int i = 0; i < ROWS_PER_HAND; ++i) {
+ 1064               		.loc 1 289 62 view .LVU244
+ 1065 006e F0E0      		ldi r31,0
+ 1066 0070 E0E0      		ldi r30,0
+ 1067 0072 8823      		tst r24
+ 1068 0074 01F0      		breq .L55
+ 1069 0076 E4E0      		ldi r30,lo8(4)
+ 1070 0078 F0E0      		ldi r31,0
+ 1071               	.L55:
+ 1072               	.LVL62:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1073               		.loc 1 290 13 is_stmt 1 view .LVU245
+ 1074               	.LBB61:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1075               		.loc 1 290 18 view .LVU246
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1076               		.loc 1 290 29 view .LVU247
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1077               		.loc 1 291 17 view .LVU248
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1078               		.loc 1 291 39 is_stmt 0 view .LVU249
+ 1079 007a E050      		subi r30,lo8(-(matrix))
+ 1080 007c F040      		sbci r31,hi8(-(matrix))
+ 1081               	.LVL63:
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1082               		.loc 1 291 39 view .LVU250
+ 1083 007e 1082      		st Z,__zero_reg__
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1084               		.loc 1 290 48 is_stmt 1 view .LVU251
+ 1085               	.LVL64:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1086               		.loc 1 290 29 view .LVU252
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1087               		.loc 1 291 17 view .LVU253
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1088               		.loc 1 291 39 is_stmt 0 view .LVU254
+ 1089 0080 1182      		std Z+1,__zero_reg__
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1090               		.loc 1 290 48 is_stmt 1 view .LVU255
+ 1091               	.LVL65:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1092               		.loc 1 290 29 view .LVU256
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1093               		.loc 1 291 17 view .LVU257
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1094               		.loc 1 291 39 is_stmt 0 view .LVU258
+ 1095 0082 1282      		std Z+2,__zero_reg__
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1096               		.loc 1 290 48 is_stmt 1 view .LVU259
+ 1097               	.LVL66:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1098               		.loc 1 290 29 view .LVU260
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1099               		.loc 1 291 17 view .LVU261
+ 291:keyboards/crkbd/rev1/legacy/matrix.c ****             }
+ 1100               		.loc 1 291 39 is_stmt 0 view .LVU262
+ 1101 0084 1382      		std Z+3,__zero_reg__
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1102               		.loc 1 290 48 is_stmt 1 view .LVU263
+ 1103               	.LVL67:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1104               		.loc 1 290 29 view .LVU264
+ 1105               	.L54:
+ 290:keyboards/crkbd/rev1/legacy/matrix.c ****                 matrix[slaveOffset+i] = 0;
+ 1106               		.loc 1 290 29 is_stmt 0 view .LVU265
+ 1107               	.LBE61:
+ 1108               	.LBE60:
+ 299:keyboards/crkbd/rev1/legacy/matrix.c ****     return ret;
+ 1109               		.loc 1 299 5 is_stmt 1 view .LVU266
+ 1110 0086 0E94 0000 		call matrix_scan_quantum
+ 1111               	.LVL68:
+ 300:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1112               		.loc 1 300 5 view .LVU267
+ 300:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1113               		.loc 1 300 5 is_stmt 0 view .LVU268
+ 1114               	.LBE59:
+ 1115               	.LBE58:
+ 244:keyboards/crkbd/rev1/legacy/matrix.c ****     }else{
+ 1116               		.loc 1 244 17 view .LVU269
+ 1117 008a C1E0      		ldi r28,lo8(1)
+ 1118               	.LVL69:
+ 244:keyboards/crkbd/rev1/legacy/matrix.c ****     }else{
+ 1119               		.loc 1 244 17 view .LVU270
+ 1120 008c 1111      		cpse r17,__zero_reg__
+ 1121 008e 00C0      		rjmp .L57
+ 1122 0090 C0E0      		ldi r28,0
+ 1123               	.LVL70:
+ 1124               	.L57:
+ 252:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1125               		.loc 1 252 5 is_stmt 1 view .LVU271
+ 253:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1126               		.loc 1 253 1 is_stmt 0 view .LVU272
+ 1127 0092 8C2F      		mov r24,r28
+ 1128               	/* epilogue start */
+ 1129 0094 DF91      		pop r29
+ 1130 0096 CF91      		pop r28
+ 1131               	.LVL71:
+ 253:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1132               		.loc 1 253 1 view .LVU273
+ 1133 0098 1F91      		pop r17
+ 1134 009a 0895      		ret
+ 1135               	.LVL72:
+ 1136               	.L53:
+ 1137               	.LBB63:
+ 1138               	.LBB62:
+ 296:keyboards/crkbd/rev1/legacy/matrix.c ****         error_count = 0;
+ 1139               		.loc 1 296 9 is_stmt 1 view .LVU274
+ 1140 009c 0E94 0000 		call tx_led_off
+ 1141               	.LVL73:
+ 297:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1142               		.loc 1 297 9 view .LVU275
+ 297:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1143               		.loc 1 297 21 is_stmt 0 view .LVU276
+ 1144 00a0 1092 0000 		sts error_count,__zero_reg__
+ 1145 00a4 00C0      		rjmp .L54
+ 1146               	.LVL74:
+ 1147               	.L51:
+ 297:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1148               		.loc 1 297 21 view .LVU277
+ 1149               	.LBE62:
+ 1150               	.LBE63:
+ 1151               	.LBB64:
+ 246:keyboards/crkbd/rev1/legacy/matrix.c ****         int offset = (isLeftHand) ? ROWS_PER_HAND : 0;
+ 1152               		.loc 1 246 9 is_stmt 1 view .LVU278
+ 246:keyboards/crkbd/rev1/legacy/matrix.c ****         int offset = (isLeftHand) ? ROWS_PER_HAND : 0;
+ 1153               		.loc 1 246 20 is_stmt 0 view .LVU279
+ 1154 00a6 0E94 0000 		call matrix_slave_scan
+ 1155               	.LVL75:
+ 246:keyboards/crkbd/rev1/legacy/matrix.c ****         int offset = (isLeftHand) ? ROWS_PER_HAND : 0;
+ 1156               		.loc 1 246 17 view .LVU280
+ 1157 00aa C1E0      		ldi r28,lo8(1)
+ 1158 00ac 8111      		cpse r24,__zero_reg__
+ 1159 00ae 00C0      		rjmp .L58
+ 1160 00b0 C0E0      		ldi r28,0
+ 1161               	.L58:
+ 1162               	.LVL76:
+ 247:keyboards/crkbd/rev1/legacy/matrix.c ****         memcpy(&matrix[offset],
+ 1163               		.loc 1 247 9 is_stmt 1 view .LVU281
+ 247:keyboards/crkbd/rev1/legacy/matrix.c ****         memcpy(&matrix[offset],
+ 1164               		.loc 1 247 35 is_stmt 0 view .LVU282
+ 1165 00b2 8091 0000 		lds r24,isLeftHand
+ 247:keyboards/crkbd/rev1/legacy/matrix.c ****         memcpy(&matrix[offset],
+ 1166               		.loc 1 247 51 view .LVU283
+ 1167 00b6 8111      		cpse r24,__zero_reg__
+ 1168 00b8 00C0      		rjmp .L62
+ 1169 00ba 90E0      		ldi r25,0
+ 1170 00bc 80E0      		ldi r24,0
+ 1171               	.L59:
+ 1172               	.LVL77:
+ 248:keyboards/crkbd/rev1/legacy/matrix.c ****                (void *)serial_master_buffer, SERIAL_MASTER_BUFFER_LENGTH);
+ 1173               		.loc 1 248 9 is_stmt 1 discriminator 4 view .LVU284
+ 248:keyboards/crkbd/rev1/legacy/matrix.c ****                (void *)serial_master_buffer, SERIAL_MASTER_BUFFER_LENGTH);
+ 1174               		.loc 1 248 16 is_stmt 0 discriminator 4 view .LVU285
+ 1175 00be 8050      		subi r24,lo8(-(matrix))
+ 1176 00c0 9040      		sbci r25,hi8(-(matrix))
+ 1177               	.LVL78:
+ 248:keyboards/crkbd/rev1/legacy/matrix.c ****                (void *)serial_master_buffer, SERIAL_MASTER_BUFFER_LENGTH);
+ 1178               		.loc 1 248 9 discriminator 4 view .LVU286
+ 1179 00c2 4091 0000 		lds r20,serial_master_buffer
+ 1180 00c6 5091 0000 		lds r21,serial_master_buffer+1
+ 1181 00ca 6091 0000 		lds r22,serial_master_buffer+2
+ 1182 00ce 7091 0000 		lds r23,serial_master_buffer+3
+ 1183 00d2 FC01      		movw r30,r24
+ 1184 00d4 4083      		st Z,r20
+ 1185 00d6 5183      		std Z+1,r21
+ 1186 00d8 6283      		std Z+2,r22
+ 1187 00da 7383      		std Z+3,r23
+ 250:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1188               		.loc 1 250 9 is_stmt 1 discriminator 4 view .LVU287
+ 1189 00dc 0E94 0000 		call matrix_scan_quantum
+ 1190               	.LVL79:
+ 250:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1191               		.loc 1 250 9 is_stmt 0 discriminator 4 view .LVU288
+ 1192 00e0 00C0      		rjmp .L57
+ 1193               	.L62:
+ 247:keyboards/crkbd/rev1/legacy/matrix.c ****         memcpy(&matrix[offset],
+ 1194               		.loc 1 247 51 view .LVU289
+ 1195 00e2 84E0      		ldi r24,lo8(4)
+ 1196 00e4 90E0      		ldi r25,0
+ 1197 00e6 00C0      		rjmp .L59
+ 1198               	.LBE64:
+ 1199               		.cfi_endproc
+ 1200               	.LFE128:
+ 1202               		.section	.text.matrix_is_modified,"ax",@progbits
+ 1203               	.global	matrix_is_modified
+ 1205               	matrix_is_modified:
+ 1206               	.LFB131:
+ 332:keyboards/crkbd/rev1/legacy/matrix.c ****     if (debouncing) return false;
+ 1207               		.loc 1 332 1 is_stmt 1 view -0
+ 1208               		.cfi_startproc
+ 1209               	/* prologue: function */
+ 1210               	/* frame size = 0 */
+ 1211               	/* stack size = 0 */
+ 1212               	.L__stack_usage = 0
+ 333:keyboards/crkbd/rev1/legacy/matrix.c ****     return true;
+ 1213               		.loc 1 333 5 view .LVU291
+ 333:keyboards/crkbd/rev1/legacy/matrix.c ****     return true;
+ 1214               		.loc 1 333 8 is_stmt 0 view .LVU292
+ 1215 0000 81E0      		ldi r24,lo8(1)
+ 1216 0002 9091 0000 		lds r25,debouncing
+ 1217 0006 9111      		cpse r25,__zero_reg__
+ 1218 0008 80E0      		ldi r24,0
+ 1219               	.L64:
+ 1220               	/* epilogue start */
+ 335:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1221               		.loc 1 335 1 view .LVU293
+ 1222 000a 0895      		ret
+ 1223               		.cfi_endproc
+ 1224               	.LFE131:
+ 1226               		.section	.text.matrix_is_on,"ax",@progbits
+ 1227               	.global	matrix_is_on
+ 1229               	matrix_is_on:
+ 1230               	.LVL80:
+ 1231               	.LFB132:
+ 339:keyboards/crkbd/rev1/legacy/matrix.c ****     return (matrix[row] & ((matrix_row_t)1<<col));
+ 1232               		.loc 1 339 1 is_stmt 1 view -0
+ 1233               		.cfi_startproc
+ 1234               	/* prologue: function */
+ 1235               	/* frame size = 0 */
+ 1236               	/* stack size = 0 */
+ 1237               	.L__stack_usage = 0
+ 340:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1238               		.loc 1 340 5 view .LVU295
+ 340:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1239               		.loc 1 340 19 is_stmt 0 view .LVU296
+ 1240 0000 E82F      		mov r30,r24
+ 1241 0002 F0E0      		ldi r31,0
+ 1242 0004 E050      		subi r30,lo8(-(matrix))
+ 1243 0006 F040      		sbci r31,hi8(-(matrix))
+ 1244 0008 2081      		ld r18,Z
+ 1245 000a 30E0      		ldi r19,0
+ 340:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1246               		.loc 1 340 43 view .LVU297
+ 1247 000c 81E0      		ldi r24,lo8(1)
+ 1248 000e 90E0      		ldi r25,0
+ 1249               	.LVL81:
+ 340:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1250               		.loc 1 340 43 view .LVU298
+ 1251 0010 00C0      		rjmp 2f
+ 1252               		1:
+ 1253 0012 880F      		lsl r24
+ 1254 0014 991F      		rol r25
+ 1255               		2:
+ 1256 0016 6A95      		dec r22
+ 1257 0018 02F4      		brpl 1b
+ 340:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1258               		.loc 1 340 25 view .LVU299
+ 1259 001a 2823      		and r18,r24
+ 1260 001c 3923      		and r19,r25
+ 1261 001e 81E0      		ldi r24,lo8(1)
+ 1262 0020 232B      		or r18,r19
+ 1263 0022 01F4      		brne .L69
+ 1264 0024 80E0      		ldi r24,0
+ 1265               	.L69:
+ 1266               	/* epilogue start */
+ 341:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1267               		.loc 1 341 1 view .LVU300
+ 1268 0026 0895      		ret
+ 1269               		.cfi_endproc
+ 1270               	.LFE132:
+ 1272               		.section	.text.matrix_get_row,"ax",@progbits
+ 1273               	.global	matrix_get_row
+ 1275               	matrix_get_row:
+ 1276               	.LVL82:
+ 1277               	.LFB133:
+ 345:keyboards/crkbd/rev1/legacy/matrix.c ****     return matrix[row];
+ 1278               		.loc 1 345 1 is_stmt 1 view -0
+ 1279               		.cfi_startproc
+ 1280               	/* prologue: function */
+ 1281               	/* frame size = 0 */
+ 1282               	/* stack size = 0 */
+ 1283               	.L__stack_usage = 0
+ 346:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1284               		.loc 1 346 5 view .LVU302
+ 346:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1285               		.loc 1 346 18 is_stmt 0 view .LVU303
+ 1286 0000 E82F      		mov r30,r24
+ 1287 0002 F0E0      		ldi r31,0
+ 1288 0004 E050      		subi r30,lo8(-(matrix))
+ 1289 0006 F040      		sbci r31,hi8(-(matrix))
+ 347:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1290               		.loc 1 347 1 view .LVU304
+ 1291 0008 8081      		ld r24,Z
+ 1292               	.LVL83:
+ 1293               	/* epilogue start */
+ 347:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1294               		.loc 1 347 1 view .LVU305
+ 1295 000a 0895      		ret
+ 1296               		.cfi_endproc
+ 1297               	.LFE133:
+ 1299               		.section	.text.matrix_print,"ax",@progbits
+ 1300               	.global	matrix_print
+ 1302               	matrix_print:
+ 1303               	.LFB134:
+ 350:keyboards/crkbd/rev1/legacy/matrix.c ****     print("\nr/c 0123456789ABCDEF\n");
+ 1304               		.loc 1 350 1 is_stmt 1 view -0
+ 1305               		.cfi_startproc
+ 1306               	/* prologue: function */
+ 1307               	/* frame size = 0 */
+ 1308               	/* stack size = 0 */
+ 1309               	.L__stack_usage = 0
+ 351:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+ 1310               		.loc 1 351 38 view .LVU307
+ 352:keyboards/crkbd/rev1/legacy/matrix.c ****         phex(row); print(": ");
+ 1311               		.loc 1 352 5 view .LVU308
+ 352:keyboards/crkbd/rev1/legacy/matrix.c ****         phex(row); print(": ");
+ 1312               		.loc 1 352 10 view .LVU309
+ 1313               	.LVL84:
+ 352:keyboards/crkbd/rev1/legacy/matrix.c ****         phex(row); print(": ");
+ 1314               		.loc 1 352 27 view .LVU310
+ 1315               	/* epilogue start */
+ 357:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1316               		.loc 1 357 1 is_stmt 0 view .LVU311
+ 1317 0000 0895      		ret
+ 1318               		.cfi_endproc
+ 1319               	.LFE134:
+ 1321               		.section	.text.matrix_key_count,"ax",@progbits
+ 1322               	.global	matrix_key_count
+ 1324               	matrix_key_count:
+ 1325               	.LFB135:
+ 360:keyboards/crkbd/rev1/legacy/matrix.c ****     uint8_t count = 0;
+ 1326               		.loc 1 360 1 is_stmt 1 view -0
+ 1327               		.cfi_startproc
+ 1328 0000 0F93      		push r16
+ 1329               	.LCFI21:
+ 1330               		.cfi_def_cfa_offset 3
+ 1331               		.cfi_offset 16, -2
+ 1332 0002 1F93      		push r17
+ 1333               	.LCFI22:
+ 1334               		.cfi_def_cfa_offset 4
+ 1335               		.cfi_offset 17, -3
+ 1336 0004 CF93      		push r28
+ 1337               	.LCFI23:
+ 1338               		.cfi_def_cfa_offset 5
+ 1339               		.cfi_offset 28, -4
+ 1340               	/* prologue: function */
+ 1341               	/* frame size = 0 */
+ 1342               	/* stack size = 3 */
+ 1343               	.L__stack_usage = 3
+ 361:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+ 1344               		.loc 1 361 5 view .LVU313
+ 1345               	.LVL85:
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 1346               		.loc 1 362 5 view .LVU314
+ 1347               	.LBB65:
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 1348               		.loc 1 362 10 view .LVU315
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 1349               		.loc 1 362 25 view .LVU316
+ 1350 0006 00E0      		ldi r16,lo8(matrix)
+ 1351 0008 10E0      		ldi r17,hi8(matrix)
+ 1352               	.LBE65:
+ 361:keyboards/crkbd/rev1/legacy/matrix.c ****     for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+ 1353               		.loc 1 361 13 is_stmt 0 view .LVU317
+ 1354 000a C0E0      		ldi r28,0
+ 1355               	.LVL86:
+ 1356               	.L73:
+ 1357               	.LBB66:
+ 363:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1358               		.loc 1 363 9 is_stmt 1 discriminator 3 view .LVU318
+ 363:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1359               		.loc 1 363 33 is_stmt 0 discriminator 3 view .LVU319
+ 1360 000c F801      		movw r30,r16
+ 1361 000e 8191      		ld r24,Z+
+ 1362 0010 8F01      		movw r16,r30
+ 1363               	.LVL87:
+ 363:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1364               		.loc 1 363 18 discriminator 3 view .LVU320
+ 1365 0012 90E0      		ldi r25,0
+ 1366 0014 0E94 0000 		call bitpop16
+ 1367               	.LVL88:
+ 363:keyboards/crkbd/rev1/legacy/matrix.c ****     }
+ 1368               		.loc 1 363 15 discriminator 3 view .LVU321
+ 1369 0018 C80F      		add r28,r24
+ 1370               	.LVL89:
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 1371               		.loc 1 362 42 is_stmt 1 discriminator 3 view .LVU322
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 1372               		.loc 1 362 25 discriminator 3 view .LVU323
+ 362:keyboards/crkbd/rev1/legacy/matrix.c ****         count += bitpop16(matrix[i]);
+ 1373               		.loc 1 362 5 is_stmt 0 discriminator 3 view .LVU324
+ 1374 001a F0E0      		ldi r31,hi8(matrix+8)
+ 1375 001c 0030      		cpi r16,lo8(matrix+8)
+ 1376 001e 1F07      		cpc r17,r31
+ 1377 0020 01F4      		brne .L73
+ 1378               	.LBE66:
+ 365:keyboards/crkbd/rev1/legacy/matrix.c **** }
+ 1379               		.loc 1 365 5 is_stmt 1 view .LVU325
+ 366:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1380               		.loc 1 366 1 is_stmt 0 view .LVU326
+ 1381 0022 8C2F      		mov r24,r28
+ 1382               	/* epilogue start */
+ 1383 0024 CF91      		pop r28
+ 1384               	.LVL90:
+ 366:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1385               		.loc 1 366 1 view .LVU327
+ 1386 0026 1F91      		pop r17
+ 1387 0028 0F91      		pop r16
+ 1388               	.LVL91:
+ 366:keyboards/crkbd/rev1/legacy/matrix.c **** 
+ 1389               		.loc 1 366 1 view .LVU328
+ 1390 002a 0895      		ret
+ 1391               		.cfi_endproc
+ 1392               	.LFE135:
+ 1394               		.section	.bss.matrix_debouncing,"aw",@nobits
+ 1397               	matrix_debouncing:
+ 1398 0000 0000 0000 		.zero	8
+ 1398      0000 0000 
+ 1399               		.section	.bss.matrix,"aw",@nobits
+ 1402               	matrix:
+ 1403 0000 0000 0000 		.zero	8
+ 1403      0000 0000 
+ 1404               		.section	.rodata.col_pins,"a"
+ 1407               	col_pins:
+ 1408 0000 F4        		.byte	-12
+ 1409 0001 F5        		.byte	-11
+ 1410 0002 F6        		.byte	-10
+ 1411 0003 F7        		.byte	-9
+ 1412 0004 31        		.byte	49
+ 1413 0005 33        		.byte	51
+ 1414               		.section	.rodata.row_pins,"a"
+ 1417               	row_pins:
+ 1418 0000 94        		.byte	-108
+ 1419 0001 66        		.byte	102
+ 1420 0002 97        		.byte	-105
+ 1421 0003 C6        		.byte	-58
+ 1422 0004 0000 0000 		.zero	4
+ 1423               	.global	is_master
+ 1424               		.section	.bss.is_master,"aw",@nobits
+ 1427               	is_master:
+ 1428 0000 00        		.zero	1
+ 1429               		.section	.bss.error_count,"aw",@nobits
+ 1432               	error_count:
+ 1433 0000 00        		.zero	1
+ 1434               		.section	.data.debouncing,"aw"
+ 1437               	debouncing:
+ 1438 0000 05        		.byte	5
+ 1439               		.text
+ 1440               	.Letext0:
+ 1441               		.file 3 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
+ 1442               		.file 4 "c:\\msys64\\mingw64\\lib\\gcc\\avr\\8.4.0\\include\\stddef.h"
+ 1443               		.file 5 "tmk_core/common/debug.h"
+ 1444               		.file 6 "tmk_core/common/matrix.h"
+ 1445               		.file 7 "keyboards/crkbd/rev1/legacy/split_util.h"
+ 1446               		.file 8 "tmk_core/common/action.h"
+ 1447               		.file 9 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../StdRequestType.h"
+ 1448               		.file 10 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../DeviceStandardReq.h"
+ 1449               		.file 11 "lib/lufa/LUFA/Drivers/USB/Core/USBTask.h"
+ 1450               		.file 12 "lib/lufa/LUFA/Drivers/USB/Core/HostStandardReq.h"
+ 1451               		.file 13 "c:\\msys64\\mingw64\\avr\\include\\stdio.h"
+ 1452               		.file 14 "tmk_core/common/report.h"
+ 1453               		.file 15 "tmk_core/common/host.h"
+ 1454               		.file 16 "quantum/keycode_config.h"
+ 1455               		.file 17 "quantum/keymap.h"
+ 1456               		.file 18 "tmk_core/common/action_layer.h"
+ 1457               		.file 19 "tmk_core/common/timer.h"
+ 1458               		.file 20 "tmk_core/common/action_util.h"
+ 1459               		.file 21 "c:\\msys64\\mingw64\\avr\\include\\stdlib.h"
+ 1460               		.file 22 "quantum/process_keycode/process_tap_dance.h"
+ 1461               		.file 23 "quantum/quantum.h"
+ 1462               		.file 24 "keyboards/crkbd/rev1/legacy/split_scomm.h"
+ 1463               		.file 25 "tmk_core/common/util.h"
+ 1464               		.file 26 "c:\\msys64\\mingw64\\avr\\include\\string.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 matrix.c
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:12     .text.unselect_rows:0000000000000000 unselect_rows
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1417   .rodata.row_pins:0000000000000000 row_pins
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:91     .text.matrix_init_user:0000000000000000 matrix_init_user
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:91     .text.matrix_init_user:0000000000000000 matrix_init_user.localalias.0
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:109    .text.matrix_init_kb:0000000000000000 matrix_init_kb
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:126    .text.matrix_scan_user:0000000000000000 matrix_scan_user
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:141    .text.matrix_scan_kb:0000000000000000 matrix_scan_kb
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:158    .text.matrix_rows:0000000000000000 matrix_rows
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:177    .text.matrix_cols:0000000000000000 matrix_cols
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:196    .text.tx_rx_leds_init:0000000000000000 tx_rx_leds_init
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:221    .text.tx_led_on:0000000000000000 tx_led_on
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:240    .text.tx_led_off:0000000000000000 tx_led_off
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:259    .text.rx_led_on:0000000000000000 rx_led_on
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:278    .text.rx_led_off:0000000000000000 rx_led_off
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:297    .text.matrix_init:0000000000000000 matrix_init
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1407   .rodata.col_pins:0000000000000000 col_pins
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1402   .bss.matrix:0000000000000000 matrix
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1397   .bss.matrix_debouncing:0000000000000000 matrix_debouncing
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1427   .bss.is_master:0000000000000000 is_master
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:413    .text._matrix_scan:0000000000000000 _matrix_scan
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1437   .data.debouncing:0000000000000000 debouncing
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:783    .text.serial_transaction:0000000000000000 serial_transaction
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:884    .text.matrix_slave_scan:0000000000000000 matrix_slave_scan
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:967    .text.matrix_scan:0000000000000000 matrix_scan
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1432   .bss.error_count:0000000000000000 error_count
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1205   .text.matrix_is_modified:0000000000000000 matrix_is_modified
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1229   .text.matrix_is_on:0000000000000000 matrix_is_on
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1275   .text.matrix_get_row:0000000000000000 matrix_get_row
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1302   .text.matrix_print:0000000000000000 matrix_print
+C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1324   .text.matrix_key_count:0000000000000000 matrix_key_count
+
+UNDEFINED SYMBOLS
+split_keyboard_setup
+has_usb
+matrix_init_quantum
+isLeftHand
+serial_update_buffers
+serial_slave_buffer
+slave_buffer_change_count
+serial_master_buffer
+memcmp
+matrix_scan_quantum
+bitpop16
+__do_copy_data
+__do_clear_bss

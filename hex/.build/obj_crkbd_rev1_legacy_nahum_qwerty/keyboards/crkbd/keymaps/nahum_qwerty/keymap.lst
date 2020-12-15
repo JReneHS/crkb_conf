@@ -1,0 +1,1618 @@
+   1               		.file	"keymap.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.text.oled_init_user,"ax",@progbits
+  11               	.global	oled_init_user
+  13               	oled_init_user:
+  14               	.LVL0:
+  15               	.LFB117:
+  16               		.file 1 "keyboards/crkbd/keymaps/nahum_qwerty/keymap.c"
+   1:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+   2:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+   3:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #include QMK_KEYBOARD_H
+   4:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+   5:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** extern keymap_config_t keymap_config;
+   6:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+   7:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #ifdef RGBLIGHT_ENABLE
+   8:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** //Following line allows macro to read current RGB settings
+   9:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** extern rgblight_config_t rgblight_config;
+  10:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #endif
+  11:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  12:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #ifdef OLED_DRIVER_ENABLE
+  13:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** static uint32_t oled_timer = 0;
+  14:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #endif
+  15:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  16:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** extern uint8_t is_master;
+  17:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  18:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // Each layer gets a name for readability, which is then used in the keymap matrix below.
+  19:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // The underscores don't mean anything - you can have a layer called STUFF or any other name.
+  20:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // Layer names don't all need to be of the same length, obviously, and you can also skip them
+  21:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // entirely and just use numbers.
+  22:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** enum layers {
+  23:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     _QWERTY,
+  24:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     _LOWER,
+  25:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     _RAISE,
+  26:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** };
+  27:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  28:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // Custom keycodes for layer keys
+  29:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // Dual function escape with left command
+  30:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  31:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  32:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** enum custom_keycodes {
+  33:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     QWERTY = SAFE_RANGE,
+  34:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     LOWER,
+  35:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     RAISE,
+  36:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** };
+  37:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  38:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** enum {
+  39:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     TD_TAB,
+  40:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     TD_CAPLOCK,
+  41:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     TD_ALT,
+  42:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** };
+  43:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  44:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  45:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     [_QWERTY] = LAYOUT(
+  46:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|-----------------------------------------------------|                    |-------------------
+  47:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     TD(TD_TAB),  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,   
+  48:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
+  49:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** TD(TD_CAPLOCK), KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,   
+  50:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //---------+--------+--------+--------+--------+--------|                    |--------+--------+-
+  51:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     KC_LCTL,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                           KC_N,    KC_M,  K
+  52:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //---------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+-
+  53:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****                                         KC_LGUI,   LOWER, KC_SPC,       KC_ENT, RAISE, TD(TD_ALT)
+  54:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****                                       //|--------------------------|  |--------------------------|
+  55:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  56:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  57:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     ),
+  58:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  59:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     [_LOWER] = LAYOUT(
+  60:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|-----------------------------------------------------|                    |-------------------
+  61:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     KC_ESC,   KC_CUT,   KC_COPY, KC_PSTE, KC_UNDO,  KC_AGIN,                     KC_RPRN, KC_RCBR, 
+  62:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
+  63:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     KC_MPLY,  KC_MUTE, KC_VOLD,  KC_VOLU, KC_BRID, KC_BRIU,                      KC_ASTR , KC_CIRC,
+  64:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
+  65:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     KC_MPRV,  KC_MNXT,  KC_MSTP,  KC_NO,   KC_NO, KC_NO,                        KC_APP , KC_LEFT, K
+  66:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+-
+  67:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****                                         KC_LGUI, KC_TRNS, KC_SPC,        KC_ENT, RAISE, TD(TD_ALT)
+  68:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****                                       //|--------------------------|  |--------------------------|
+  69:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     ),
+  70:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  71:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     [_RAISE] = LAYOUT(
+  72:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|-----------------------------------------------------|                    |-------------------
+  73:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     KC_F1,    KC_F2,     KC_F3,   KC_F4,   KC_F5,   KC_F6,                        KC_LPRN, KC_LCBR,
+  74:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
+  75:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,                       KC_DLR, KC_AMPR, KC
+  76:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
+  77:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     RESET,    KC_NO,   KC_NO,   KC_MYCM, KC_CALC, KC_PSCR,                       KC_TILD, KC_HASH, 
+  78:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+-
+  79:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****                                         KC_LGUI, LOWER,    KC_SPC,      KC_ENT, KC_TRNS, TD(TD_ALT)
+  80:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****                                       //|--------------------------|  |--------------------------|
+  81:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     )
+  82:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** };
+  83:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  84:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  85:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** // Tap Dance definitions
+  86:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** qk_tap_dance_action_t tap_dance_actions[] = {
+  87:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     // Tap once for ;, twice for :
+  88:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     [TD_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
+  89:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     [TD_CAPLOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
+  90:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     [TD_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_LALT),
+  91:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** };
+  92:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  93:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** int RGB_current_mode;
+  94:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  95:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #ifdef OLED_DRIVER_ENABLE
+  96:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
+  17               		.loc 1 96 58 view -0
+  18               		.cfi_startproc
+  19               	/* prologue: function */
+  20               	/* frame size = 0 */
+  21               	/* stack size = 0 */
+  22               	.L__stack_usage = 0
+  23               		.loc 1 96 60 view .LVU1
+  24               		.loc 1 96 1 is_stmt 0 view .LVU2
+  25 0000 83E0      		ldi r24,lo8(3)
+  26               	.LVL1:
+  27               	/* epilogue start */
+  28               		.loc 1 96 1 view .LVU3
+  29 0002 0895      		ret
+  30               		.cfi_endproc
+  31               	.LFE117:
+  33               		.section	.text.render_space,"ax",@progbits
+  34               	.global	render_space
+  36               	render_space:
+  37               	.LFB118:
+  97:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+  98:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_space(void) {
+  38               		.loc 1 98 25 is_stmt 1 view -0
+  39               		.cfi_startproc
+  40               	/* prologue: function */
+  41               	/* frame size = 0 */
+  42               	/* stack size = 0 */
+  43               	.L__stack_usage = 0
+  99:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     oled_write_P(PSTR("     "), false);
+  44               		.loc 1 99 5 view .LVU5
+  45               	.LBB2:
+  46               		.loc 1 99 18 view .LVU6
+  47               		.loc 1 99 18 view .LVU7
+  48               	.LBE2:
+  49               		.loc 1 99 5 is_stmt 0 view .LVU8
+  50 0000 60E0      		ldi r22,0
+  51 0002 80E0      		ldi r24,lo8(__c.6194)
+  52 0004 90E0      		ldi r25,hi8(__c.6194)
+  53 0006 0C94 0000 		jmp oled_write_P
+  54               	.LVL2:
+  55               		.cfi_endproc
+  56               	.LFE118:
+  58               		.section	.text.render_mod_status_gui_alt,"ax",@progbits
+  59               	.global	render_mod_status_gui_alt
+  61               	render_mod_status_gui_alt:
+  62               	.LVL3:
+  63               	.LFB119:
+ 100:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 101:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 102:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_mod_status_gui_alt(uint8_t modifiers) {
+  64               		.loc 1 102 51 is_stmt 1 view -0
+  65               		.cfi_startproc
+  66               		.loc 1 102 51 is_stmt 0 view .LVU10
+  67 0000 CF93      		push r28
+  68               	.LCFI0:
+  69               		.cfi_def_cfa_offset 3
+  70               		.cfi_offset 28, -2
+  71 0002 DF93      		push r29
+  72               	.LCFI1:
+  73               		.cfi_def_cfa_offset 4
+  74               		.cfi_offset 29, -3
+  75               	/* prologue: function */
+  76               	/* frame size = 0 */
+  77               	/* stack size = 2 */
+  78               	.L__stack_usage = 2
+ 103:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM gui_off_1[] = {0x85, 0x86, 0};
+  79               		.loc 1 103 5 is_stmt 1 view .LVU11
+ 104:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM gui_off_2[] = {0xa5, 0xa6, 0};
+  80               		.loc 1 104 5 view .LVU12
+ 105:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM gui_on_1[] = {0x8d, 0x8e, 0};
+  81               		.loc 1 105 5 view .LVU13
+ 106:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM gui_on_2[] = {0xad, 0xae, 0};
+  82               		.loc 1 106 5 view .LVU14
+ 107:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 108:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM alt_off_1[] = {0x87, 0x88, 0};
+  83               		.loc 1 108 5 view .LVU15
+ 109:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM alt_off_2[] = {0xa7, 0xa8, 0};
+  84               		.loc 1 109 5 view .LVU16
+ 110:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};
+  85               		.loc 1 110 5 view .LVU17
+ 111:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM alt_on_2[] = {0xaf, 0xb0, 0};
+  86               		.loc 1 111 5 view .LVU18
+ 112:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 113:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     // fillers between the modifier icons bleed into the icon frames
+ 114:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_off_1[] = {0xc5, 0};
+  87               		.loc 1 114 5 view .LVU19
+ 115:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_off_2[] = {0xc6, 0};
+  88               		.loc 1 115 5 view .LVU20
+ 116:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_off_1[] = {0xc7, 0};
+  89               		.loc 1 116 5 view .LVU21
+ 117:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_off_2[] = {0xc8, 0};
+  90               		.loc 1 117 5 view .LVU22
+ 118:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_on_1[] = {0xc9, 0};
+  91               		.loc 1 118 5 view .LVU23
+ 119:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_on_2[] = {0xca, 0};
+  92               		.loc 1 119 5 view .LVU24
+ 120:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_on_1[] = {0xcb, 0};
+  93               		.loc 1 120 5 view .LVU25
+ 121:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_on_2[] = {0xcc, 0};
+  94               		.loc 1 121 5 view .LVU26
+ 122:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 123:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_GUI) {
+  95               		.loc 1 123 5 view .LVU27
+  96 0004 D82F      		mov r29,r24
+  97 0006 D878      		andi r29,lo8(-120)
+  98 0008 C82F      		mov r28,r24
+  99 000a C474      		andi r28,lo8(68)
+ 124:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(gui_on_1, false);
+ 100               		.loc 1 124 9 is_stmt 0 view .LVU28
+ 101 000c 60E0      		ldi r22,0
+ 123:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(gui_on_1, false);
+ 102               		.loc 1 123 7 view .LVU29
+ 103 000e DD23      		tst r29
+ 104 0010 01F0      		breq .L4
+ 105               		.loc 1 124 9 is_stmt 1 view .LVU30
+ 106 0012 80E0      		ldi r24,lo8(gui_on_1.6201)
+ 107 0014 90E0      		ldi r25,hi8(gui_on_1.6201)
+ 108               	.LVL4:
+ 109               		.loc 1 124 9 is_stmt 0 view .LVU31
+ 110 0016 0E94 0000 		call oled_write_P
+ 111               	.LVL5:
+ 125:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 126:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(gui_off_1, false);
+ 127:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 128:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 129:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
+ 112               		.loc 1 129 5 is_stmt 1 view .LVU32
+ 130:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 131:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_GUI) {
+ 132:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_1, false);
+ 113               		.loc 1 132 9 is_stmt 0 view .LVU33
+ 114 001a 60E0      		ldi r22,0
+ 115 001c 80E0      		ldi r24,lo8(on_off_1.6209)
+ 116 001e 90E0      		ldi r25,hi8(on_off_1.6209)
+ 129:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 117               		.loc 1 129 36 view .LVU34
+ 118 0020 CC23      		tst r28
+ 119 0022 01F0      		breq .L20
+ 130:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 120               		.loc 1 130 9 is_stmt 1 view .LVU35
+ 121 0024 60E0      		ldi r22,0
+ 122 0026 80E0      		ldi r24,lo8(on_on_1.6213)
+ 123 0028 90E0      		ldi r25,hi8(on_on_1.6213)
+ 124               	.L19:
+ 133:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_ALT) {
+ 134:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_1, false);
+ 125               		.loc 1 134 9 is_stmt 0 view .LVU36
+ 126 002a 0E94 0000 		call oled_write_P
+ 127               	.LVL6:
+ 135:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 136:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_off_1, false);
+ 137:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 138:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 139:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_ALT) {
+ 128               		.loc 1 139 5 is_stmt 1 view .LVU37
+ 140:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_on_1, false);
+ 129               		.loc 1 140 9 view .LVU38
+ 130 002e 60E0      		ldi r22,0
+ 131 0030 80E0      		ldi r24,lo8(alt_on_1.6205)
+ 132 0032 90E0      		ldi r25,hi8(alt_on_1.6205)
+ 133               	.L18:
+ 141:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 142:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_off_1, false);
+ 134               		.loc 1 142 9 is_stmt 0 view .LVU39
+ 135 0034 0E94 0000 		call oled_write_P
+ 136               	.LVL7:
+ 143:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 144:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 145:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_GUI) {
+ 137               		.loc 1 145 5 is_stmt 1 view .LVU40
+ 146:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(gui_on_2, false);
+ 138               		.loc 1 146 9 is_stmt 0 view .LVU41
+ 139 0038 60E0      		ldi r22,0
+ 145:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(gui_on_2, false);
+ 140               		.loc 1 145 7 view .LVU42
+ 141 003a DD23      		tst r29
+ 142 003c 01F0      		breq .L11
+ 143               		.loc 1 146 9 is_stmt 1 view .LVU43
+ 144 003e 80E0      		ldi r24,lo8(gui_on_2.6202)
+ 145 0040 90E0      		ldi r25,hi8(gui_on_2.6202)
+ 146 0042 0E94 0000 		call oled_write_P
+ 147               	.LVL8:
+ 147:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 148:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(gui_off_2, false);
+ 149:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 150:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 151:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if (modifiers & MOD_MASK_GUI & MOD_MASK_ALT) {
+ 148               		.loc 1 151 5 view .LVU44
+ 152:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_2, false);
+ 153:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_GUI) {
+ 149               		.loc 1 153 12 view .LVU45
+ 154:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_2, false);
+ 150               		.loc 1 154 9 view .LVU46
+ 151 0046 60E0      		ldi r22,0
+ 152 0048 80E0      		ldi r24,lo8(on_off_2.6210)
+ 153 004a 90E0      		ldi r25,hi8(on_off_2.6210)
+ 154 004c 0E94 0000 		call oled_write_P
+ 155               	.LVL9:
+ 155:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_ALT) {
+ 156:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_2, false);
+ 157:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 158:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_off_2, false);
+ 159:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 160:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 161:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_ALT) {
+ 156               		.loc 1 161 5 view .LVU47
+ 157               		.loc 1 161 7 is_stmt 0 view .LVU48
+ 158 0050 C111      		cpse r28,__zero_reg__
+ 159 0052 00C0      		rjmp .L12
+ 160               	.L13:
+ 162:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_on_2, false);
+ 163:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 164:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_off_2, false);
+ 161               		.loc 1 164 9 is_stmt 1 view .LVU49
+ 162 0054 60E0      		ldi r22,0
+ 163 0056 80E0      		ldi r24,lo8(alt_off_2.6204)
+ 164 0058 90E0      		ldi r25,hi8(alt_off_2.6204)
+ 165 005a 00C0      		rjmp .L21
+ 166               	.LVL10:
+ 167               	.L4:
+ 126:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 168               		.loc 1 126 9 view .LVU50
+ 169 005c 80E0      		ldi r24,lo8(gui_off_1.6199)
+ 170 005e 90E0      		ldi r25,hi8(gui_off_1.6199)
+ 171               	.LVL11:
+ 126:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 172               		.loc 1 126 9 is_stmt 0 view .LVU51
+ 173 0060 0E94 0000 		call oled_write_P
+ 174               	.LVL12:
+ 129:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 175               		.loc 1 129 5 is_stmt 1 view .LVU52
+ 131:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_1, false);
+ 176               		.loc 1 131 12 view .LVU53
+ 133:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_1, false);
+ 177               		.loc 1 133 12 view .LVU54
+ 133:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_1, false);
+ 178               		.loc 1 133 14 is_stmt 0 view .LVU55
+ 179 0064 C111      		cpse r28,__zero_reg__
+ 180 0066 00C0      		rjmp .L7
+ 136:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 181               		.loc 1 136 9 is_stmt 1 view .LVU56
+ 182 0068 60E0      		ldi r22,0
+ 183 006a 80E0      		ldi r24,lo8(off_off_1.6207)
+ 184 006c 90E0      		ldi r25,hi8(off_off_1.6207)
+ 185               	.L20:
+ 186 006e 0E94 0000 		call oled_write_P
+ 187               	.LVL13:
+ 139:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_on_1, false);
+ 188               		.loc 1 139 5 view .LVU57
+ 142:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 189               		.loc 1 142 9 view .LVU58
+ 190 0072 60E0      		ldi r22,0
+ 191 0074 80E0      		ldi r24,lo8(alt_off_1.6203)
+ 192 0076 90E0      		ldi r25,hi8(alt_off_1.6203)
+ 193 0078 00C0      		rjmp .L18
+ 194               	.L7:
+ 134:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 195               		.loc 1 134 9 view .LVU59
+ 196 007a 60E0      		ldi r22,0
+ 197 007c 80E0      		ldi r24,lo8(off_on_1.6211)
+ 198 007e 90E0      		ldi r25,hi8(off_on_1.6211)
+ 199 0080 00C0      		rjmp .L19
+ 200               	.L11:
+ 148:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 201               		.loc 1 148 9 view .LVU60
+ 202 0082 80E0      		ldi r24,lo8(gui_off_2.6200)
+ 203 0084 90E0      		ldi r25,hi8(gui_off_2.6200)
+ 204 0086 0E94 0000 		call oled_write_P
+ 205               	.LVL14:
+ 151:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_2, false);
+ 206               		.loc 1 151 5 view .LVU61
+ 153:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_2, false);
+ 207               		.loc 1 153 12 view .LVU62
+ 155:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_2, false);
+ 208               		.loc 1 155 12 view .LVU63
+ 156:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 209               		.loc 1 156 9 is_stmt 0 view .LVU64
+ 210 008a 60E0      		ldi r22,0
+ 155:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_2, false);
+ 211               		.loc 1 155 14 view .LVU65
+ 212 008c CC23      		tst r28
+ 213 008e 01F0      		breq .L14
+ 156:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 214               		.loc 1 156 9 is_stmt 1 view .LVU66
+ 215 0090 80E0      		ldi r24,lo8(off_on_2.6212)
+ 216 0092 90E0      		ldi r25,hi8(off_on_2.6212)
+ 217 0094 0E94 0000 		call oled_write_P
+ 218               	.LVL15:
+ 161:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_on_2, false);
+ 219               		.loc 1 161 5 view .LVU67
+ 220               	.L12:
+ 162:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 221               		.loc 1 162 9 view .LVU68
+ 222 0098 60E0      		ldi r22,0
+ 223 009a 80E0      		ldi r24,lo8(alt_on_2.6206)
+ 224 009c 90E0      		ldi r25,hi8(alt_on_2.6206)
+ 225               	.L21:
+ 226               	/* epilogue start */
+ 165:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 166:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 227               		.loc 1 166 1 is_stmt 0 view .LVU69
+ 228 009e DF91      		pop r29
+ 229 00a0 CF91      		pop r28
+ 164:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 230               		.loc 1 164 9 view .LVU70
+ 231 00a2 0C94 0000 		jmp oled_write_P
+ 232               	.LVL16:
+ 233               	.L14:
+ 158:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 234               		.loc 1 158 9 is_stmt 1 view .LVU71
+ 235 00a6 80E0      		ldi r24,lo8(off_off_2.6208)
+ 236 00a8 90E0      		ldi r25,hi8(off_off_2.6208)
+ 237 00aa 0E94 0000 		call oled_write_P
+ 238               	.LVL17:
+ 161:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(alt_on_2, false);
+ 239               		.loc 1 161 5 view .LVU72
+ 240 00ae 00C0      		rjmp .L13
+ 241               		.cfi_endproc
+ 242               	.LFE119:
+ 244               		.section	.text.render_mod_status_ctrl_shift,"ax",@progbits
+ 245               	.global	render_mod_status_ctrl_shift
+ 247               	render_mod_status_ctrl_shift:
+ 248               	.LVL18:
+ 249               	.LFB120:
+ 167:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 168:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 169:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_mod_status_ctrl_shift(uint8_t modifiers) {
+ 250               		.loc 1 169 54 view -0
+ 251               		.cfi_startproc
+ 252               		.loc 1 169 54 is_stmt 0 view .LVU74
+ 253 0000 CF93      		push r28
+ 254               	.LCFI2:
+ 255               		.cfi_def_cfa_offset 3
+ 256               		.cfi_offset 28, -2
+ 257 0002 DF93      		push r29
+ 258               	.LCFI3:
+ 259               		.cfi_def_cfa_offset 4
+ 260               		.cfi_offset 29, -3
+ 261               	/* prologue: function */
+ 262               	/* frame size = 0 */
+ 263               	/* stack size = 2 */
+ 264               	.L__stack_usage = 2
+ 170:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
+ 265               		.loc 1 170 5 is_stmt 1 view .LVU75
+ 171:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM ctrl_off_2[] = {0xa9, 0xaa, 0};
+ 266               		.loc 1 171 5 view .LVU76
+ 172:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM ctrl_on_1[] = {0x91, 0x92, 0};
+ 267               		.loc 1 172 5 view .LVU77
+ 173:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM ctrl_on_2[] = {0xb1, 0xb2, 0};
+ 268               		.loc 1 173 5 view .LVU78
+ 174:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 175:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM shift_off_1[] = {0x8b, 0x8c, 0};
+ 269               		.loc 1 175 5 view .LVU79
+ 176:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM shift_off_2[] = {0xab, 0xac, 0};
+ 270               		.loc 1 176 5 view .LVU80
+ 177:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM shift_on_1[] = {0xcd, 0xce, 0};
+ 271               		.loc 1 177 5 view .LVU81
+ 178:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM shift_on_2[] = {0xcf, 0xd0, 0};
+ 272               		.loc 1 178 5 view .LVU82
+ 179:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 180:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     // fillers between the modifier icons bleed into the icon frames
+ 181:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_off_1[] = {0xc5, 0};
+ 273               		.loc 1 181 5 view .LVU83
+ 182:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_off_2[] = {0xc6, 0};
+ 274               		.loc 1 182 5 view .LVU84
+ 183:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_off_1[] = {0xc7, 0};
+ 275               		.loc 1 183 5 view .LVU85
+ 184:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_off_2[] = {0xc8, 0};
+ 276               		.loc 1 184 5 view .LVU86
+ 185:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_on_1[] = {0xc9, 0};
+ 277               		.loc 1 185 5 view .LVU87
+ 186:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM off_on_2[] = {0xca, 0};
+ 278               		.loc 1 186 5 view .LVU88
+ 187:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_on_1[] = {0xcb, 0};
+ 279               		.loc 1 187 5 view .LVU89
+ 188:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM on_on_2[] = {0xcc, 0};
+ 280               		.loc 1 188 5 view .LVU90
+ 189:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 190:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_CTRL) {
+ 281               		.loc 1 190 5 view .LVU91
+ 282 0004 D82F      		mov r29,r24
+ 283 0006 D171      		andi r29,lo8(17)
+ 284 0008 C82F      		mov r28,r24
+ 285 000a C272      		andi r28,lo8(34)
+ 191:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(ctrl_on_1, false);
+ 286               		.loc 1 191 9 is_stmt 0 view .LVU92
+ 287 000c 60E0      		ldi r22,0
+ 190:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(ctrl_on_1, false);
+ 288               		.loc 1 190 7 view .LVU93
+ 289 000e DD23      		tst r29
+ 290 0010 01F0      		breq .L23
+ 291               		.loc 1 191 9 is_stmt 1 view .LVU94
+ 292 0012 80E0      		ldi r24,lo8(ctrl_on_1.6220)
+ 293 0014 90E0      		ldi r25,hi8(ctrl_on_1.6220)
+ 294               	.LVL19:
+ 295               		.loc 1 191 9 is_stmt 0 view .LVU95
+ 296 0016 0E94 0000 		call oled_write_P
+ 297               	.LVL20:
+ 192:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 193:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(ctrl_off_1, false);
+ 194:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 195:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 196:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
+ 298               		.loc 1 196 5 is_stmt 1 view .LVU96
+ 197:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 198:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_CTRL) {
+ 199:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_1, false);
+ 299               		.loc 1 199 9 is_stmt 0 view .LVU97
+ 300 001a 60E0      		ldi r22,0
+ 301 001c 80E0      		ldi r24,lo8(on_off_1.6228)
+ 302 001e 90E0      		ldi r25,hi8(on_off_1.6228)
+ 196:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 303               		.loc 1 196 37 view .LVU98
+ 304 0020 CC23      		tst r28
+ 305 0022 01F0      		breq .L39
+ 197:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 306               		.loc 1 197 9 is_stmt 1 view .LVU99
+ 307 0024 60E0      		ldi r22,0
+ 308 0026 80E0      		ldi r24,lo8(on_on_1.6232)
+ 309 0028 90E0      		ldi r25,hi8(on_on_1.6232)
+ 310               	.L38:
+ 200:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_SHIFT) {
+ 201:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_1, false);
+ 311               		.loc 1 201 9 is_stmt 0 view .LVU100
+ 312 002a 0E94 0000 		call oled_write_P
+ 313               	.LVL21:
+ 202:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 203:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_off_1, false);
+ 204:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 205:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 206:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_SHIFT) {
+ 314               		.loc 1 206 5 is_stmt 1 view .LVU101
+ 207:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_on_1, false);
+ 315               		.loc 1 207 9 view .LVU102
+ 316 002e 60E0      		ldi r22,0
+ 317 0030 80E0      		ldi r24,lo8(shift_on_1.6224)
+ 318 0032 90E0      		ldi r25,hi8(shift_on_1.6224)
+ 319               	.L37:
+ 208:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 209:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_off_1, false);
+ 320               		.loc 1 209 9 is_stmt 0 view .LVU103
+ 321 0034 0E94 0000 		call oled_write_P
+ 322               	.LVL22:
+ 210:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 211:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 212:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_CTRL) {
+ 323               		.loc 1 212 5 is_stmt 1 view .LVU104
+ 213:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(ctrl_on_2, false);
+ 324               		.loc 1 213 9 is_stmt 0 view .LVU105
+ 325 0038 60E0      		ldi r22,0
+ 212:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(ctrl_on_2, false);
+ 326               		.loc 1 212 7 view .LVU106
+ 327 003a DD23      		tst r29
+ 328 003c 01F0      		breq .L30
+ 329               		.loc 1 213 9 is_stmt 1 view .LVU107
+ 330 003e 80E0      		ldi r24,lo8(ctrl_on_2.6221)
+ 331 0040 90E0      		ldi r25,hi8(ctrl_on_2.6221)
+ 332 0042 0E94 0000 		call oled_write_P
+ 333               	.LVL23:
+ 214:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 215:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(ctrl_off_2, false);
+ 216:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 217:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 218:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if (modifiers & MOD_MASK_CTRL & MOD_MASK_SHIFT) {
+ 334               		.loc 1 218 5 view .LVU108
+ 219:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_2, false);
+ 220:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_CTRL) {
+ 335               		.loc 1 220 12 view .LVU109
+ 221:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_2, false);
+ 336               		.loc 1 221 9 view .LVU110
+ 337 0046 60E0      		ldi r22,0
+ 338 0048 80E0      		ldi r24,lo8(on_off_2.6229)
+ 339 004a 90E0      		ldi r25,hi8(on_off_2.6229)
+ 340 004c 0E94 0000 		call oled_write_P
+ 341               	.LVL24:
+ 222:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(modifiers & MOD_MASK_SHIFT) {
+ 223:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_2, false);
+ 224:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 225:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_off_2, false);
+ 226:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 227:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 228:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(modifiers & MOD_MASK_SHIFT) {
+ 342               		.loc 1 228 5 view .LVU111
+ 343               		.loc 1 228 7 is_stmt 0 view .LVU112
+ 344 0050 C111      		cpse r28,__zero_reg__
+ 345 0052 00C0      		rjmp .L31
+ 346               	.L32:
+ 229:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_on_2, false);
+ 230:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 231:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_off_2, false);
+ 347               		.loc 1 231 9 is_stmt 1 view .LVU113
+ 348 0054 60E0      		ldi r22,0
+ 349 0056 80E0      		ldi r24,lo8(shift_off_2.6223)
+ 350 0058 90E0      		ldi r25,hi8(shift_off_2.6223)
+ 351 005a 00C0      		rjmp .L40
+ 352               	.LVL25:
+ 353               	.L23:
+ 193:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 354               		.loc 1 193 9 view .LVU114
+ 355 005c 80E0      		ldi r24,lo8(ctrl_off_1.6218)
+ 356 005e 90E0      		ldi r25,hi8(ctrl_off_1.6218)
+ 357               	.LVL26:
+ 193:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 358               		.loc 1 193 9 is_stmt 0 view .LVU115
+ 359 0060 0E94 0000 		call oled_write_P
+ 360               	.LVL27:
+ 196:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_1, false);
+ 361               		.loc 1 196 5 is_stmt 1 view .LVU116
+ 198:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_1, false);
+ 362               		.loc 1 198 12 view .LVU117
+ 200:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_1, false);
+ 363               		.loc 1 200 12 view .LVU118
+ 200:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_1, false);
+ 364               		.loc 1 200 14 is_stmt 0 view .LVU119
+ 365 0064 C111      		cpse r28,__zero_reg__
+ 366 0066 00C0      		rjmp .L26
+ 203:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 367               		.loc 1 203 9 is_stmt 1 view .LVU120
+ 368 0068 60E0      		ldi r22,0
+ 369 006a 80E0      		ldi r24,lo8(off_off_1.6226)
+ 370 006c 90E0      		ldi r25,hi8(off_off_1.6226)
+ 371               	.L39:
+ 372 006e 0E94 0000 		call oled_write_P
+ 373               	.LVL28:
+ 206:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_on_1, false);
+ 374               		.loc 1 206 5 view .LVU121
+ 209:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 375               		.loc 1 209 9 view .LVU122
+ 376 0072 60E0      		ldi r22,0
+ 377 0074 80E0      		ldi r24,lo8(shift_off_1.6222)
+ 378 0076 90E0      		ldi r25,hi8(shift_off_1.6222)
+ 379 0078 00C0      		rjmp .L37
+ 380               	.L26:
+ 201:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 381               		.loc 1 201 9 view .LVU123
+ 382 007a 60E0      		ldi r22,0
+ 383 007c 80E0      		ldi r24,lo8(off_on_1.6230)
+ 384 007e 90E0      		ldi r25,hi8(off_on_1.6230)
+ 385 0080 00C0      		rjmp .L38
+ 386               	.L30:
+ 215:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 387               		.loc 1 215 9 view .LVU124
+ 388 0082 80E0      		ldi r24,lo8(ctrl_off_2.6219)
+ 389 0084 90E0      		ldi r25,hi8(ctrl_off_2.6219)
+ 390 0086 0E94 0000 		call oled_write_P
+ 391               	.LVL29:
+ 218:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_on_2, false);
+ 392               		.loc 1 218 5 view .LVU125
+ 220:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(on_off_2, false);
+ 393               		.loc 1 220 12 view .LVU126
+ 222:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_2, false);
+ 394               		.loc 1 222 12 view .LVU127
+ 223:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 395               		.loc 1 223 9 is_stmt 0 view .LVU128
+ 396 008a 60E0      		ldi r22,0
+ 222:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(off_on_2, false);
+ 397               		.loc 1 222 14 view .LVU129
+ 398 008c CC23      		tst r28
+ 399 008e 01F0      		breq .L33
+ 223:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 400               		.loc 1 223 9 is_stmt 1 view .LVU130
+ 401 0090 80E0      		ldi r24,lo8(off_on_2.6231)
+ 402 0092 90E0      		ldi r25,hi8(off_on_2.6231)
+ 403 0094 0E94 0000 		call oled_write_P
+ 404               	.LVL30:
+ 228:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_on_2, false);
+ 405               		.loc 1 228 5 view .LVU131
+ 406               	.L31:
+ 229:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 407               		.loc 1 229 9 view .LVU132
+ 408 0098 60E0      		ldi r22,0
+ 409 009a 80E0      		ldi r24,lo8(shift_on_2.6225)
+ 410 009c 90E0      		ldi r25,hi8(shift_on_2.6225)
+ 411               	.L40:
+ 412               	/* epilogue start */
+ 232:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 233:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 413               		.loc 1 233 1 is_stmt 0 view .LVU133
+ 414 009e DF91      		pop r29
+ 415 00a0 CF91      		pop r28
+ 231:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 416               		.loc 1 231 9 view .LVU134
+ 417 00a2 0C94 0000 		jmp oled_write_P
+ 418               	.LVL31:
+ 419               	.L33:
+ 225:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 420               		.loc 1 225 9 is_stmt 1 view .LVU135
+ 421 00a6 80E0      		ldi r24,lo8(off_off_2.6227)
+ 422 00a8 90E0      		ldi r25,hi8(off_off_2.6227)
+ 423 00aa 0E94 0000 		call oled_write_P
+ 424               	.LVL32:
+ 228:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(shift_on_2, false);
+ 425               		.loc 1 228 5 view .LVU136
+ 426 00ae 00C0      		rjmp .L32
+ 427               		.cfi_endproc
+ 428               	.LFE120:
+ 430               		.section	.text.render_logo,"ax",@progbits
+ 431               	.global	render_logo
+ 433               	render_logo:
+ 434               	.LFB121:
+ 234:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 235:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_logo(void) {
+ 435               		.loc 1 235 24 view -0
+ 436               		.cfi_startproc
+ 437               	/* prologue: function */
+ 438               	/* frame size = 0 */
+ 439               	/* stack size = 0 */
+ 440               	.L__stack_usage = 0
+ 236:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM corne_logo[] = {
+ 441               		.loc 1 236 5 view .LVU138
+ 237:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x80, 0x81, 0x82, 0x83, 0x84,
+ 238:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
+ 239:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0};
+ 240:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     oled_write_P(corne_logo, false);
+ 442               		.loc 1 240 5 view .LVU139
+ 443 0000 60E0      		ldi r22,0
+ 444 0002 80E0      		ldi r24,lo8(corne_logo.6237)
+ 445 0004 90E0      		ldi r25,hi8(corne_logo.6237)
+ 446 0006 0E94 0000 		call oled_write_P
+ 447               	.LVL33:
+ 241:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     oled_write_P(PSTR("Arturo N."), false);
+ 448               		.loc 1 241 5 view .LVU140
+ 449               	.LBB3:
+ 450               		.loc 1 241 18 view .LVU141
+ 451               		.loc 1 241 18 view .LVU142
+ 452               	.LBE3:
+ 453               		.loc 1 241 5 is_stmt 0 view .LVU143
+ 454 000a 60E0      		ldi r22,0
+ 455 000c 80E0      		ldi r24,lo8(__c.6238)
+ 456 000e 90E0      		ldi r25,hi8(__c.6238)
+ 457 0010 0C94 0000 		jmp oled_write_P
+ 458               	.LVL34:
+ 459               		.cfi_endproc
+ 460               	.LFE121:
+ 462               		.section	.text.render_layer_state,"ax",@progbits
+ 463               	.global	render_layer_state
+ 465               	render_layer_state:
+ 466               	.LFB122:
+ 242:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 243:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 244:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_layer_state(void) {
+ 467               		.loc 1 244 31 is_stmt 1 view -0
+ 468               		.cfi_startproc
+ 469               	/* prologue: function */
+ 470               	/* frame size = 0 */
+ 471               	/* stack size = 0 */
+ 472               	.L__stack_usage = 0
+ 245:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM default_layer[] = {
+ 473               		.loc 1 245 5 view .LVU145
+ 246:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0x94, 0x95, 0x96, 0x20,
+ 247:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0xb4, 0xb5, 0xb6, 0x20,
+ 248:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0xd4, 0xd5, 0xd6, 0x20, 0};
+ 249:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM raise_layer[] = {
+ 474               		.loc 1 249 5 view .LVU146
+ 250:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0x97, 0x98, 0x99, 0x20,
+ 251:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0xb7, 0xb8, 0xb9, 0x20,
+ 252:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0xd7, 0xd8, 0xd9, 0x20, 0};
+ 253:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     static const char PROGMEM lower_layer[] = {
+ 475               		.loc 1 253 5 view .LVU147
+ 254:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0x9a, 0x9b, 0x9c, 0x20,
+ 255:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0xba, 0xbb, 0xbc, 0x20,
+ 256:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         0x20, 0xda, 0xdb, 0xdc, 0x20, 0};
+ 257:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if(layer_state_is(_LOWER)) {
+ 476               		.loc 1 257 5 view .LVU148
+ 477               		.loc 1 257 8 is_stmt 0 view .LVU149
+ 478 0000 81E0      		ldi r24,lo8(1)
+ 479 0002 0E94 0000 		call layer_state_is
+ 480               	.LVL35:
+ 481               		.loc 1 257 7 view .LVU150
+ 482 0006 8823      		tst r24
+ 483 0008 01F0      		breq .L43
+ 258:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(lower_layer, false);
+ 484               		.loc 1 258 9 is_stmt 1 view .LVU151
+ 485 000a 60E0      		ldi r22,0
+ 486 000c 80E0      		ldi r24,lo8(lower_layer.6245)
+ 487 000e 90E0      		ldi r25,hi8(lower_layer.6245)
+ 488               	.L45:
+ 259:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(layer_state_is(_RAISE)) {
+ 260:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(raise_layer, false);
+ 261:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 262:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_write_P(default_layer, false);
+ 489               		.loc 1 262 9 is_stmt 0 view .LVU152
+ 490 0010 0C94 0000 		jmp oled_write_P
+ 491               	.LVL36:
+ 492               	.L43:
+ 259:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(layer_state_is(_RAISE)) {
+ 493               		.loc 1 259 12 is_stmt 1 view .LVU153
+ 259:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(layer_state_is(_RAISE)) {
+ 494               		.loc 1 259 15 is_stmt 0 view .LVU154
+ 495 0014 82E0      		ldi r24,lo8(2)
+ 496 0016 0E94 0000 		call layer_state_is
+ 497               	.LVL37:
+ 260:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 498               		.loc 1 260 9 view .LVU155
+ 499 001a 60E0      		ldi r22,0
+ 259:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else if(layer_state_is(_RAISE)) {
+ 500               		.loc 1 259 14 view .LVU156
+ 501 001c 8823      		tst r24
+ 502 001e 01F0      		breq .L44
+ 260:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 503               		.loc 1 260 9 is_stmt 1 view .LVU157
+ 504 0020 80E0      		ldi r24,lo8(raise_layer.6244)
+ 505 0022 90E0      		ldi r25,hi8(raise_layer.6244)
+ 506 0024 00C0      		rjmp .L45
+ 507               	.L44:
+ 508               		.loc 1 262 9 view .LVU158
+ 509 0026 80E0      		ldi r24,lo8(default_layer.6243)
+ 510 0028 90E0      		ldi r25,hi8(default_layer.6243)
+ 511 002a 00C0      		rjmp .L45
+ 512               		.cfi_endproc
+ 513               	.LFE122:
+ 515               		.section	.text.render_status_main,"ax",@progbits
+ 516               	.global	render_status_main
+ 518               	render_status_main:
+ 519               	.LFB123:
+ 263:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 264:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 265:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 266:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_status_main(void) {
+ 520               		.loc 1 266 31 view -0
+ 521               		.cfi_startproc
+ 522 0000 CF93      		push r28
+ 523               	.LCFI4:
+ 524               		.cfi_def_cfa_offset 3
+ 525               		.cfi_offset 28, -2
+ 526               	/* prologue: function */
+ 527               	/* frame size = 0 */
+ 528               	/* stack size = 1 */
+ 529               	.L__stack_usage = 1
+ 267:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_logo();
+ 530               		.loc 1 267 5 view .LVU160
+ 531 0002 0E94 0000 		call render_logo
+ 532               	.LVL38:
+ 268:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_space();
+ 533               		.loc 1 268 5 view .LVU161
+ 534 0006 0E94 0000 		call render_space
+ 535               	.LVL39:
+ 269:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_layer_state();
+ 536               		.loc 1 269 5 view .LVU162
+ 537 000a 0E94 0000 		call render_layer_state
+ 538               	.LVL40:
+ 270:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_space();
+ 539               		.loc 1 270 5 view .LVU163
+ 540 000e 0E94 0000 		call render_space
+ 541               	.LVL41:
+ 271:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_mod_status_gui_alt(get_mods()|get_oneshot_mods());
+ 542               		.loc 1 271 5 view .LVU164
+ 543               		.loc 1 271 31 is_stmt 0 view .LVU165
+ 544 0012 0E94 0000 		call get_mods
+ 545               	.LVL42:
+ 546 0016 C82F      		mov r28,r24
+ 547               		.loc 1 271 42 view .LVU166
+ 548 0018 0E94 0000 		call get_oneshot_mods
+ 549               	.LVL43:
+ 550               		.loc 1 271 5 view .LVU167
+ 551 001c 8C2B      		or r24,r28
+ 552 001e 0E94 0000 		call render_mod_status_gui_alt
+ 553               	.LVL44:
+ 272:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
+ 554               		.loc 1 272 5 is_stmt 1 view .LVU168
+ 555               		.loc 1 272 34 is_stmt 0 view .LVU169
+ 556 0022 0E94 0000 		call get_mods
+ 557               	.LVL45:
+ 558 0026 C82F      		mov r28,r24
+ 559               		.loc 1 272 45 view .LVU170
+ 560 0028 0E94 0000 		call get_oneshot_mods
+ 561               	.LVL46:
+ 562               		.loc 1 272 5 view .LVU171
+ 563 002c 8C2B      		or r24,r28
+ 564               	/* epilogue start */
+ 273:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 565               		.loc 1 273 1 view .LVU172
+ 566 002e CF91      		pop r28
+ 272:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
+ 567               		.loc 1 272 5 view .LVU173
+ 568 0030 0C94 0000 		jmp render_mod_status_ctrl_shift
+ 569               	.LVL47:
+ 570               		.cfi_endproc
+ 571               	.LFE123:
+ 573               		.section	.text.render_status_secondary,"ax",@progbits
+ 574               	.global	render_status_secondary
+ 576               	render_status_secondary:
+ 577               	.LFB128:
+ 578               		.cfi_startproc
+ 579               	/* prologue: function */
+ 580               	/* frame size = 0 */
+ 581               	/* stack size = 0 */
+ 582               	.L__stack_usage = 0
+ 583 0000 0C94 0000 		jmp render_status_main
+ 584               		.cfi_endproc
+ 585               	.LFE128:
+ 587               		.section	.text.oled_task_user,"ax",@progbits
+ 588               	.global	oled_task_user
+ 590               	oled_task_user:
+ 591               	.LFB125:
+ 274:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 275:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void render_status_secondary(void) {
+ 276:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_logo();
+ 277:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_space();
+ 278:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_layer_state();
+ 279:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_space();
+ 280:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_mod_status_gui_alt(get_mods()|get_oneshot_mods());
+ 281:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
+ 282:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 283:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 284:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** void oled_task_user(void) {
+ 592               		.loc 1 284 27 is_stmt 1 view -0
+ 593               		.cfi_startproc
+ 594               	/* prologue: function */
+ 595               	/* frame size = 0 */
+ 596               	/* stack size = 0 */
+ 597               	.L__stack_usage = 0
+ 285:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if (timer_elapsed32(oled_timer) > 1000000) {
+ 598               		.loc 1 285 5 view .LVU175
+ 599               		.loc 1 285 9 is_stmt 0 view .LVU176
+ 600 0000 6091 0000 		lds r22,oled_timer
+ 601 0004 7091 0000 		lds r23,oled_timer+1
+ 602 0008 8091 0000 		lds r24,oled_timer+2
+ 603 000c 9091 0000 		lds r25,oled_timer+3
+ 604 0010 0E94 0000 		call timer_elapsed32
+ 605               	.LVL48:
+ 606               		.loc 1 285 8 view .LVU177
+ 607 0014 6134      		cpi r22,65
+ 608 0016 7244      		sbci r23,66
+ 609 0018 8F40      		sbci r24,15
+ 610 001a 9105      		cpc r25,__zero_reg__
+ 611 001c 00F0      		brlo .L49
+ 286:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_off();
+ 612               		.loc 1 286 9 is_stmt 1 view .LVU178
+ 613 001e 0C94 0000 		jmp oled_off
+ 614               	.LVL49:
+ 615               	.L49:
+ 287:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         return;
+ 288:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 289:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #ifndef SPLIT_KEYBOARD
+ 290:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     else { oled_on(); }
+ 616               		.loc 1 290 12 view .LVU179
+ 617 0022 0E94 0000 		call oled_on
+ 618               	.LVL50:
+ 291:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #endif
+ 292:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 293:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     if (is_master) {
+ 619               		.loc 1 293 5 view .LVU180
+ 294:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         render_status_main();  // Renders the current keyboard state (layer, lock, caps, scroll, et
+ 620               		.loc 1 294 9 view .LVU181
+ 621 0026 0C94 0000 		jmp render_status_main
+ 622               	.LVL51:
+ 623               		.cfi_endproc
+ 624               	.LFE125:
+ 626               		.section	.text.process_record_user,"ax",@progbits
+ 627               	.global	process_record_user
+ 629               	process_record_user:
+ 630               	.LVL52:
+ 631               	.LFB126:
+ 295:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     } else {
+ 296:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         render_status_secondary();
+ 297:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     }
+ 298:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 299:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 300:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #endif
+ 301:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+ 632               		.loc 1 301 65 view -0
+ 633               		.cfi_startproc
+ 634               		.loc 1 301 65 is_stmt 0 view .LVU183
+ 635 0000 0F93      		push r16
+ 636               	.LCFI5:
+ 637               		.cfi_def_cfa_offset 3
+ 638               		.cfi_offset 16, -2
+ 639 0002 1F93      		push r17
+ 640               	.LCFI6:
+ 641               		.cfi_def_cfa_offset 4
+ 642               		.cfi_offset 17, -3
+ 643 0004 CF93      		push r28
+ 644               	.LCFI7:
+ 645               		.cfi_def_cfa_offset 5
+ 646               		.cfi_offset 28, -4
+ 647 0006 DF93      		push r29
+ 648               	.LCFI8:
+ 649               		.cfi_def_cfa_offset 6
+ 650               		.cfi_offset 29, -5
+ 651               	/* prologue: function */
+ 652               	/* frame size = 0 */
+ 653               	/* stack size = 4 */
+ 654               	.L__stack_usage = 4
+ 655 0008 8C01      		movw r16,r24
+ 656 000a EB01      		movw r28,r22
+ 302:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   if (record->event.pressed) {
+ 657               		.loc 1 302 3 is_stmt 1 view .LVU184
+ 658               		.loc 1 302 6 is_stmt 0 view .LVU185
+ 659 000c 8A81      		ldd r24,Y+2
+ 660               	.LVL53:
+ 661               		.loc 1 302 6 view .LVU186
+ 662 000e 8823      		tst r24
+ 663 0010 01F0      		breq .L51
+ 303:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #ifdef OLED_DRIVER_ENABLE
+ 304:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         oled_timer = timer_read32();
+ 664               		.loc 1 304 9 is_stmt 1 view .LVU187
+ 665               		.loc 1 304 22 is_stmt 0 view .LVU188
+ 666 0012 0E94 0000 		call timer_read32
+ 667               	.LVL54:
+ 668               		.loc 1 304 20 view .LVU189
+ 669 0016 6093 0000 		sts oled_timer,r22
+ 670 001a 7093 0000 		sts oled_timer+1,r23
+ 671 001e 8093 0000 		sts oled_timer+2,r24
+ 672 0022 9093 0000 		sts oled_timer+3,r25
+ 673               	.L51:
+ 305:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** #endif
+ 306:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     // set_timelog();
+ 307:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   }
+ 308:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** 
+ 309:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   switch (keycode) {
+ 674               		.loc 1 309 3 is_stmt 1 view .LVU190
+ 675 0026 0932      		cpi r16,41
+ 676 0028 8DE5      		ldi r24,93
+ 677 002a 1807      		cpc r17,r24
+ 678 002c 01F0      		breq .L52
+ 679 002e 0A32      		cpi r16,42
+ 680 0030 1D45      		sbci r17,93
+ 681 0032 01F0      		breq .L53
+ 310:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     case LOWER:
+ 311:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       if (record->event.pressed) {
+ 312:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_LOWER);
+ 313:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       } else {
+ 314:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_off(_LOWER);
+ 315:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       }
+ 316:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       return false;
+ 317:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****     case RAISE:
+ 318:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       if (record->event.pressed) {
+ 319:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_RAISE);
+ 320:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       } else {
+ 321:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_off(_RAISE);
+ 322:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       }
+ 323:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       return false;
+ 324:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       break;
+ 325:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   }
+ 326:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****   return true;
+ 682               		.loc 1 326 10 is_stmt 0 view .LVU191
+ 683 0034 C1E0      		ldi r28,lo8(1)
+ 684               	.LVL55:
+ 685               	.L50:
+ 327:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c **** }
+ 686               		.loc 1 327 1 view .LVU192
+ 687 0036 8C2F      		mov r24,r28
+ 688               	/* epilogue start */
+ 689 0038 DF91      		pop r29
+ 690 003a CF91      		pop r28
+ 691 003c 1F91      		pop r17
+ 692 003e 0F91      		pop r16
+ 693               	.LVL56:
+ 694               		.loc 1 327 1 view .LVU193
+ 695 0040 0895      		ret
+ 696               	.LVL57:
+ 697               	.L52:
+ 311:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_LOWER);
+ 698               		.loc 1 311 7 is_stmt 1 view .LVU194
+ 311:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_LOWER);
+ 699               		.loc 1 311 24 is_stmt 0 view .LVU195
+ 700 0042 CA81      		ldd r28,Y+2
+ 701               	.LVL58:
+ 312:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       } else {
+ 702               		.loc 1 312 9 view .LVU196
+ 703 0044 81E0      		ldi r24,lo8(1)
+ 704               	.L62:
+ 318:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_RAISE);
+ 705               		.loc 1 318 10 view .LVU197
+ 706 0046 CC23      		tst r28
+ 707 0048 01F0      		breq .L56
+ 319:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       } else {
+ 708               		.loc 1 319 9 is_stmt 1 view .LVU198
+ 709 004a 0E94 0000 		call layer_on
+ 710               	.LVL59:
+ 323:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       break;
+ 711               		.loc 1 323 14 is_stmt 0 view .LVU199
+ 712 004e C0E0      		ldi r28,0
+ 713 0050 00C0      		rjmp .L50
+ 714               	.LVL60:
+ 715               	.L53:
+ 318:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_RAISE);
+ 716               		.loc 1 318 7 is_stmt 1 view .LVU200
+ 318:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****         layer_on(_RAISE);
+ 717               		.loc 1 318 24 is_stmt 0 view .LVU201
+ 718 0052 CA81      		ldd r28,Y+2
+ 719               	.LVL61:
+ 319:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       } else {
+ 720               		.loc 1 319 9 view .LVU202
+ 721 0054 82E0      		ldi r24,lo8(2)
+ 722 0056 00C0      		rjmp .L62
+ 723               	.L56:
+ 321:keyboards/crkbd/keymaps/nahum_qwerty/keymap.c ****       }
+ 724               		.loc 1 321 9 is_stmt 1 view .LVU203
+ 725 0058 0E94 0000 		call layer_off
+ 726               	.LVL62:
+ 727 005c 00C0      		rjmp .L50
+ 728               		.cfi_endproc
+ 729               	.LFE126:
+ 731               		.section	.progmem.data.default_layer.6243,"a"
+ 734               	default_layer.6243:
+ 735 0000 20        		.byte	32
+ 736 0001 94        		.byte	-108
+ 737 0002 95        		.byte	-107
+ 738 0003 96        		.byte	-106
+ 739 0004 20        		.byte	32
+ 740 0005 20        		.byte	32
+ 741 0006 B4        		.byte	-76
+ 742 0007 B5        		.byte	-75
+ 743 0008 B6        		.byte	-74
+ 744 0009 20        		.byte	32
+ 745 000a 20        		.byte	32
+ 746 000b D4        		.byte	-44
+ 747 000c D5        		.byte	-43
+ 748 000d D6        		.byte	-42
+ 749 000e 20        		.byte	32
+ 750 000f 00        		.byte	0
+ 751               		.section	.progmem.data.raise_layer.6244,"a"
+ 754               	raise_layer.6244:
+ 755 0000 20        		.byte	32
+ 756 0001 97        		.byte	-105
+ 757 0002 98        		.byte	-104
+ 758 0003 99        		.byte	-103
+ 759 0004 20        		.byte	32
+ 760 0005 20        		.byte	32
+ 761 0006 B7        		.byte	-73
+ 762 0007 B8        		.byte	-72
+ 763 0008 B9        		.byte	-71
+ 764 0009 20        		.byte	32
+ 765 000a 20        		.byte	32
+ 766 000b D7        		.byte	-41
+ 767 000c D8        		.byte	-40
+ 768 000d D9        		.byte	-39
+ 769 000e 20        		.byte	32
+ 770 000f 00        		.byte	0
+ 771               		.section	.progmem.data.lower_layer.6245,"a"
+ 774               	lower_layer.6245:
+ 775 0000 20        		.byte	32
+ 776 0001 9A        		.byte	-102
+ 777 0002 9B        		.byte	-101
+ 778 0003 9C        		.byte	-100
+ 779 0004 20        		.byte	32
+ 780 0005 20        		.byte	32
+ 781 0006 BA        		.byte	-70
+ 782 0007 BB        		.byte	-69
+ 783 0008 BC        		.byte	-68
+ 784 0009 20        		.byte	32
+ 785 000a 20        		.byte	32
+ 786 000b DA        		.byte	-38
+ 787 000c DB        		.byte	-37
+ 788 000d DC        		.byte	-36
+ 789 000e 20        		.byte	32
+ 790 000f 00        		.byte	0
+ 791               		.section	.progmem.data.__c.6238,"a"
+ 794               	__c.6238:
+ 795 0000 4172 7475 		.string	"Arturo N."
+ 795      726F 204E 
+ 795      2E00 
+ 796               		.section	.progmem.data.corne_logo.6237,"a"
+ 799               	corne_logo.6237:
+ 800 0000 80        		.byte	-128
+ 801 0001 81        		.byte	-127
+ 802 0002 82        		.byte	-126
+ 803 0003 83        		.byte	-125
+ 804 0004 84        		.byte	-124
+ 805 0005 A0        		.byte	-96
+ 806 0006 A1        		.byte	-95
+ 807 0007 A2        		.byte	-94
+ 808 0008 A3        		.byte	-93
+ 809 0009 A4        		.byte	-92
+ 810 000a C0        		.byte	-64
+ 811 000b C1        		.byte	-63
+ 812 000c C2        		.byte	-62
+ 813 000d C3        		.byte	-61
+ 814 000e C4        		.byte	-60
+ 815 000f 00        		.byte	0
+ 816               		.section	.progmem.data.shift_off_2.6223,"a"
+ 819               	shift_off_2.6223:
+ 820 0000 AB        		.byte	-85
+ 821 0001 AC        		.byte	-84
+ 822 0002 00        		.byte	0
+ 823               		.section	.progmem.data.shift_on_2.6225,"a"
+ 826               	shift_on_2.6225:
+ 827 0000 CF        		.byte	-49
+ 828 0001 D0        		.byte	-48
+ 829 0002 00        		.byte	0
+ 830               		.section	.progmem.data.off_off_2.6227,"a"
+ 833               	off_off_2.6227:
+ 834 0000 C6        		.byte	-58
+ 835 0001 00        		.byte	0
+ 836               		.section	.progmem.data.off_on_2.6231,"a"
+ 839               	off_on_2.6231:
+ 840 0000 CA        		.byte	-54
+ 841 0001 00        		.byte	0
+ 842               		.section	.progmem.data.on_off_2.6229,"a"
+ 845               	on_off_2.6229:
+ 846 0000 C8        		.byte	-56
+ 847 0001 00        		.byte	0
+ 848               		.section	.progmem.data.ctrl_off_2.6219,"a"
+ 851               	ctrl_off_2.6219:
+ 852 0000 A9        		.byte	-87
+ 853 0001 AA        		.byte	-86
+ 854 0002 00        		.byte	0
+ 855               		.section	.progmem.data.ctrl_on_2.6221,"a"
+ 858               	ctrl_on_2.6221:
+ 859 0000 B1        		.byte	-79
+ 860 0001 B2        		.byte	-78
+ 861 0002 00        		.byte	0
+ 862               		.section	.progmem.data.shift_off_1.6222,"a"
+ 865               	shift_off_1.6222:
+ 866 0000 8B        		.byte	-117
+ 867 0001 8C        		.byte	-116
+ 868 0002 00        		.byte	0
+ 869               		.section	.progmem.data.shift_on_1.6224,"a"
+ 872               	shift_on_1.6224:
+ 873 0000 CD        		.byte	-51
+ 874 0001 CE        		.byte	-50
+ 875 0002 00        		.byte	0
+ 876               		.section	.progmem.data.off_off_1.6226,"a"
+ 879               	off_off_1.6226:
+ 880 0000 C5        		.byte	-59
+ 881 0001 00        		.byte	0
+ 882               		.section	.progmem.data.off_on_1.6230,"a"
+ 885               	off_on_1.6230:
+ 886 0000 C9        		.byte	-55
+ 887 0001 00        		.byte	0
+ 888               		.section	.progmem.data.on_off_1.6228,"a"
+ 891               	on_off_1.6228:
+ 892 0000 C7        		.byte	-57
+ 893 0001 00        		.byte	0
+ 894               		.section	.progmem.data.on_on_1.6232,"a"
+ 897               	on_on_1.6232:
+ 898 0000 CB        		.byte	-53
+ 899 0001 00        		.byte	0
+ 900               		.section	.progmem.data.ctrl_off_1.6218,"a"
+ 903               	ctrl_off_1.6218:
+ 904 0000 89        		.byte	-119
+ 905 0001 8A        		.byte	-118
+ 906 0002 00        		.byte	0
+ 907               		.section	.progmem.data.ctrl_on_1.6220,"a"
+ 910               	ctrl_on_1.6220:
+ 911 0000 91        		.byte	-111
+ 912 0001 92        		.byte	-110
+ 913 0002 00        		.byte	0
+ 914               		.section	.progmem.data.alt_off_2.6204,"a"
+ 917               	alt_off_2.6204:
+ 918 0000 A7        		.byte	-89
+ 919 0001 A8        		.byte	-88
+ 920 0002 00        		.byte	0
+ 921               		.section	.progmem.data.alt_on_2.6206,"a"
+ 924               	alt_on_2.6206:
+ 925 0000 AF        		.byte	-81
+ 926 0001 B0        		.byte	-80
+ 927 0002 00        		.byte	0
+ 928               		.section	.progmem.data.off_off_2.6208,"a"
+ 931               	off_off_2.6208:
+ 932 0000 C6        		.byte	-58
+ 933 0001 00        		.byte	0
+ 934               		.section	.progmem.data.off_on_2.6212,"a"
+ 937               	off_on_2.6212:
+ 938 0000 CA        		.byte	-54
+ 939 0001 00        		.byte	0
+ 940               		.section	.progmem.data.on_off_2.6210,"a"
+ 943               	on_off_2.6210:
+ 944 0000 C8        		.byte	-56
+ 945 0001 00        		.byte	0
+ 946               		.section	.progmem.data.gui_off_2.6200,"a"
+ 949               	gui_off_2.6200:
+ 950 0000 A5        		.byte	-91
+ 951 0001 A6        		.byte	-90
+ 952 0002 00        		.byte	0
+ 953               		.section	.progmem.data.gui_on_2.6202,"a"
+ 956               	gui_on_2.6202:
+ 957 0000 AD        		.byte	-83
+ 958 0001 AE        		.byte	-82
+ 959 0002 00        		.byte	0
+ 960               		.section	.progmem.data.alt_off_1.6203,"a"
+ 963               	alt_off_1.6203:
+ 964 0000 87        		.byte	-121
+ 965 0001 88        		.byte	-120
+ 966 0002 00        		.byte	0
+ 967               		.section	.progmem.data.alt_on_1.6205,"a"
+ 970               	alt_on_1.6205:
+ 971 0000 8F        		.byte	-113
+ 972 0001 90        		.byte	-112
+ 973 0002 00        		.byte	0
+ 974               		.section	.progmem.data.off_off_1.6207,"a"
+ 977               	off_off_1.6207:
+ 978 0000 C5        		.byte	-59
+ 979 0001 00        		.byte	0
+ 980               		.section	.progmem.data.off_on_1.6211,"a"
+ 983               	off_on_1.6211:
+ 984 0000 C9        		.byte	-55
+ 985 0001 00        		.byte	0
+ 986               		.section	.progmem.data.on_off_1.6209,"a"
+ 989               	on_off_1.6209:
+ 990 0000 C7        		.byte	-57
+ 991 0001 00        		.byte	0
+ 992               		.section	.progmem.data.on_on_1.6213,"a"
+ 995               	on_on_1.6213:
+ 996 0000 CB        		.byte	-53
+ 997 0001 00        		.byte	0
+ 998               		.section	.progmem.data.gui_off_1.6199,"a"
+ 1001               	gui_off_1.6199:
+ 1002 0000 85        		.byte	-123
+ 1003 0001 86        		.byte	-122
+ 1004 0002 00        		.byte	0
+ 1005               		.section	.progmem.data.gui_on_1.6201,"a"
+ 1008               	gui_on_1.6201:
+ 1009 0000 8D        		.byte	-115
+ 1010 0001 8E        		.byte	-114
+ 1011 0002 00        		.byte	0
+ 1012               		.section	.progmem.data.__c.6194,"a"
+ 1015               	__c.6194:
+ 1016 0000 2020 2020 		.string	"     "
+ 1016      2000 
+ 1017               		.comm	RGB_current_mode,2,1
+ 1018               	.global	tap_dance_actions
+ 1019               		.section	.data.tap_dance_actions,"aw"
+ 1022               	tap_dance_actions:
+ 1023 0000 0000      		.word	gs(qk_tap_dance_pair_on_each_tap)
+ 1024 0002 0000      		.word	gs(qk_tap_dance_pair_finished)
+ 1025 0004 0000      		.word	gs(qk_tap_dance_pair_reset)
+ 1026 0006 0000 0000 		.zero	14
+ 1026      0000 0000 
+ 1026      0000 0000 
+ 1026      0000 
+ 1027 0014 0000      		.word	__compound_literal.0
+ 1028 0016 0000      		.word	gs(qk_tap_dance_pair_on_each_tap)
+ 1029 0018 0000      		.word	gs(qk_tap_dance_pair_finished)
+ 1030 001a 0000      		.word	gs(qk_tap_dance_pair_reset)
+ 1031 001c 0000 0000 		.zero	14
+ 1031      0000 0000 
+ 1031      0000 0000 
+ 1031      0000 
+ 1032 002a 0000      		.word	__compound_literal.1
+ 1033 002c 0000      		.word	gs(qk_tap_dance_pair_on_each_tap)
+ 1034 002e 0000      		.word	gs(qk_tap_dance_pair_finished)
+ 1035 0030 0000      		.word	gs(qk_tap_dance_pair_reset)
+ 1036 0032 0000 0000 		.zero	14
+ 1036      0000 0000 
+ 1036      0000 0000 
+ 1036      0000 
+ 1037 0040 0000      		.word	__compound_literal.2
+ 1038               		.section	.data.__compound_literal.2,"aw"
+ 1041               	__compound_literal.2:
+ 1042 0000 E600      		.word	230
+ 1043 0002 E200      		.word	226
+ 1044               		.section	.data.__compound_literal.1,"aw"
+ 1047               	__compound_literal.1:
+ 1048 0000 E100      		.word	225
+ 1049 0002 3900      		.word	57
+ 1050               		.section	.data.__compound_literal.0,"aw"
+ 1053               	__compound_literal.0:
+ 1054 0000 2B00      		.word	43
+ 1055 0002 2900      		.word	41
+ 1056               	.global	keymaps
+ 1057               		.section	.progmem.data.keymaps,"a"
+ 1060               	keymaps:
+ 1061 0000 0057      		.word	22272
+ 1062 0002 1400      		.word	20
+ 1063 0004 1A00      		.word	26
+ 1064 0006 0800      		.word	8
+ 1065 0008 1500      		.word	21
+ 1066 000a 1700      		.word	23
+ 1067 000c 0157      		.word	22273
+ 1068 000e 0400      		.word	4
+ 1069 0010 1600      		.word	22
+ 1070 0012 0700      		.word	7
+ 1071 0014 0900      		.word	9
+ 1072 0016 0A00      		.word	10
+ 1073 0018 E000      		.word	224
+ 1074 001a 1D00      		.word	29
+ 1075 001c 1B00      		.word	27
+ 1076 001e 0600      		.word	6
+ 1077 0020 1900      		.word	25
+ 1078 0022 0500      		.word	5
+ 1079 0024 0000      		.word	0
+ 1080 0026 0000      		.word	0
+ 1081 0028 0000      		.word	0
+ 1082 002a E300      		.word	227
+ 1083 002c 295D      		.word	23849
+ 1084 002e 2C00      		.word	44
+ 1085 0030 2A00      		.word	42
+ 1086 0032 1300      		.word	19
+ 1087 0034 1200      		.word	18
+ 1088 0036 0C00      		.word	12
+ 1089 0038 1800      		.word	24
+ 1090 003a 1C00      		.word	28
+ 1091 003c 4C00      		.word	76
+ 1092 003e 3500      		.word	53
+ 1093 0040 0F00      		.word	15
+ 1094 0042 0E00      		.word	14
+ 1095 0044 0D00      		.word	13
+ 1096 0046 0B00      		.word	11
+ 1097 0048 E500      		.word	229
+ 1098 004a 3300      		.word	51
+ 1099 004c 3700      		.word	55
+ 1100 004e 3600      		.word	54
+ 1101 0050 1000      		.word	16
+ 1102 0052 1100      		.word	17
+ 1103 0054 0000      		.word	0
+ 1104 0056 0000      		.word	0
+ 1105 0058 0000      		.word	0
+ 1106 005a 0257      		.word	22274
+ 1107 005c 2A5D      		.word	23850
+ 1108 005e 2800      		.word	40
+ 1109 0060 2900      		.word	41
+ 1110 0062 7B00      		.word	123
+ 1111 0064 7C00      		.word	124
+ 1112 0066 7D00      		.word	125
+ 1113 0068 7A00      		.word	122
+ 1114 006a 7900      		.word	121
+ 1115 006c AE00      		.word	174
+ 1116 006e A800      		.word	168
+ 1117 0070 AA00      		.word	170
+ 1118 0072 A900      		.word	169
+ 1119 0074 BE00      		.word	190
+ 1120 0076 BD00      		.word	189
+ 1121 0078 AC00      		.word	172
+ 1122 007a AB00      		.word	171
+ 1123 007c AD00      		.word	173
+ 1124 007e 0000      		.word	0
+ 1125 0080 0000      		.word	0
+ 1126 0082 0000      		.word	0
+ 1127 0084 0000      		.word	0
+ 1128 0086 0000      		.word	0
+ 1129 0088 0000      		.word	0
+ 1130 008a E300      		.word	227
+ 1131 008c 0100      		.word	1
+ 1132 008e 2C00      		.word	44
+ 1133 0090 2A00      		.word	42
+ 1134 0092 3800      		.word	56
+ 1135 0094 2E00      		.word	46
+ 1136 0096 3000      		.word	48
+ 1137 0098 3002      		.word	560
+ 1138 009a 2702      		.word	551
+ 1139 009c 4C00      		.word	76
+ 1140 009e 3100      		.word	49
+ 1141 00a0 1E02      		.word	542
+ 1142 00a2 5200      		.word	82
+ 1143 00a4 2302      		.word	547
+ 1144 00a6 2502      		.word	549
+ 1145 00a8 E500      		.word	229
+ 1146 00aa 2D00      		.word	45
+ 1147 00ac 4F00      		.word	79
+ 1148 00ae 5100      		.word	81
+ 1149 00b0 5000      		.word	80
+ 1150 00b2 6500      		.word	101
+ 1151 00b4 0000      		.word	0
+ 1152 00b6 0000      		.word	0
+ 1153 00b8 0000      		.word	0
+ 1154 00ba 0257      		.word	22274
+ 1155 00bc 2A5D      		.word	23850
+ 1156 00be 2800      		.word	40
+ 1157 00c0 3A00      		.word	58
+ 1158 00c2 3B00      		.word	59
+ 1159 00c4 3C00      		.word	60
+ 1160 00c6 3D00      		.word	61
+ 1161 00c8 3E00      		.word	62
+ 1162 00ca 3F00      		.word	63
+ 1163 00cc 4000      		.word	64
+ 1164 00ce 4100      		.word	65
+ 1165 00d0 4200      		.word	66
+ 1166 00d2 4300      		.word	67
+ 1167 00d4 4400      		.word	68
+ 1168 00d6 4500      		.word	69
+ 1169 00d8 005C      		.word	23552
+ 1170 00da 0000      		.word	0
+ 1171 00dc 0000      		.word	0
+ 1172 00de B300      		.word	179
+ 1173 00e0 B200      		.word	178
+ 1174 00e2 4600      		.word	70
+ 1175 00e4 0000      		.word	0
+ 1176 00e6 0000      		.word	0
+ 1177 00e8 0000      		.word	0
+ 1178 00ea E300      		.word	227
+ 1179 00ec 295D      		.word	23849
+ 1180 00ee 2C00      		.word	44
+ 1181 00f0 6100      		.word	97
+ 1182 00f2 6000      		.word	96
+ 1183 00f4 5F00      		.word	95
+ 1184 00f6 2F00      		.word	47
+ 1185 00f8 2F02      		.word	559
+ 1186 00fa 2602      		.word	550
+ 1187 00fc 5E00      		.word	94
+ 1188 00fe 5D00      		.word	93
+ 1189 0100 5C00      		.word	92
+ 1190 0102 2E02      		.word	558
+ 1191 0104 2402      		.word	548
+ 1192 0106 2102      		.word	545
+ 1193 0108 5B00      		.word	91
+ 1194 010a 5A00      		.word	90
+ 1195 010c 5900      		.word	89
+ 1196 010e 6200      		.word	98
+ 1197 0110 2002      		.word	544
+ 1198 0112 3502      		.word	565
+ 1199 0114 0000      		.word	0
+ 1200 0116 0000      		.word	0
+ 1201 0118 0000      		.word	0
+ 1202 011a 0257      		.word	22274
+ 1203 011c 0100      		.word	1
+ 1204 011e 2800      		.word	40
+ 1205               		.section	.bss.oled_timer,"aw",@nobits
+ 1208               	oled_timer:
+ 1209 0000 0000 0000 		.zero	4
+ 1210               		.text
+ 1211               	.Letext0:
+ 1212               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
+ 1213               		.file 3 "c:\\msys64\\mingw64\\lib\\gcc\\avr\\8.4.0\\include\\stddef.h"
+ 1214               		.file 4 "tmk_core/common/keyboard.h"
+ 1215               		.file 5 "tmk_core/common/keycode.h"
+ 1216               		.file 6 "tmk_core/common/action.h"
+ 1217               		.file 7 "keyboards/crkbd/rev1/rev1.h"
+ 1218               		.file 8 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../StdRequestType.h"
+ 1219               		.file 9 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../DeviceStandardReq.h"
+ 1220               		.file 10 "lib/lufa/LUFA/Drivers/USB/Core/USBTask.h"
+ 1221               		.file 11 "lib/lufa/LUFA/Drivers/USB/Core/HostStandardReq.h"
+ 1222               		.file 12 "c:\\msys64\\mingw64\\avr\\include\\stdio.h"
+ 1223               		.file 13 "tmk_core/common/report.h"
+ 1224               		.file 14 "tmk_core/common/host_driver.h"
+ 1225               		.file 15 "tmk_core/common/host.h"
+ 1226               		.file 16 "tmk_core/common/debug.h"
+ 1227               		.file 17 "quantum/keycode_config.h"
+ 1228               		.file 18 "quantum/quantum_keycodes.h"
+ 1229               		.file 19 "quantum/keymap.h"
+ 1230               		.file 20 "tmk_core/common/action_layer.h"
+ 1231               		.file 21 "tmk_core/common/timer.h"
+ 1232               		.file 22 "tmk_core/common/action_util.h"
+ 1233               		.file 23 "c:\\msys64\\mingw64\\avr\\include\\stdlib.h"
+ 1234               		.file 24 "quantum/process_keycode/process_tap_dance.h"
+ 1235               		.file 25 "drivers/oled/oled_driver.h"
+ 1236               		.file 26 "quantum/quantum.h"
+ 1237               		.file 27 "keyboards/crkbd/rev1/legacy/split_util.h"
+ 1238               		.file 28 "tmk_core/protocol/lufa/lufa.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 keymap.c
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:13     .text.oled_init_user:0000000000000000 oled_init_user
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:36     .text.render_space:0000000000000000 render_space
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1015   .progmem.data.__c.6194:0000000000000000 __c.6194
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:61     .text.render_mod_status_gui_alt:0000000000000000 render_mod_status_gui_alt
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1008   .progmem.data.gui_on_1.6201:0000000000000000 gui_on_1.6201
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:989    .progmem.data.on_off_1.6209:0000000000000000 on_off_1.6209
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:995    .progmem.data.on_on_1.6213:0000000000000000 on_on_1.6213
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:970    .progmem.data.alt_on_1.6205:0000000000000000 alt_on_1.6205
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:956    .progmem.data.gui_on_2.6202:0000000000000000 gui_on_2.6202
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:943    .progmem.data.on_off_2.6210:0000000000000000 on_off_2.6210
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:917    .progmem.data.alt_off_2.6204:0000000000000000 alt_off_2.6204
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1001   .progmem.data.gui_off_1.6199:0000000000000000 gui_off_1.6199
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:977    .progmem.data.off_off_1.6207:0000000000000000 off_off_1.6207
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:963    .progmem.data.alt_off_1.6203:0000000000000000 alt_off_1.6203
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:983    .progmem.data.off_on_1.6211:0000000000000000 off_on_1.6211
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:949    .progmem.data.gui_off_2.6200:0000000000000000 gui_off_2.6200
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:937    .progmem.data.off_on_2.6212:0000000000000000 off_on_2.6212
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:924    .progmem.data.alt_on_2.6206:0000000000000000 alt_on_2.6206
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:931    .progmem.data.off_off_2.6208:0000000000000000 off_off_2.6208
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:247    .text.render_mod_status_ctrl_shift:0000000000000000 render_mod_status_ctrl_shift
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:910    .progmem.data.ctrl_on_1.6220:0000000000000000 ctrl_on_1.6220
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:891    .progmem.data.on_off_1.6228:0000000000000000 on_off_1.6228
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:897    .progmem.data.on_on_1.6232:0000000000000000 on_on_1.6232
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:872    .progmem.data.shift_on_1.6224:0000000000000000 shift_on_1.6224
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:858    .progmem.data.ctrl_on_2.6221:0000000000000000 ctrl_on_2.6221
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:845    .progmem.data.on_off_2.6229:0000000000000000 on_off_2.6229
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:819    .progmem.data.shift_off_2.6223:0000000000000000 shift_off_2.6223
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:903    .progmem.data.ctrl_off_1.6218:0000000000000000 ctrl_off_1.6218
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:879    .progmem.data.off_off_1.6226:0000000000000000 off_off_1.6226
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:865    .progmem.data.shift_off_1.6222:0000000000000000 shift_off_1.6222
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:885    .progmem.data.off_on_1.6230:0000000000000000 off_on_1.6230
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:851    .progmem.data.ctrl_off_2.6219:0000000000000000 ctrl_off_2.6219
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:839    .progmem.data.off_on_2.6231:0000000000000000 off_on_2.6231
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:826    .progmem.data.shift_on_2.6225:0000000000000000 shift_on_2.6225
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:833    .progmem.data.off_off_2.6227:0000000000000000 off_off_2.6227
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:433    .text.render_logo:0000000000000000 render_logo
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:799    .progmem.data.corne_logo.6237:0000000000000000 corne_logo.6237
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:794    .progmem.data.__c.6238:0000000000000000 __c.6238
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:465    .text.render_layer_state:0000000000000000 render_layer_state
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:774    .progmem.data.lower_layer.6245:0000000000000000 lower_layer.6245
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:754    .progmem.data.raise_layer.6244:0000000000000000 raise_layer.6244
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:734    .progmem.data.default_layer.6243:0000000000000000 default_layer.6243
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:518    .text.render_status_main:0000000000000000 render_status_main
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:576    .text.render_status_secondary:0000000000000000 render_status_secondary
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:590    .text.oled_task_user:0000000000000000 oled_task_user
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1208   .bss.oled_timer:0000000000000000 oled_timer
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:629    .text.process_record_user:0000000000000000 process_record_user
+                            *COM*:0000000000000002 RGB_current_mode
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1022   .data.tap_dance_actions:0000000000000000 tap_dance_actions
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1053   .data.__compound_literal.0:0000000000000000 __compound_literal.0
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1047   .data.__compound_literal.1:0000000000000000 __compound_literal.1
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1041   .data.__compound_literal.2:0000000000000000 __compound_literal.2
+C:\Users\renep\AppData\Local\Temp\ccsEMzeX.s:1060   .progmem.data.keymaps:0000000000000000 keymaps
+
+UNDEFINED SYMBOLS
+oled_write_P
+layer_state_is
+get_mods
+get_oneshot_mods
+timer_elapsed32
+oled_off
+oled_on
+timer_read32
+layer_on
+layer_off
+qk_tap_dance_pair_on_each_tap
+qk_tap_dance_pair_finished
+qk_tap_dance_pair_reset
+__do_copy_data
+__do_clear_bss

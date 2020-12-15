@@ -1,0 +1,2968 @@
+   1               		.file	"serial.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.text.sync_recv,"ax",@progbits
+  12               	sync_recv:
+  13               	.LFB16:
+  14               		.file 1 "keyboards/crkbd/rev1/legacy/serial.c"
+   1:keyboards/crkbd/rev1/legacy/serial.c **** /*
+   2:keyboards/crkbd/rev1/legacy/serial.c ****  * WARNING: be careful changing this code, it is very timing dependent
+   3:keyboards/crkbd/rev1/legacy/serial.c ****  *
+   4:keyboards/crkbd/rev1/legacy/serial.c ****  * 2018-10-28 checked
+   5:keyboards/crkbd/rev1/legacy/serial.c ****  *  avr-gcc 4.9.2
+   6:keyboards/crkbd/rev1/legacy/serial.c ****  *  avr-gcc 5.4.0
+   7:keyboards/crkbd/rev1/legacy/serial.c ****  *  avr-gcc 7.3.0
+   8:keyboards/crkbd/rev1/legacy/serial.c ****  */
+   9:keyboards/crkbd/rev1/legacy/serial.c **** 
+  10:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef F_CPU
+  11:keyboards/crkbd/rev1/legacy/serial.c **** #define F_CPU 16000000
+  12:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+  13:keyboards/crkbd/rev1/legacy/serial.c **** 
+  14:keyboards/crkbd/rev1/legacy/serial.c **** #include <avr/io.h>
+  15:keyboards/crkbd/rev1/legacy/serial.c **** #include <avr/interrupt.h>
+  16:keyboards/crkbd/rev1/legacy/serial.c **** #include <util/delay.h>
+  17:keyboards/crkbd/rev1/legacy/serial.c **** #include <stddef.h>
+  18:keyboards/crkbd/rev1/legacy/serial.c **** #include <stdbool.h>
+  19:keyboards/crkbd/rev1/legacy/serial.c **** #include "serial.h"
+  20:keyboards/crkbd/rev1/legacy/serial.c **** 
+  21:keyboards/crkbd/rev1/legacy/serial.c **** #ifdef SOFT_SERIAL_PIN
+  22:keyboards/crkbd/rev1/legacy/serial.c **** 
+  23:keyboards/crkbd/rev1/legacy/serial.c **** #ifdef __AVR_ATmega32U4__
+  24:keyboards/crkbd/rev1/legacy/serial.c ****   // if using ATmega32U4 I2C, can not use PD0 and PD1 in soft serial.
+  25:keyboards/crkbd/rev1/legacy/serial.c ****   #ifdef USE_I2C
+  26:keyboards/crkbd/rev1/legacy/serial.c ****     #if SOFT_SERIAL_PIN == D0 || SOFT_SERIAL_PIN == D1
+  27:keyboards/crkbd/rev1/legacy/serial.c ****       #error Using ATmega32U4 I2C, so can not use PD0, PD1
+  28:keyboards/crkbd/rev1/legacy/serial.c ****     #endif
+  29:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+  30:keyboards/crkbd/rev1/legacy/serial.c **** 
+  31:keyboards/crkbd/rev1/legacy/serial.c ****   #if SOFT_SERIAL_PIN >= D0 && SOFT_SERIAL_PIN <= D3
+  32:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_DDR   DDRD
+  33:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_PORT  PORTD
+  34:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_INPUT PIND
+  35:keyboards/crkbd/rev1/legacy/serial.c ****     #if SOFT_SERIAL_PIN == D0
+  36:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_MASK _BV(PD0)
+  37:keyboards/crkbd/rev1/legacy/serial.c ****       #define EIMSK_BIT       _BV(INT0)
+  38:keyboards/crkbd/rev1/legacy/serial.c ****       #define EICRx_BIT       (~(_BV(ISC00) | _BV(ISC01)))
+  39:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_INTERRUPT INT0_vect
+  40:keyboards/crkbd/rev1/legacy/serial.c ****     #elif  SOFT_SERIAL_PIN == D1
+  41:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_MASK _BV(PD1)
+  42:keyboards/crkbd/rev1/legacy/serial.c ****       #define EIMSK_BIT       _BV(INT1)
+  43:keyboards/crkbd/rev1/legacy/serial.c ****       #define EICRx_BIT       (~(_BV(ISC10) | _BV(ISC11)))
+  44:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_INTERRUPT INT1_vect
+  45:keyboards/crkbd/rev1/legacy/serial.c ****     #elif  SOFT_SERIAL_PIN == D2
+  46:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_MASK _BV(PD2)
+  47:keyboards/crkbd/rev1/legacy/serial.c ****       #define EIMSK_BIT       _BV(INT2)
+  48:keyboards/crkbd/rev1/legacy/serial.c ****       #define EICRx_BIT       (~(_BV(ISC20) | _BV(ISC21)))
+  49:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_INTERRUPT INT2_vect
+  50:keyboards/crkbd/rev1/legacy/serial.c ****     #elif  SOFT_SERIAL_PIN == D3
+  51:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_MASK _BV(PD3)
+  52:keyboards/crkbd/rev1/legacy/serial.c ****       #define EIMSK_BIT       _BV(INT3)
+  53:keyboards/crkbd/rev1/legacy/serial.c ****       #define EICRx_BIT       (~(_BV(ISC30) | _BV(ISC31)))
+  54:keyboards/crkbd/rev1/legacy/serial.c ****       #define SERIAL_PIN_INTERRUPT INT3_vect
+  55:keyboards/crkbd/rev1/legacy/serial.c ****     #endif
+  56:keyboards/crkbd/rev1/legacy/serial.c ****   #elif  SOFT_SERIAL_PIN == E6
+  57:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_DDR   DDRE
+  58:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_PORT  PORTE
+  59:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_INPUT PINE
+  60:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_MASK  _BV(PE6)
+  61:keyboards/crkbd/rev1/legacy/serial.c ****     #define EIMSK_BIT        _BV(INT6)
+  62:keyboards/crkbd/rev1/legacy/serial.c ****     #define EICRx_BIT        (~(_BV(ISC60) | _BV(ISC61)))
+  63:keyboards/crkbd/rev1/legacy/serial.c ****     #define SERIAL_PIN_INTERRUPT INT6_vect
+  64:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+  65:keyboards/crkbd/rev1/legacy/serial.c ****   #error invalid SOFT_SERIAL_PIN value
+  66:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+  67:keyboards/crkbd/rev1/legacy/serial.c **** 
+  68:keyboards/crkbd/rev1/legacy/serial.c **** #else
+  69:keyboards/crkbd/rev1/legacy/serial.c ****  #error serial.c now support ATmega32U4 only
+  70:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+  71:keyboards/crkbd/rev1/legacy/serial.c **** 
+  72:keyboards/crkbd/rev1/legacy/serial.c **** //////////////// for backward compatibility ////////////////////////////////
+  73:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef SERIAL_USE_MULTI_TRANSACTION
+  74:keyboards/crkbd/rev1/legacy/serial.c **** /* --- USE Simple API (OLD API, compatible with let's split serial.c) */
+  75:keyboards/crkbd/rev1/legacy/serial.c ****   #if SERIAL_SLAVE_BUFFER_LENGTH > 0
+  76:keyboards/crkbd/rev1/legacy/serial.c ****   uint8_t volatile serial_slave_buffer[SERIAL_SLAVE_BUFFER_LENGTH] = {0};
+  77:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+  78:keyboards/crkbd/rev1/legacy/serial.c ****   #if SERIAL_MASTER_BUFFER_LENGTH > 0
+  79:keyboards/crkbd/rev1/legacy/serial.c ****   uint8_t volatile serial_master_buffer[SERIAL_MASTER_BUFFER_LENGTH] = {0};
+  80:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+  81:keyboards/crkbd/rev1/legacy/serial.c ****   uint8_t volatile status0 = 0;
+  82:keyboards/crkbd/rev1/legacy/serial.c **** 
+  83:keyboards/crkbd/rev1/legacy/serial.c **** SSTD_t transactions[] = {
+  84:keyboards/crkbd/rev1/legacy/serial.c ****     { (uint8_t *)&status0,
+  85:keyboards/crkbd/rev1/legacy/serial.c ****   #if SERIAL_MASTER_BUFFER_LENGTH > 0
+  86:keyboards/crkbd/rev1/legacy/serial.c ****       sizeof(serial_master_buffer), (uint8_t *)serial_master_buffer,
+  87:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+  88:keyboards/crkbd/rev1/legacy/serial.c ****       0, (uint8_t *)NULL,
+  89:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+  90:keyboards/crkbd/rev1/legacy/serial.c ****   #if SERIAL_SLAVE_BUFFER_LENGTH > 0
+  91:keyboards/crkbd/rev1/legacy/serial.c ****       sizeof(serial_slave_buffer), (uint8_t *)serial_slave_buffer
+  92:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+  93:keyboards/crkbd/rev1/legacy/serial.c ****       0, (uint8_t *)NULL,
+  94:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+  95:keyboards/crkbd/rev1/legacy/serial.c ****   }
+  96:keyboards/crkbd/rev1/legacy/serial.c **** };
+  97:keyboards/crkbd/rev1/legacy/serial.c **** 
+  98:keyboards/crkbd/rev1/legacy/serial.c **** void serial_master_init(void)
+  99:keyboards/crkbd/rev1/legacy/serial.c **** { soft_serial_initiator_init(transactions, TID_LIMIT(transactions)); }
+ 100:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 101:keyboards/crkbd/rev1/legacy/serial.c **** void serial_slave_init(void)
+ 102:keyboards/crkbd/rev1/legacy/serial.c **** { soft_serial_target_init(transactions, TID_LIMIT(transactions)); }
+ 103:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 104:keyboards/crkbd/rev1/legacy/serial.c **** // 0 => no error
+ 105:keyboards/crkbd/rev1/legacy/serial.c **** // 1 => slave did not respond
+ 106:keyboards/crkbd/rev1/legacy/serial.c **** // 2 => checksum error
+ 107:keyboards/crkbd/rev1/legacy/serial.c **** int serial_update_buffers()
+ 108:keyboards/crkbd/rev1/legacy/serial.c **** {
+ 109:keyboards/crkbd/rev1/legacy/serial.c ****     int result;
+ 110:keyboards/crkbd/rev1/legacy/serial.c ****     result = soft_serial_transaction();
+ 111:keyboards/crkbd/rev1/legacy/serial.c ****     return result;
+ 112:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 113:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 114:keyboards/crkbd/rev1/legacy/serial.c **** #endif // end of Simple API (OLD API, compatible with let's split serial.c)
+ 115:keyboards/crkbd/rev1/legacy/serial.c **** ////////////////////////////////////////////////////////////////////////////
+ 116:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 117:keyboards/crkbd/rev1/legacy/serial.c **** #define ALWAYS_INLINE __attribute__((always_inline))
+ 118:keyboards/crkbd/rev1/legacy/serial.c **** #define NO_INLINE __attribute__((noinline))
+ 119:keyboards/crkbd/rev1/legacy/serial.c **** #define _delay_sub_us(x)    __builtin_avr_delay_cycles(x)
+ 120:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 121:keyboards/crkbd/rev1/legacy/serial.c **** // parity check
+ 122:keyboards/crkbd/rev1/legacy/serial.c **** #define ODD_PARITY 1
+ 123:keyboards/crkbd/rev1/legacy/serial.c **** #define EVEN_PARITY 0
+ 124:keyboards/crkbd/rev1/legacy/serial.c **** #define PARITY EVEN_PARITY
+ 125:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 126:keyboards/crkbd/rev1/legacy/serial.c **** #ifdef SERIAL_DELAY
+ 127:keyboards/crkbd/rev1/legacy/serial.c ****   // custom setup in config.h
+ 128:keyboards/crkbd/rev1/legacy/serial.c ****   // #define TID_SEND_ADJUST 2
+ 129:keyboards/crkbd/rev1/legacy/serial.c ****   // #define SERIAL_DELAY 6             // micro sec
+ 130:keyboards/crkbd/rev1/legacy/serial.c ****   // #define READ_WRITE_START_ADJUST 30 // cycles
+ 131:keyboards/crkbd/rev1/legacy/serial.c ****   // #define READ_WRITE_WIDTH_ADJUST 8 // cycles
+ 132:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 133:keyboards/crkbd/rev1/legacy/serial.c **** // ============ Standard setups ============
+ 134:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 135:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef SELECT_SOFT_SERIAL_SPEED
+ 136:keyboards/crkbd/rev1/legacy/serial.c **** #define SELECT_SOFT_SERIAL_SPEED 1
+ 137:keyboards/crkbd/rev1/legacy/serial.c **** //  0: about 189kbps
+ 138:keyboards/crkbd/rev1/legacy/serial.c **** //  1: about 137kbps (default)
+ 139:keyboards/crkbd/rev1/legacy/serial.c **** //  2: about 75kbps
+ 140:keyboards/crkbd/rev1/legacy/serial.c **** //  3: about 39kbps
+ 141:keyboards/crkbd/rev1/legacy/serial.c **** //  4: about 26kbps
+ 142:keyboards/crkbd/rev1/legacy/serial.c **** //  5: about 20kbps
+ 143:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 144:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 145:keyboards/crkbd/rev1/legacy/serial.c **** #if __GNUC__ < 6
+ 146:keyboards/crkbd/rev1/legacy/serial.c ****   #define TID_SEND_ADJUST 14
+ 147:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 148:keyboards/crkbd/rev1/legacy/serial.c ****   #define TID_SEND_ADJUST 2
+ 149:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 150:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 151:keyboards/crkbd/rev1/legacy/serial.c **** #if SELECT_SOFT_SERIAL_SPEED == 0
+ 152:keyboards/crkbd/rev1/legacy/serial.c ****   // Very High speed
+ 153:keyboards/crkbd/rev1/legacy/serial.c ****   #define SERIAL_DELAY 4             // micro sec
+ 154:keyboards/crkbd/rev1/legacy/serial.c ****   #if __GNUC__ < 6
+ 155:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_START_ADJUST 33 // cycles
+ 156:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 3 // cycles
+ 157:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+ 158:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_START_ADJUST 34 // cycles
+ 159:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 7 // cycles
+ 160:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+ 161:keyboards/crkbd/rev1/legacy/serial.c **** #elif SELECT_SOFT_SERIAL_SPEED == 1
+ 162:keyboards/crkbd/rev1/legacy/serial.c ****   // High speed
+ 163:keyboards/crkbd/rev1/legacy/serial.c ****   #define SERIAL_DELAY 6             // micro sec
+ 164:keyboards/crkbd/rev1/legacy/serial.c ****   #if __GNUC__ < 6
+ 165:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_START_ADJUST 30 // cycles
+ 166:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 3 // cycles
+ 167:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+ 168:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_START_ADJUST 33 // cycles
+ 169:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 7 // cycles
+ 170:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+ 171:keyboards/crkbd/rev1/legacy/serial.c **** #elif SELECT_SOFT_SERIAL_SPEED == 2
+ 172:keyboards/crkbd/rev1/legacy/serial.c ****   // Middle speed
+ 173:keyboards/crkbd/rev1/legacy/serial.c ****   #define SERIAL_DELAY 12            // micro sec
+ 174:keyboards/crkbd/rev1/legacy/serial.c ****   #define READ_WRITE_START_ADJUST 30 // cycles
+ 175:keyboards/crkbd/rev1/legacy/serial.c ****   #if __GNUC__ < 6
+ 176:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 3 // cycles
+ 177:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+ 178:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 7 // cycles
+ 179:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+ 180:keyboards/crkbd/rev1/legacy/serial.c **** #elif SELECT_SOFT_SERIAL_SPEED == 3
+ 181:keyboards/crkbd/rev1/legacy/serial.c ****   // Low speed
+ 182:keyboards/crkbd/rev1/legacy/serial.c ****   #define SERIAL_DELAY 24            // micro sec
+ 183:keyboards/crkbd/rev1/legacy/serial.c ****   #define READ_WRITE_START_ADJUST 30 // cycles
+ 184:keyboards/crkbd/rev1/legacy/serial.c ****   #if __GNUC__ < 6
+ 185:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 3 // cycles
+ 186:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+ 187:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 7 // cycles
+ 188:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+ 189:keyboards/crkbd/rev1/legacy/serial.c **** #elif SELECT_SOFT_SERIAL_SPEED == 4
+ 190:keyboards/crkbd/rev1/legacy/serial.c ****   // Very Low speed
+ 191:keyboards/crkbd/rev1/legacy/serial.c ****   #define SERIAL_DELAY 36            // micro sec
+ 192:keyboards/crkbd/rev1/legacy/serial.c ****   #define READ_WRITE_START_ADJUST 30 // cycles
+ 193:keyboards/crkbd/rev1/legacy/serial.c ****   #if __GNUC__ < 6
+ 194:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 3 // cycles
+ 195:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+ 196:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 7 // cycles
+ 197:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+ 198:keyboards/crkbd/rev1/legacy/serial.c **** #elif SELECT_SOFT_SERIAL_SPEED == 5
+ 199:keyboards/crkbd/rev1/legacy/serial.c ****   // Ultra Low speed
+ 200:keyboards/crkbd/rev1/legacy/serial.c ****   #define SERIAL_DELAY 48            // micro sec
+ 201:keyboards/crkbd/rev1/legacy/serial.c ****   #define READ_WRITE_START_ADJUST 30 // cycles
+ 202:keyboards/crkbd/rev1/legacy/serial.c ****   #if __GNUC__ < 6
+ 203:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 3 // cycles
+ 204:keyboards/crkbd/rev1/legacy/serial.c ****   #else
+ 205:keyboards/crkbd/rev1/legacy/serial.c ****     #define READ_WRITE_WIDTH_ADJUST 7 // cycles
+ 206:keyboards/crkbd/rev1/legacy/serial.c ****   #endif
+ 207:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 208:keyboards/crkbd/rev1/legacy/serial.c **** #error invalid SELECT_SOFT_SERIAL_SPEED value
+ 209:keyboards/crkbd/rev1/legacy/serial.c **** #endif /* SELECT_SOFT_SERIAL_SPEED */
+ 210:keyboards/crkbd/rev1/legacy/serial.c **** #endif /* SERIAL_DELAY */
+ 211:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 212:keyboards/crkbd/rev1/legacy/serial.c **** #define SERIAL_DELAY_HALF1 (SERIAL_DELAY/2)
+ 213:keyboards/crkbd/rev1/legacy/serial.c **** #define SERIAL_DELAY_HALF2 (SERIAL_DELAY - SERIAL_DELAY/2)
+ 214:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 215:keyboards/crkbd/rev1/legacy/serial.c **** #define SLAVE_INT_WIDTH_US 1
+ 216:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef SERIAL_USE_MULTI_TRANSACTION
+ 217:keyboards/crkbd/rev1/legacy/serial.c ****   #define SLAVE_INT_RESPONSE_TIME SERIAL_DELAY
+ 218:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 219:keyboards/crkbd/rev1/legacy/serial.c ****   #define SLAVE_INT_ACK_WIDTH_UNIT 2
+ 220:keyboards/crkbd/rev1/legacy/serial.c ****   #define SLAVE_INT_ACK_WIDTH 4
+ 221:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 222:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 223:keyboards/crkbd/rev1/legacy/serial.c **** static SSTD_t *Transaction_table = NULL;
+ 224:keyboards/crkbd/rev1/legacy/serial.c **** static uint8_t Transaction_table_size = 0;
+ 225:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 226:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_delay(void) ALWAYS_INLINE;
+ 227:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 228:keyboards/crkbd/rev1/legacy/serial.c **** void serial_delay(void) {
+ 229:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY);
+ 230:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 231:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 232:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_delay_half1(void) ALWAYS_INLINE;
+ 233:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 234:keyboards/crkbd/rev1/legacy/serial.c **** void serial_delay_half1(void) {
+ 235:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 236:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 237:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 238:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_delay_half2(void) ALWAYS_INLINE;
+ 239:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 240:keyboards/crkbd/rev1/legacy/serial.c **** void serial_delay_half2(void) {
+ 241:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF2);
+ 242:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 243:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 244:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_output(void) ALWAYS_INLINE;
+ 245:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 246:keyboards/crkbd/rev1/legacy/serial.c **** void serial_output(void) {
+ 247:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 248:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 249:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 250:keyboards/crkbd/rev1/legacy/serial.c **** // make the serial pin an input with pull-up resistor
+ 251:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_input_with_pullup(void) ALWAYS_INLINE;
+ 252:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 253:keyboards/crkbd/rev1/legacy/serial.c **** void serial_input_with_pullup(void) {
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR  &= ~SERIAL_PIN_MASK;
+ 255:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 256:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 257:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 258:keyboards/crkbd/rev1/legacy/serial.c **** inline static uint8_t serial_read_pin(void) ALWAYS_INLINE;
+ 259:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 260:keyboards/crkbd/rev1/legacy/serial.c **** uint8_t serial_read_pin(void) {
+ 261:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+ 262:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 263:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 264:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_low(void) ALWAYS_INLINE;
+ 265:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 266:keyboards/crkbd/rev1/legacy/serial.c **** void serial_low(void) {
+ 267:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 268:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 269:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 270:keyboards/crkbd/rev1/legacy/serial.c **** inline static void serial_high(void) ALWAYS_INLINE;
+ 271:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 272:keyboards/crkbd/rev1/legacy/serial.c **** void serial_high(void) {
+ 273:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 274:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 275:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 276:keyboards/crkbd/rev1/legacy/serial.c **** void soft_serial_initiator_init(SSTD_t *sstd_table, int sstd_table_size)
+ 277:keyboards/crkbd/rev1/legacy/serial.c **** {
+ 278:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table = sstd_table;
+ 279:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table_size = (uint8_t)sstd_table_size;
+ 280:keyboards/crkbd/rev1/legacy/serial.c ****     serial_output();
+ 281:keyboards/crkbd/rev1/legacy/serial.c ****     serial_high();
+ 282:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 283:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 284:keyboards/crkbd/rev1/legacy/serial.c **** void soft_serial_target_init(SSTD_t *sstd_table, int sstd_table_size)
+ 285:keyboards/crkbd/rev1/legacy/serial.c **** {
+ 286:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table = sstd_table;
+ 287:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table_size = (uint8_t)sstd_table_size;
+ 288:keyboards/crkbd/rev1/legacy/serial.c ****     serial_input_with_pullup();
+ 289:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 290:keyboards/crkbd/rev1/legacy/serial.c ****     // Enable INT0-INT3,INT6
+ 291:keyboards/crkbd/rev1/legacy/serial.c ****     EIMSK |= EIMSK_BIT;
+ 292:keyboards/crkbd/rev1/legacy/serial.c **** #if SERIAL_PIN_MASK == _BV(PE6)
+ 293:keyboards/crkbd/rev1/legacy/serial.c ****     // Trigger on falling edge of INT6
+ 294:keyboards/crkbd/rev1/legacy/serial.c ****     EICRB &= EICRx_BIT;
+ 295:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 296:keyboards/crkbd/rev1/legacy/serial.c ****     // Trigger on falling edge of INT0-INT3
+ 297:keyboards/crkbd/rev1/legacy/serial.c ****     EICRA &= EICRx_BIT;
+ 298:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 299:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 300:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 301:keyboards/crkbd/rev1/legacy/serial.c **** // Used by the sender to synchronize timing with the reciver.
+ 302:keyboards/crkbd/rev1/legacy/serial.c **** static void sync_recv(void) NO_INLINE;
+ 303:keyboards/crkbd/rev1/legacy/serial.c **** static
+ 304:keyboards/crkbd/rev1/legacy/serial.c **** void sync_recv(void) {
+  15               		.loc 1 304 22 view -0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+ 305:keyboards/crkbd/rev1/legacy/serial.c ****   for (uint8_t i = 0; i < SERIAL_DELAY*5 && serial_read_pin(); i++ ) {
+  21               		.loc 1 305 3 view .LVU1
+  22               	.LBB124:
+  23               		.loc 1 305 8 view .LVU2
+  24               	.LVL0:
+  25               		.loc 1 305 23 view .LVU3
+  26               	.LBE124:
+ 304:keyboards/crkbd/rev1/legacy/serial.c ****   for (uint8_t i = 0; i < SERIAL_DELAY*5 && serial_read_pin(); i++ ) {
+  27               		.loc 1 304 22 is_stmt 0 view .LVU4
+  28 0000 8EE1      		ldi r24,lo8(30)
+  29               	.LVL1:
+  30               	.L2:
+  31               	.LBB127:
+  32               	.LBB125:
+  33               	.LBI125:
+ 260:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+  34               		.loc 1 260 9 is_stmt 1 view .LVU5
+  35               	.LBB126:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+  36               		.loc 1 261 3 view .LVU6
+  37               	.LBE126:
+  38               	.LBE125:
+  39               		.loc 1 305 42 is_stmt 0 view .LVU7
+  40 0002 4A9B      		sbis 0x9,2
+  41 0004 00C0      		rjmp .L7
+ 306:keyboards/crkbd/rev1/legacy/serial.c ****   }
+  42               		.loc 1 306 3 is_stmt 1 discriminator 4 view .LVU8
+ 305:keyboards/crkbd/rev1/legacy/serial.c ****   }
+  43               		.loc 1 305 64 discriminator 4 view .LVU9
+  44               	.LVL2:
+ 305:keyboards/crkbd/rev1/legacy/serial.c ****   }
+  45               		.loc 1 305 23 discriminator 4 view .LVU10
+  46 0006 8150      		subi r24,lo8(-(-1))
+  47               	.LVL3:
+ 305:keyboards/crkbd/rev1/legacy/serial.c ****   }
+  48               		.loc 1 305 3 is_stmt 0 discriminator 4 view .LVU11
+  49 0008 01F4      		brne .L2
+  50               	.LVL4:
+  51               	.L7:
+ 305:keyboards/crkbd/rev1/legacy/serial.c ****   }
+  52               		.loc 1 305 3 discriminator 4 view .LVU12
+  53               	.LBE127:
+ 307:keyboards/crkbd/rev1/legacy/serial.c ****   // This shouldn't hang if the target disconnects because the
+ 308:keyboards/crkbd/rev1/legacy/serial.c ****   // serial line will float to high if the target does disconnect.
+ 309:keyboards/crkbd/rev1/legacy/serial.c ****   while (!serial_read_pin());
+  54               		.loc 1 309 29 is_stmt 1 discriminator 1 view .LVU13
+  55               		.loc 1 309 9 discriminator 1 view .LVU14
+  56               	.LBB128:
+  57               	.LBI128:
+ 260:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+  58               		.loc 1 260 9 discriminator 1 view .LVU15
+  59               	.LBB129:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+  60               		.loc 1 261 3 discriminator 1 view .LVU16
+  61               	.LBE129:
+  62               	.LBE128:
+  63               		.loc 1 309 9 is_stmt 0 discriminator 1 view .LVU17
+  64 000a 4A9B      		sbis 0x9,2
+  65 000c 00C0      		rjmp .L7
+  66               	/* epilogue start */
+ 310:keyboards/crkbd/rev1/legacy/serial.c **** }
+  67               		.loc 1 310 1 view .LVU18
+  68 000e 0895      		ret
+  69               		.cfi_endproc
+  70               	.LFE16:
+  72               		.section	.text.sync_send,"ax",@progbits
+  74               	sync_send:
+  75               	.LFB17:
+ 311:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 312:keyboards/crkbd/rev1/legacy/serial.c **** // Used by the reciver to send a synchronization signal to the sender.
+ 313:keyboards/crkbd/rev1/legacy/serial.c **** static void sync_send(void) NO_INLINE;
+ 314:keyboards/crkbd/rev1/legacy/serial.c **** static
+ 315:keyboards/crkbd/rev1/legacy/serial.c **** void sync_send(void) {
+  76               		.loc 1 315 22 is_stmt 1 view -0
+  77               		.cfi_startproc
+  78               	/* prologue: function */
+  79               	/* frame size = 0 */
+  80               	/* stack size = 0 */
+  81               	.L__stack_usage = 0
+ 316:keyboards/crkbd/rev1/legacy/serial.c ****   serial_low();
+  82               		.loc 1 316 3 view .LVU20
+  83               	.LBB130:
+  84               	.LBI130:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+  85               		.loc 1 266 6 view .LVU21
+  86               	.LBB131:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+  87               		.loc 1 267 3 view .LVU22
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+  88               		.loc 1 267 19 is_stmt 0 view .LVU23
+  89 0000 5A98      		cbi 0xb,2
+  90               	.LBE131:
+  91               	.LBE130:
+ 317:keyboards/crkbd/rev1/legacy/serial.c ****   serial_delay();
+  92               		.loc 1 317 3 is_stmt 1 view .LVU24
+  93               	.LBB132:
+  94               	.LBI132:
+ 228:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY);
+  95               		.loc 1 228 6 view .LVU25
+  96               	.LBE132:
+ 229:keyboards/crkbd/rev1/legacy/serial.c **** }
+  97               		.loc 1 229 3 view .LVU26
+  98               	.LVL5:
+  99               	.LBB135:
+ 100               	.LBB133:
+ 101               	.LBI133:
+ 102               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\util\\delay.h"
+   1:c:\msys64\mingw64\avr\include\util\delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:c:\msys64\mingw64\avr\include\util\delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:c:\msys64\mingw64\avr\include\util\delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:c:\msys64\mingw64\avr\include\util\delay.h ****    All rights reserved.
+   5:c:\msys64\mingw64\avr\include\util\delay.h **** 
+   6:c:\msys64\mingw64\avr\include\util\delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:c:\msys64\mingw64\avr\include\util\delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:c:\msys64\mingw64\avr\include\util\delay.h **** 
+   9:c:\msys64\mingw64\avr\include\util\delay.h ****    * Redistributions of source code must retain the above copyright
+  10:c:\msys64\mingw64\avr\include\util\delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  12:c:\msys64\mingw64\avr\include\util\delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:c:\msys64\mingw64\avr\include\util\delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:c:\msys64\mingw64\avr\include\util\delay.h ****      the documentation and/or other materials provided with the
+  15:c:\msys64\mingw64\avr\include\util\delay.h ****      distribution.
+  16:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  17:c:\msys64\mingw64\avr\include\util\delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:c:\msys64\mingw64\avr\include\util\delay.h ****      contributors may be used to endorse or promote products derived
+  19:c:\msys64\mingw64\avr\include\util\delay.h ****      from this software without specific prior written permission.
+  20:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  21:c:\msys64\mingw64\avr\include\util\delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:c:\msys64\mingw64\avr\include\util\delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:c:\msys64\mingw64\avr\include\util\delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:c:\msys64\mingw64\avr\include\util\delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:c:\msys64\mingw64\avr\include\util\delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:c:\msys64\mingw64\avr\include\util\delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:c:\msys64\mingw64\avr\include\util\delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:c:\msys64\mingw64\avr\include\util\delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:c:\msys64\mingw64\avr\include\util\delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:c:\msys64\mingw64\avr\include\util\delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:c:\msys64\mingw64\avr\include\util\delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  33:c:\msys64\mingw64\avr\include\util\delay.h **** /* $Id: delay.h.in 2506 2016-02-08 10:05:45Z joerg_wunsch $ */
+  34:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  35:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef _UTIL_DELAY_H_
+  36:c:\msys64\mingw64\avr\include\util\delay.h **** #define _UTIL_DELAY_H_ 1
+  37:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  38:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef __DOXYGEN__
+  39:c:\msys64\mingw64\avr\include\util\delay.h **** #  ifndef __HAS_DELAY_CYCLES
+  40:c:\msys64\mingw64\avr\include\util\delay.h **** #    define __HAS_DELAY_CYCLES 1
+  41:c:\msys64\mingw64\avr\include\util\delay.h **** #  endif
+  42:c:\msys64\mingw64\avr\include\util\delay.h **** #endif  /* __DOXYGEN__ */
+  43:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  44:c:\msys64\mingw64\avr\include\util\delay.h **** #include <inttypes.h>
+  45:c:\msys64\mingw64\avr\include\util\delay.h **** #include <util/delay_basic.h>
+  46:c:\msys64\mingw64\avr\include\util\delay.h **** #include <math.h>
+  47:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  48:c:\msys64\mingw64\avr\include\util\delay.h **** /** \file */
+  49:c:\msys64\mingw64\avr\include\util\delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  50:c:\msys64\mingw64\avr\include\util\delay.h ****     \code
+  51:c:\msys64\mingw64\avr\include\util\delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  52:c:\msys64\mingw64\avr\include\util\delay.h ****     //#define F_CPU 14.7456E6
+  53:c:\msys64\mingw64\avr\include\util\delay.h ****     #include <util/delay.h>
+  54:c:\msys64\mingw64\avr\include\util\delay.h ****     \endcode
+  55:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  56:c:\msys64\mingw64\avr\include\util\delay.h ****     \note As an alternative method, it is possible to pass the
+  57:c:\msys64\mingw64\avr\include\util\delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  58:c:\msys64\mingw64\avr\include\util\delay.h ****     Obviously, in that case, no \c \#define statement should be
+  59:c:\msys64\mingw64\avr\include\util\delay.h ****     used.
+  60:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  61:c:\msys64\mingw64\avr\include\util\delay.h ****     The functions in this header file are wrappers around the basic
+  62:c:\msys64\mingw64\avr\include\util\delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  63:c:\msys64\mingw64\avr\include\util\delay.h ****     convenience functions where actual time values can be specified
+  64:c:\msys64\mingw64\avr\include\util\delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  65:c:\msys64\mingw64\avr\include\util\delay.h ****     that compile-time constant expressions will be eliminated by
+  66:c:\msys64\mingw64\avr\include\util\delay.h ****     compiler optimization so floating-point expressions can be used
+  67:c:\msys64\mingw64\avr\include\util\delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  68:c:\msys64\mingw64\avr\include\util\delay.h ****     frequency passed by the macro F_CPU.
+  69:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  70:c:\msys64\mingw64\avr\include\util\delay.h ****     \note In order for these functions to work as intended, compiler
+  71:c:\msys64\mingw64\avr\include\util\delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  72:c:\msys64\mingw64\avr\include\util\delay.h ****     <em>must</em> be an expression that is a known constant at
+  73:c:\msys64\mingw64\avr\include\util\delay.h ****     compile-time.  If these requirements are not met, the resulting
+  74:c:\msys64\mingw64\avr\include\util\delay.h ****     delay will be much longer (and basically unpredictable), and
+  75:c:\msys64\mingw64\avr\include\util\delay.h ****     applications that otherwise do not use floating-point calculations
+  76:c:\msys64\mingw64\avr\include\util\delay.h ****     will experience severe code bloat by the floating-point library
+  77:c:\msys64\mingw64\avr\include\util\delay.h ****     routines linked into the application.
+  78:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  79:c:\msys64\mingw64\avr\include\util\delay.h ****     The functions available allow the specification of microsecond, and
+  80:c:\msys64\mingw64\avr\include\util\delay.h ****     millisecond delays directly, using the application-supplied macro
+  81:c:\msys64\mingw64\avr\include\util\delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  82:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  83:c:\msys64\mingw64\avr\include\util\delay.h **** */
+  84:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  85:c:\msys64\mingw64\avr\include\util\delay.h **** #if !defined(__DOXYGEN__)
+  86:c:\msys64\mingw64\avr\include\util\delay.h **** static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+  87:c:\msys64\mingw64\avr\include\util\delay.h **** static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+  88:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+  89:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  90:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef F_CPU
+  91:c:\msys64\mingw64\avr\include\util\delay.h **** /* prevent compiler error by supplying a default */
+  92:c:\msys64\mingw64\avr\include\util\delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  93:c:\msys64\mingw64\avr\include\util\delay.h **** /** \ingroup util_delay
+  94:c:\msys64\mingw64\avr\include\util\delay.h ****     \def F_CPU
+  95:c:\msys64\mingw64\avr\include\util\delay.h ****     \brief CPU frequency in Hz
+  96:c:\msys64\mingw64\avr\include\util\delay.h **** 
+  97:c:\msys64\mingw64\avr\include\util\delay.h ****     The macro F_CPU specifies the CPU frequency to be considered by
+  98:c:\msys64\mingw64\avr\include\util\delay.h ****     the delay macros.  This macro is normally supplied by the
+  99:c:\msys64\mingw64\avr\include\util\delay.h ****     environment (e.g. from within a project header, or the project's
+ 100:c:\msys64\mingw64\avr\include\util\delay.h ****     Makefile).  The value 1 MHz here is only provided as a "vanilla"
+ 101:c:\msys64\mingw64\avr\include\util\delay.h ****     fallback if no such user-provided definition could be found.
+ 102:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 103:c:\msys64\mingw64\avr\include\util\delay.h ****     In terms of the delay functions, the CPU frequency can be given as
+ 104:c:\msys64\mingw64\avr\include\util\delay.h ****     a floating-point constant (e.g. 3.6864E6 for 3.6864 MHz).
+ 105:c:\msys64\mingw64\avr\include\util\delay.h ****     However, the macros in <util/setbaud.h> require it to be an
+ 106:c:\msys64\mingw64\avr\include\util\delay.h ****     integer value.
+ 107:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 108:c:\msys64\mingw64\avr\include\util\delay.h **** # define F_CPU 1000000UL
+ 109:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 110:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 111:c:\msys64\mingw64\avr\include\util\delay.h **** #ifndef __OPTIMIZE__
+ 112:c:\msys64\mingw64\avr\include\util\delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+ 113:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 114:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 115:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 116:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 117:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 118:c:\msys64\mingw64\avr\include\util\delay.h **** #  include <math.h>
+ 119:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 120:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 121:c:\msys64\mingw64\avr\include\util\delay.h **** /**
+ 122:c:\msys64\mingw64\avr\include\util\delay.h ****    \ingroup util_delay
+ 123:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 124:c:\msys64\mingw64\avr\include\util\delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 125:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 126:c:\msys64\mingw64\avr\include\util\delay.h ****    The macro F_CPU is supposed to be defined to a
+ 127:c:\msys64\mingw64\avr\include\util\delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 128:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 129:c:\msys64\mingw64\avr\include\util\delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 130:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 131:c:\msys64\mingw64\avr\include\util\delay.h ****    When the user request delay which exceed the maximum possible one,
+ 132:c:\msys64\mingw64\avr\include\util\delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 133:c:\msys64\mingw64\avr\include\util\delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 134:c:\msys64\mingw64\avr\include\util\delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 135:c:\msys64\mingw64\avr\include\util\delay.h ****    user will not be informed about decreased resolution.
+ 136:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 137:c:\msys64\mingw64\avr\include\util\delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 138:c:\msys64\mingw64\avr\include\util\delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 139:c:\msys64\mingw64\avr\include\util\delay.h ****    values greater than the maximal possible delay, overflows results in
+ 140:c:\msys64\mingw64\avr\include\util\delay.h ****    no delay i.e., 0ms.
+ 141:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 142:c:\msys64\mingw64\avr\include\util\delay.h ****    Conversion of \c __ms into clock cycles may not always result in
+ 143:c:\msys64\mingw64\avr\include\util\delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 144:c:\msys64\mingw64\avr\include\util\delay.h ****    integer. This ensures that the user gets at least \c __ms
+ 145:c:\msys64\mingw64\avr\include\util\delay.h ****    microseconds of delay.
+ 146:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 147:c:\msys64\mingw64\avr\include\util\delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 148:c:\msys64\mingw64\avr\include\util\delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 149:c:\msys64\mingw64\avr\include\util\delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 150:c:\msys64\mingw64\avr\include\util\delay.h ****    respectively.
+ 151:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 152:c:\msys64\mingw64\avr\include\util\delay.h ****    \note
+ 153:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 154:c:\msys64\mingw64\avr\include\util\delay.h ****    The implementation of _delay_ms() based on
+ 155:c:\msys64\mingw64\avr\include\util\delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 156:c:\msys64\mingw64\avr\include\util\delay.h ****    implementations.  In order to get functionality backward compatible
+ 157:c:\msys64\mingw64\avr\include\util\delay.h ****    with previous versions, the macro \c "__DELAY_BACKWARD_COMPATIBLE__"
+ 158:c:\msys64\mingw64\avr\include\util\delay.h ****    must be defined before including this header file. Also, the
+ 159:c:\msys64\mingw64\avr\include\util\delay.h ****    backward compatible algorithm will be chosen if the code is
+ 160:c:\msys64\mingw64\avr\include\util\delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 161:c:\msys64\mingw64\avr\include\util\delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 162:c:\msys64\mingw64\avr\include\util\delay.h ****    not available to the compiler then.
+ 163:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 164:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 165:c:\msys64\mingw64\avr\include\util\delay.h **** void
+ 166:c:\msys64\mingw64\avr\include\util\delay.h **** _delay_ms(double __ms)
+ 167:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 168:c:\msys64\mingw64\avr\include\util\delay.h **** 	double __tmp ;
+ 169:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 170:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 171:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 172:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint32_t __ticks_dc;
+ 173:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 174:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 175:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 176:c:\msys64\mingw64\avr\include\util\delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 177:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 178:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 179:c:\msys64\mingw64\avr\include\util\delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 180:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 181:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 182:c:\msys64\mingw64\avr\include\util\delay.h **** 	#else
+ 183:c:\msys64\mingw64\avr\include\util\delay.h **** 		//round up by default
+ 184:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 185:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 186:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 187:c:\msys64\mingw64\avr\include\util\delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 188:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 189:c:\msys64\mingw64\avr\include\util\delay.h **** #else
+ 190:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint16_t __ticks;
+ 191:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 4e3) * __ms;
+ 192:c:\msys64\mingw64\avr\include\util\delay.h **** 	if (__tmp < 1.0)
+ 193:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = 1;
+ 194:c:\msys64\mingw64\avr\include\util\delay.h **** 	else if (__tmp > 65535)
+ 195:c:\msys64\mingw64\avr\include\util\delay.h **** 	{
+ 196:c:\msys64\mingw64\avr\include\util\delay.h **** 		//	__ticks = requested delay in 1/10 ms
+ 197:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = (uint16_t) (__ms * 10.0);
+ 198:c:\msys64\mingw64\avr\include\util\delay.h **** 		while(__ticks)
+ 199:c:\msys64\mingw64\avr\include\util\delay.h **** 		{
+ 200:c:\msys64\mingw64\avr\include\util\delay.h **** 			// wait 1/10 ms
+ 201:c:\msys64\mingw64\avr\include\util\delay.h **** 			_delay_loop_2(((F_CPU) / 4e3) / 10);
+ 202:c:\msys64\mingw64\avr\include\util\delay.h **** 			__ticks --;
+ 203:c:\msys64\mingw64\avr\include\util\delay.h **** 		}
+ 204:c:\msys64\mingw64\avr\include\util\delay.h **** 		return;
+ 205:c:\msys64\mingw64\avr\include\util\delay.h **** 	}
+ 206:c:\msys64\mingw64\avr\include\util\delay.h **** 	else
+ 207:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks = (uint16_t)__tmp;
+ 208:c:\msys64\mingw64\avr\include\util\delay.h **** 	_delay_loop_2(__ticks);
+ 209:c:\msys64\mingw64\avr\include\util\delay.h **** #endif
+ 210:c:\msys64\mingw64\avr\include\util\delay.h **** }
+ 211:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 212:c:\msys64\mingw64\avr\include\util\delay.h **** /**
+ 213:c:\msys64\mingw64\avr\include\util\delay.h ****    \ingroup util_delay
+ 214:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 215:c:\msys64\mingw64\avr\include\util\delay.h ****    Perform a delay of \c __us microseconds, using _delay_loop_1().
+ 216:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 217:c:\msys64\mingw64\avr\include\util\delay.h ****    The macro F_CPU is supposed to be defined to a
+ 218:c:\msys64\mingw64\avr\include\util\delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 219:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 220:c:\msys64\mingw64\avr\include\util\delay.h ****    The maximal possible delay is 768 us / F_CPU in MHz.
+ 221:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 222:c:\msys64\mingw64\avr\include\util\delay.h ****    If the user requests a delay greater than the maximal possible one,
+ 223:c:\msys64\mingw64\avr\include\util\delay.h ****    _delay_us() will automatically call _delay_ms() instead.  The user
+ 224:c:\msys64\mingw64\avr\include\util\delay.h ****    will not be informed about this case.
+ 225:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 226:c:\msys64\mingw64\avr\include\util\delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 227:c:\msys64\mingw64\avr\include\util\delay.h ****    support, maximal possible delay is 4294967.295 us/ F_CPU in MHz. For
+ 228:c:\msys64\mingw64\avr\include\util\delay.h ****    values greater than the maximal possible delay, overflow results in
+ 229:c:\msys64\mingw64\avr\include\util\delay.h ****    no delay i.e., 0us.
+ 230:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 231:c:\msys64\mingw64\avr\include\util\delay.h ****    Conversion of \c __us into clock cycles may not always result in
+ 232:c:\msys64\mingw64\avr\include\util\delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 233:c:\msys64\mingw64\avr\include\util\delay.h ****    integer. This ensures that the user gets at least \c __us
+ 234:c:\msys64\mingw64\avr\include\util\delay.h ****    microseconds of delay.
+ 235:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 236:c:\msys64\mingw64\avr\include\util\delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 237:c:\msys64\mingw64\avr\include\util\delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 238:c:\msys64\mingw64\avr\include\util\delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 239:c:\msys64\mingw64\avr\include\util\delay.h ****    respectively.
+ 240:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 241:c:\msys64\mingw64\avr\include\util\delay.h ****    \note
+ 242:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 243:c:\msys64\mingw64\avr\include\util\delay.h ****    The implementation of _delay_ms() based on
+ 244:c:\msys64\mingw64\avr\include\util\delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 245:c:\msys64\mingw64\avr\include\util\delay.h ****    implementations.  In order to get functionality backward compatible
+ 246:c:\msys64\mingw64\avr\include\util\delay.h ****    with previous versions, the macro \c __DELAY_BACKWARD_COMPATIBLE__
+ 247:c:\msys64\mingw64\avr\include\util\delay.h ****    must be defined before including this header file. Also, the
+ 248:c:\msys64\mingw64\avr\include\util\delay.h ****    backward compatible algorithm will be chosen if the code is
+ 249:c:\msys64\mingw64\avr\include\util\delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 250:c:\msys64\mingw64\avr\include\util\delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 251:c:\msys64\mingw64\avr\include\util\delay.h ****    not available to the compiler then.
+ 252:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 253:c:\msys64\mingw64\avr\include\util\delay.h ****  */
+ 254:c:\msys64\mingw64\avr\include\util\delay.h **** void
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** _delay_us(double __us)
+ 103               		.loc 2 255 1 view .LVU27
+ 104               	.LBB134:
+ 256:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** 	double __tmp ;
+ 105               		.loc 2 257 2 view .LVU28
+ 258:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 259:c:\msys64\mingw64\avr\include\util\delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 260:c:\msys64\mingw64\avr\include\util\delay.h ****   __STDC_HOSTED__
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	uint32_t __ticks_dc;
+ 106               		.loc 2 261 2 view .LVU29
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 107               		.loc 2 262 2 view .LVU30
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 108               		.loc 2 263 2 view .LVU31
+ 264:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 265:c:\msys64\mingw64\avr\include\util\delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 266:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 267:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 268:c:\msys64\mingw64\avr\include\util\delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 269:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 270:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 271:c:\msys64\mingw64\avr\include\util\delay.h **** 	#else
+ 272:c:\msys64\mingw64\avr\include\util\delay.h **** 		//round up by default
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 109               		.loc 2 273 3 view .LVU32
+ 274:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 275:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 276:c:\msys64\mingw64\avr\include\util\delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 110               		.loc 2 276 2 view .LVU33
+ 111 0002 80E2      		ldi r24,lo8(32)
+ 112 0004 8A95      	1:	dec r24
+ 113 0006 01F4      		brne 1b
+ 114               	.LVL6:
+ 115               		.loc 2 276 2 is_stmt 0 view .LVU34
+ 116               	.LBE134:
+ 117               	.LBE133:
+ 118               	.LBE135:
+ 318:keyboards/crkbd/rev1/legacy/serial.c ****   serial_high();
+ 119               		.loc 1 318 3 is_stmt 1 view .LVU35
+ 120               	.LBB136:
+ 121               	.LBI136:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 122               		.loc 1 272 6 view .LVU36
+ 123               	.LBB137:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 124               		.loc 1 273 3 view .LVU37
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 125               		.loc 1 273 19 is_stmt 0 view .LVU38
+ 126 0008 5A9A      		sbi 0xb,2
+ 127               	/* epilogue start */
+ 128               	.LBE137:
+ 129               	.LBE136:
+ 319:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 130               		.loc 1 319 1 view .LVU39
+ 131 000a 0895      		ret
+ 132               		.cfi_endproc
+ 133               	.LFE17:
+ 135               		.section	.text.serial_read_chunk,"ax",@progbits
+ 137               	serial_read_chunk:
+ 138               	.LVL7:
+ 139               	.LFB18:
+ 320:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 321:keyboards/crkbd/rev1/legacy/serial.c **** // Reads a byte from the serial line
+ 322:keyboards/crkbd/rev1/legacy/serial.c **** static uint8_t serial_read_chunk(uint8_t *pterrcount, uint8_t bit) NO_INLINE;
+ 323:keyboards/crkbd/rev1/legacy/serial.c **** static uint8_t serial_read_chunk(uint8_t *pterrcount, uint8_t bit) {
+ 140               		.loc 1 323 68 is_stmt 1 view -0
+ 141               		.cfi_startproc
+ 142               	/* prologue: function */
+ 143               	/* frame size = 0 */
+ 144               	/* stack size = 0 */
+ 145               	.L__stack_usage = 0
+ 146               		.loc 1 323 68 is_stmt 0 view .LVU41
+ 147 0000 FC01      		movw r30,r24
+ 324:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t byte, i, p, pb;
+ 148               		.loc 1 324 5 is_stmt 1 view .LVU42
+ 325:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 326:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_sub_us(READ_WRITE_START_ADJUST);
+ 149               		.loc 1 326 3 view .LVU43
+ 150 0002 3BE0      		ldi r19,lo8(11)
+ 151 0004 3A95      	1:	dec r19
+ 152 0006 01F4      		brne 1b
+ 327:keyboards/crkbd/rev1/legacy/serial.c ****   for( i = 0, byte = 0, p = PARITY; i < bit; i++ ) {
+ 153               		.loc 1 327 3 view .LVU44
+ 154               	.LVL8:
+ 155               		.loc 1 327 37 view .LVU45
+ 156               		.loc 1 327 27 is_stmt 0 view .LVU46
+ 157 0008 20E0      		ldi r18,0
+ 158               		.loc 1 327 10 view .LVU47
+ 159 000a 90E0      		ldi r25,0
+ 160               		.loc 1 327 20 view .LVU48
+ 161 000c 80E0      		ldi r24,0
+ 162               	.LVL9:
+ 328:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half1();   // read the middle of pulses
+ 329:keyboards/crkbd/rev1/legacy/serial.c ****       if( serial_read_pin() ) {
+ 330:keyboards/crkbd/rev1/legacy/serial.c ****           byte = (byte << 1) | 1; p ^= 1;
+ 163               		.loc 1 330 37 view .LVU49
+ 164 000e 31E0      		ldi r19,lo8(1)
+ 165               	.LVL10:
+ 166               	.L14:
+ 328:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half1();   // read the middle of pulses
+ 167               		.loc 1 328 7 is_stmt 1 view .LVU50
+ 168               	.LBB138:
+ 169               	.LBI138:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 170               		.loc 1 234 6 view .LVU51
+ 171               	.LBE138:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 172               		.loc 1 235 3 view .LVU52
+ 173               	.LBB141:
+ 174               	.LBB139:
+ 175               	.LBI139:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 176               		.loc 2 255 1 view .LVU53
+ 177               	.LBB140:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 178               		.loc 2 257 2 view .LVU54
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 179               		.loc 2 261 2 view .LVU55
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 180               		.loc 2 262 2 view .LVU56
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 181               		.loc 2 263 2 view .LVU57
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 182               		.loc 2 273 3 view .LVU58
+ 183               		.loc 2 276 2 view .LVU59
+ 184 0010 40E1      		ldi r20,lo8(16)
+ 185 0012 4A95      	1:	dec r20
+ 186 0014 01F4      		brne 1b
+ 187               	.LVL11:
+ 188               		.loc 2 276 2 is_stmt 0 view .LVU60
+ 189               	.LBE140:
+ 190               	.LBE139:
+ 191               	.LBE141:
+ 329:keyboards/crkbd/rev1/legacy/serial.c ****           byte = (byte << 1) | 1; p ^= 1;
+ 192               		.loc 1 329 7 is_stmt 1 view .LVU61
+ 193               	.LBB142:
+ 194               	.LBI142:
+ 260:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+ 195               		.loc 1 260 9 view .LVU62
+ 196               	.LBB143:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 197               		.loc 1 261 3 view .LVU63
+ 198               	.LBE143:
+ 199               	.LBE142:
+ 200               		.loc 1 330 24 is_stmt 0 view .LVU64
+ 201 0016 880F      		lsl r24
+ 202               	.LVL12:
+ 329:keyboards/crkbd/rev1/legacy/serial.c ****           byte = (byte << 1) | 1; p ^= 1;
+ 203               		.loc 1 329 9 view .LVU65
+ 204 0018 4A9B      		sbis 0x9,2
+ 205 001a 00C0      		rjmp .L13
+ 206               		.loc 1 330 11 is_stmt 1 view .LVU66
+ 207               		.loc 1 330 30 is_stmt 0 view .LVU67
+ 208 001c 8160      		ori r24,lo8(1)
+ 209               	.LVL13:
+ 210               		.loc 1 330 35 is_stmt 1 view .LVU68
+ 211               		.loc 1 330 37 is_stmt 0 view .LVU69
+ 212 001e 2327      		eor r18,r19
+ 213               	.LVL14:
+ 214               	.L13:
+ 331:keyboards/crkbd/rev1/legacy/serial.c ****       } else {
+ 332:keyboards/crkbd/rev1/legacy/serial.c ****           byte = (byte << 1) | 0; p ^= 0;
+ 333:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 334:keyboards/crkbd/rev1/legacy/serial.c ****       _delay_sub_us(READ_WRITE_WIDTH_ADJUST);
+ 215               		.loc 1 334 7 is_stmt 1 discriminator 2 view .LVU70
+ 216 0020 42E0      		ldi r20,lo8(2)
+ 217 0022 4A95      	1:	dec r20
+ 218 0024 01F4      		brne 1b
+ 219 0026 0000      		nop
+ 335:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half2();
+ 220               		.loc 1 335 7 discriminator 2 view .LVU71
+ 221               	.LBB144:
+ 222               	.LBI144:
+ 240:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF2);
+ 223               		.loc 1 240 6 discriminator 2 view .LVU72
+ 224               	.LBE144:
+ 241:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 225               		.loc 1 241 3 discriminator 2 view .LVU73
+ 226               	.LVL15:
+ 227               	.LBB147:
+ 228               	.LBB145:
+ 229               	.LBI145:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 230               		.loc 2 255 1 discriminator 2 view .LVU74
+ 231               	.LBB146:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 232               		.loc 2 257 2 discriminator 2 view .LVU75
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 233               		.loc 2 261 2 discriminator 2 view .LVU76
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 234               		.loc 2 262 2 discriminator 2 view .LVU77
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 235               		.loc 2 263 2 discriminator 2 view .LVU78
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 236               		.loc 2 273 3 discriminator 2 view .LVU79
+ 237               		.loc 2 276 2 discriminator 2 view .LVU80
+ 238 0028 40E1      		ldi r20,lo8(16)
+ 239 002a 4A95      	1:	dec r20
+ 240 002c 01F4      		brne 1b
+ 241               	.LVL16:
+ 242               		.loc 2 276 2 is_stmt 0 discriminator 2 view .LVU81
+ 243               	.LBE146:
+ 244               	.LBE145:
+ 245               	.LBE147:
+ 327:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half1();   // read the middle of pulses
+ 246               		.loc 1 327 46 is_stmt 1 discriminator 2 view .LVU82
+ 327:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half1();   // read the middle of pulses
+ 247               		.loc 1 327 47 is_stmt 0 discriminator 2 view .LVU83
+ 248 002e 9F5F      		subi r25,lo8(-(1))
+ 249               	.LVL17:
+ 327:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half1();   // read the middle of pulses
+ 250               		.loc 1 327 37 is_stmt 1 discriminator 2 view .LVU84
+ 327:keyboards/crkbd/rev1/legacy/serial.c ****       serial_delay_half1();   // read the middle of pulses
+ 251               		.loc 1 327 3 is_stmt 0 discriminator 2 view .LVU85
+ 252 0030 6913      		cpse r22,r25
+ 253 0032 00C0      		rjmp .L14
+ 336:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 337:keyboards/crkbd/rev1/legacy/serial.c ****   /* recive parity bit */
+ 338:keyboards/crkbd/rev1/legacy/serial.c ****   serial_delay_half1();   // read the middle of pulses
+ 254               		.loc 1 338 3 is_stmt 1 view .LVU86
+ 255               	.LBB148:
+ 256               	.LBI148:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 257               		.loc 1 234 6 view .LVU87
+ 258               	.LBE148:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 259               		.loc 1 235 3 view .LVU88
+ 260               	.LVL18:
+ 261               	.LBB151:
+ 262               	.LBB149:
+ 263               	.LBI149:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 264               		.loc 2 255 1 view .LVU89
+ 265               	.LBB150:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 266               		.loc 2 257 2 view .LVU90
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 267               		.loc 2 261 2 view .LVU91
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 268               		.loc 2 262 2 view .LVU92
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 269               		.loc 2 263 2 view .LVU93
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 270               		.loc 2 273 3 view .LVU94
+ 271               		.loc 2 276 2 view .LVU95
+ 272 0034 90E1      		ldi r25,lo8(16)
+ 273 0036 9A95      	1:	dec r25
+ 274 0038 01F4      		brne 1b
+ 275               	.LVL19:
+ 276               		.loc 2 276 2 is_stmt 0 view .LVU96
+ 277               	.LBE150:
+ 278               	.LBE149:
+ 279               	.LBE151:
+ 339:keyboards/crkbd/rev1/legacy/serial.c ****   pb = serial_read_pin();
+ 280               		.loc 1 339 3 is_stmt 1 view .LVU97
+ 281               	.LBB152:
+ 282               	.LBI152:
+ 260:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+ 283               		.loc 1 260 9 view .LVU98
+ 284               	.LBB153:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 285               		.loc 1 261 3 view .LVU99
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 286               		.loc 1 261 13 is_stmt 0 view .LVU100
+ 287 003a 99B1      		in r25,0x9
+ 288               	.LVL20:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 289               		.loc 1 261 13 view .LVU101
+ 290               	.LBE153:
+ 291               	.LBE152:
+ 340:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_sub_us(READ_WRITE_WIDTH_ADJUST);
+ 292               		.loc 1 340 3 is_stmt 1 view .LVU102
+ 293 003c 32E0      		ldi r19,lo8(2)
+ 294 003e 3A95      	1:	dec r19
+ 295 0040 01F4      		brne 1b
+ 296 0042 0000      		nop
+ 341:keyboards/crkbd/rev1/legacy/serial.c ****   serial_delay_half2();
+ 297               		.loc 1 341 3 view .LVU103
+ 298               	.LBB155:
+ 299               	.LBI155:
+ 240:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF2);
+ 300               		.loc 1 240 6 view .LVU104
+ 301               	.LBE155:
+ 241:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 302               		.loc 1 241 3 view .LVU105
+ 303               	.LVL21:
+ 304               	.LBB158:
+ 305               	.LBB156:
+ 306               	.LBI156:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 307               		.loc 2 255 1 view .LVU106
+ 308               	.LBB157:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 309               		.loc 2 257 2 view .LVU107
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 310               		.loc 2 261 2 view .LVU108
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 311               		.loc 2 262 2 view .LVU109
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 312               		.loc 2 263 2 view .LVU110
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 313               		.loc 2 273 3 view .LVU111
+ 314               		.loc 2 276 2 view .LVU112
+ 315 0044 40E1      		ldi r20,lo8(16)
+ 316 0046 4A95      	1:	dec r20
+ 317 0048 01F4      		brne 1b
+ 318               	.LVL22:
+ 319               		.loc 2 276 2 is_stmt 0 view .LVU113
+ 320               	.LBE157:
+ 321               	.LBE156:
+ 322               	.LBE158:
+ 342:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 343:keyboards/crkbd/rev1/legacy/serial.c ****   *pterrcount += (p != pb)? 1 : 0;
+ 323               		.loc 1 343 3 is_stmt 1 view .LVU114
+ 324               	.LBB159:
+ 325               	.LBB154:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 326               		.loc 1 261 10 is_stmt 0 view .LVU115
+ 327 004a 92FB      		bst r25,2
+ 328 004c 9927      		clr r25
+ 329 004e 90F9      		bld r25,0
+ 330               	.LVL23:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 331               		.loc 1 261 10 view .LVU116
+ 332               	.LBE154:
+ 333               	.LBE159:
+ 334               		.loc 1 343 15 view .LVU117
+ 335 0050 9227      		eor r25,r18
+ 336 0052 2081      		ld r18,Z
+ 337               	.LVL24:
+ 338               		.loc 1 343 15 view .LVU118
+ 339 0054 920F      		add r25,r18
+ 340 0056 9083      		st Z,r25
+ 344:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 345:keyboards/crkbd/rev1/legacy/serial.c ****   return byte;
+ 341               		.loc 1 345 3 is_stmt 1 view .LVU119
+ 342               	/* epilogue start */
+ 346:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 343               		.loc 1 346 1 is_stmt 0 view .LVU120
+ 344 0058 0895      		ret
+ 345               		.cfi_endproc
+ 346               	.LFE18:
+ 348               		.section	.text.serial_recive_packet,"ax",@progbits
+ 350               	serial_recive_packet:
+ 351               	.LVL25:
+ 352               	.LFB21:
+ 347:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 348:keyboards/crkbd/rev1/legacy/serial.c **** // Sends a byte with MSB ordering
+ 349:keyboards/crkbd/rev1/legacy/serial.c **** void serial_write_chunk(uint8_t data, uint8_t bit) NO_INLINE;
+ 350:keyboards/crkbd/rev1/legacy/serial.c **** void serial_write_chunk(uint8_t data, uint8_t bit) {
+ 351:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t b, p;
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****     for( p = PARITY, b = 1<<(bit-1); b ; b >>= 1) {
+ 353:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 354:keyboards/crkbd/rev1/legacy/serial.c ****             serial_high(); p ^= 1;
+ 355:keyboards/crkbd/rev1/legacy/serial.c ****         } else {
+ 356:keyboards/crkbd/rev1/legacy/serial.c ****             serial_low();  p ^= 0;
+ 357:keyboards/crkbd/rev1/legacy/serial.c ****         }
+ 358:keyboards/crkbd/rev1/legacy/serial.c ****         serial_delay();
+ 359:keyboards/crkbd/rev1/legacy/serial.c ****     }
+ 360:keyboards/crkbd/rev1/legacy/serial.c ****     /* send parity bit */
+ 361:keyboards/crkbd/rev1/legacy/serial.c ****     if(p & 1) { serial_high(); }
+ 362:keyboards/crkbd/rev1/legacy/serial.c ****     else      { serial_low(); }
+ 363:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay();
+ 364:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 365:keyboards/crkbd/rev1/legacy/serial.c ****     serial_low(); // sync_send() / senc_recv() need raise edge
+ 366:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 367:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 368:keyboards/crkbd/rev1/legacy/serial.c **** static void serial_send_packet(uint8_t *buffer, uint8_t size) NO_INLINE;
+ 369:keyboards/crkbd/rev1/legacy/serial.c **** static
+ 370:keyboards/crkbd/rev1/legacy/serial.c **** void serial_send_packet(uint8_t *buffer, uint8_t size) {
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****   for (uint8_t i = 0; i < size; ++i) {
+ 372:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 373:keyboards/crkbd/rev1/legacy/serial.c ****     data = buffer[i];
+ 374:keyboards/crkbd/rev1/legacy/serial.c ****     sync_send();
+ 375:keyboards/crkbd/rev1/legacy/serial.c ****     serial_write_chunk(data,8);
+ 376:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 377:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 378:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 379:keyboards/crkbd/rev1/legacy/serial.c **** static uint8_t serial_recive_packet(uint8_t *buffer, uint8_t size) NO_INLINE;
+ 380:keyboards/crkbd/rev1/legacy/serial.c **** static
+ 381:keyboards/crkbd/rev1/legacy/serial.c **** uint8_t serial_recive_packet(uint8_t *buffer, uint8_t size) {
+ 353               		.loc 1 381 61 is_stmt 1 view -0
+ 354               		.cfi_startproc
+ 355               		.loc 1 381 61 is_stmt 0 view .LVU122
+ 356 0000 EF92      		push r14
+ 357               	.LCFI0:
+ 358               		.cfi_def_cfa_offset 3
+ 359               		.cfi_offset 14, -2
+ 360 0002 FF92      		push r15
+ 361               	.LCFI1:
+ 362               		.cfi_def_cfa_offset 4
+ 363               		.cfi_offset 15, -3
+ 364 0004 0F93      		push r16
+ 365               	.LCFI2:
+ 366               		.cfi_def_cfa_offset 5
+ 367               		.cfi_offset 16, -4
+ 368 0006 1F93      		push r17
+ 369               	.LCFI3:
+ 370               		.cfi_def_cfa_offset 6
+ 371               		.cfi_offset 17, -5
+ 372 0008 CF93      		push r28
+ 373               	.LCFI4:
+ 374               		.cfi_def_cfa_offset 7
+ 375               		.cfi_offset 28, -6
+ 376 000a DF93      		push r29
+ 377               	.LCFI5:
+ 378               		.cfi_def_cfa_offset 8
+ 379               		.cfi_offset 29, -7
+ 380 000c 0F92      		push __tmp_reg__
+ 381               	.LCFI6:
+ 382               		.cfi_def_cfa_offset 9
+ 383 000e CDB7      		in r28,__SP_L__
+ 384 0010 DEB7      		in r29,__SP_H__
+ 385               	.LCFI7:
+ 386               		.cfi_def_cfa_register 28
+ 387               	/* prologue: function */
+ 388               	/* frame size = 1 */
+ 389               	/* stack size = 7 */
+ 390               	.L__stack_usage = 7
+ 382:keyboards/crkbd/rev1/legacy/serial.c ****   uint8_t pecount = 0;
+ 391               		.loc 1 382 3 is_stmt 1 view .LVU123
+ 392               		.loc 1 382 11 is_stmt 0 view .LVU124
+ 393 0012 1982      		std Y+1,__zero_reg__
+ 383:keyboards/crkbd/rev1/legacy/serial.c ****   for (uint8_t i = 0; i < size; ++i) {
+ 394               		.loc 1 383 3 is_stmt 1 view .LVU125
+ 395               	.LBB160:
+ 396               		.loc 1 383 8 view .LVU126
+ 397               	.LVL26:
+ 398               		.loc 1 383 8 is_stmt 0 view .LVU127
+ 399 0014 8C01      		movw r16,r24
+ 400 0016 7C01      		movw r14,r24
+ 401 0018 E60E      		add r14,r22
+ 402 001a F11C      		adc r15,__zero_reg__
+ 403               	.LVL27:
+ 404               	.L17:
+ 405               		.loc 1 383 23 is_stmt 1 discriminator 1 view .LVU128
+ 406               		.loc 1 383 3 is_stmt 0 discriminator 1 view .LVU129
+ 407 001c 0E15      		cp r16,r14
+ 408 001e 1F05      		cpc r17,r15
+ 409 0020 01F4      		brne .L18
+ 410               	.LBE160:
+ 384:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 385:keyboards/crkbd/rev1/legacy/serial.c ****     sync_recv();
+ 386:keyboards/crkbd/rev1/legacy/serial.c ****     data = serial_read_chunk(&pecount, 8);
+ 387:keyboards/crkbd/rev1/legacy/serial.c ****     buffer[i] = data;
+ 388:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 389:keyboards/crkbd/rev1/legacy/serial.c ****   return pecount == 0;
+ 411               		.loc 1 389 3 is_stmt 1 view .LVU130
+ 412               		.loc 1 389 18 is_stmt 0 view .LVU131
+ 413 0022 81E0      		ldi r24,lo8(1)
+ 414 0024 9981      		ldd r25,Y+1
+ 415 0026 9111      		cpse r25,__zero_reg__
+ 416 0028 80E0      		ldi r24,0
+ 417               	.L16:
+ 418               	/* epilogue start */
+ 390:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 419               		.loc 1 390 1 view .LVU132
+ 420 002a 0F90      		pop __tmp_reg__
+ 421 002c DF91      		pop r29
+ 422 002e CF91      		pop r28
+ 423 0030 1F91      		pop r17
+ 424 0032 0F91      		pop r16
+ 425               	.LVL28:
+ 426               		.loc 1 390 1 view .LVU133
+ 427 0034 FF90      		pop r15
+ 428 0036 EF90      		pop r14
+ 429 0038 0895      		ret
+ 430               	.LVL29:
+ 431               	.L18:
+ 432               	.LBB162:
+ 433               	.LBB161:
+ 384:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 434               		.loc 1 384 5 is_stmt 1 discriminator 3 view .LVU134
+ 385:keyboards/crkbd/rev1/legacy/serial.c ****     data = serial_read_chunk(&pecount, 8);
+ 435               		.loc 1 385 5 discriminator 3 view .LVU135
+ 436 003a 0E94 0000 		call sync_recv
+ 437               	.LVL30:
+ 386:keyboards/crkbd/rev1/legacy/serial.c ****     buffer[i] = data;
+ 438               		.loc 1 386 5 discriminator 3 view .LVU136
+ 386:keyboards/crkbd/rev1/legacy/serial.c ****     buffer[i] = data;
+ 439               		.loc 1 386 12 is_stmt 0 discriminator 3 view .LVU137
+ 440 003e 68E0      		ldi r22,lo8(8)
+ 441 0040 CE01      		movw r24,r28
+ 442 0042 0196      		adiw r24,1
+ 443 0044 0E94 0000 		call serial_read_chunk
+ 444               	.LVL31:
+ 387:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 445               		.loc 1 387 5 is_stmt 1 discriminator 3 view .LVU138
+ 387:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 446               		.loc 1 387 15 is_stmt 0 discriminator 3 view .LVU139
+ 447 0048 F801      		movw r30,r16
+ 448 004a 8193      		st Z+,r24
+ 449 004c 8F01      		movw r16,r30
+ 450               	.LVL32:
+ 387:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 451               		.loc 1 387 15 discriminator 3 view .LVU140
+ 452               	.LBE161:
+ 383:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 453               		.loc 1 383 33 is_stmt 1 discriminator 3 view .LVU141
+ 383:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 454               		.loc 1 383 33 is_stmt 0 discriminator 3 view .LVU142
+ 455 004e 00C0      		rjmp .L17
+ 456               	.LBE162:
+ 457               		.cfi_endproc
+ 458               	.LFE21:
+ 460               		.section	.text.soft_serial_initiator_init,"ax",@progbits
+ 461               	.global	soft_serial_initiator_init
+ 463               	soft_serial_initiator_init:
+ 464               	.LVL33:
+ 465               	.LFB14:
+ 277:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table = sstd_table;
+ 466               		.loc 1 277 1 is_stmt 1 view -0
+ 467               		.cfi_startproc
+ 468               	/* prologue: function */
+ 469               	/* frame size = 0 */
+ 470               	/* stack size = 0 */
+ 471               	.L__stack_usage = 0
+ 278:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table_size = (uint8_t)sstd_table_size;
+ 472               		.loc 1 278 5 view .LVU144
+ 278:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table_size = (uint8_t)sstd_table_size;
+ 473               		.loc 1 278 23 is_stmt 0 view .LVU145
+ 474 0000 9093 0000 		sts Transaction_table+1,r25
+ 475 0004 8093 0000 		sts Transaction_table,r24
+ 279:keyboards/crkbd/rev1/legacy/serial.c ****     serial_output();
+ 476               		.loc 1 279 5 is_stmt 1 view .LVU146
+ 279:keyboards/crkbd/rev1/legacy/serial.c ****     serial_output();
+ 477               		.loc 1 279 30 is_stmt 0 view .LVU147
+ 478 0008 6093 0000 		sts Transaction_table_size,r22
+ 280:keyboards/crkbd/rev1/legacy/serial.c ****     serial_high();
+ 479               		.loc 1 280 5 is_stmt 1 view .LVU148
+ 480               	.LBB163:
+ 481               	.LBI163:
+ 246:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 482               		.loc 1 246 6 view .LVU149
+ 483               	.LBB164:
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 484               		.loc 1 247 3 view .LVU150
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 485               		.loc 1 247 18 is_stmt 0 view .LVU151
+ 486 000c 529A      		sbi 0xa,2
+ 487               	.LBE164:
+ 488               	.LBE163:
+ 281:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 489               		.loc 1 281 5 is_stmt 1 view .LVU152
+ 490               	.LBB165:
+ 491               	.LBI165:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 492               		.loc 1 272 6 view .LVU153
+ 493               	.LBB166:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 494               		.loc 1 273 3 view .LVU154
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 495               		.loc 1 273 19 is_stmt 0 view .LVU155
+ 496 000e 5A9A      		sbi 0xb,2
+ 497               	/* epilogue start */
+ 498               	.LBE166:
+ 499               	.LBE165:
+ 282:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 500               		.loc 1 282 1 view .LVU156
+ 501 0010 0895      		ret
+ 502               		.cfi_endproc
+ 503               	.LFE14:
+ 505               		.section	.text.soft_serial_target_init,"ax",@progbits
+ 506               	.global	soft_serial_target_init
+ 508               	soft_serial_target_init:
+ 509               	.LVL34:
+ 510               	.LFB15:
+ 285:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table = sstd_table;
+ 511               		.loc 1 285 1 is_stmt 1 view -0
+ 512               		.cfi_startproc
+ 513               	/* prologue: function */
+ 514               	/* frame size = 0 */
+ 515               	/* stack size = 0 */
+ 516               	.L__stack_usage = 0
+ 286:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table_size = (uint8_t)sstd_table_size;
+ 517               		.loc 1 286 5 view .LVU158
+ 286:keyboards/crkbd/rev1/legacy/serial.c ****     Transaction_table_size = (uint8_t)sstd_table_size;
+ 518               		.loc 1 286 23 is_stmt 0 view .LVU159
+ 519 0000 9093 0000 		sts Transaction_table+1,r25
+ 520 0004 8093 0000 		sts Transaction_table,r24
+ 287:keyboards/crkbd/rev1/legacy/serial.c ****     serial_input_with_pullup();
+ 521               		.loc 1 287 5 is_stmt 1 view .LVU160
+ 287:keyboards/crkbd/rev1/legacy/serial.c ****     serial_input_with_pullup();
+ 522               		.loc 1 287 30 is_stmt 0 view .LVU161
+ 523 0008 6093 0000 		sts Transaction_table_size,r22
+ 288:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 524               		.loc 1 288 5 is_stmt 1 view .LVU162
+ 525               	.LBB167:
+ 526               	.LBI167:
+ 253:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR  &= ~SERIAL_PIN_MASK;
+ 527               		.loc 1 253 6 view .LVU163
+ 528               	.LBB168:
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 529               		.loc 1 254 3 view .LVU164
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 530               		.loc 1 254 19 is_stmt 0 view .LVU165
+ 531 000c 5298      		cbi 0xa,2
+ 255:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 532               		.loc 1 255 3 is_stmt 1 view .LVU166
+ 255:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 533               		.loc 1 255 19 is_stmt 0 view .LVU167
+ 534 000e 5A9A      		sbi 0xb,2
+ 535               	.LBE168:
+ 536               	.LBE167:
+ 291:keyboards/crkbd/rev1/legacy/serial.c **** #if SERIAL_PIN_MASK == _BV(PE6)
+ 537               		.loc 1 291 5 is_stmt 1 view .LVU168
+ 291:keyboards/crkbd/rev1/legacy/serial.c **** #if SERIAL_PIN_MASK == _BV(PE6)
+ 538               		.loc 1 291 11 is_stmt 0 view .LVU169
+ 539 0010 EA9A      		sbi 0x1d,2
+ 297:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 540               		.loc 1 297 5 is_stmt 1 view .LVU170
+ 297:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 541               		.loc 1 297 11 is_stmt 0 view .LVU171
+ 542 0012 E9E6      		ldi r30,lo8(105)
+ 543 0014 F0E0      		ldi r31,0
+ 544 0016 8081      		ld r24,Z
+ 545               	.LVL35:
+ 297:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 546               		.loc 1 297 11 view .LVU172
+ 547 0018 8F7C      		andi r24,lo8(-49)
+ 548 001a 8083      		st Z,r24
+ 549               	.LVL36:
+ 550               	/* epilogue start */
+ 299:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 551               		.loc 1 299 1 view .LVU173
+ 552 001c 0895      		ret
+ 553               		.cfi_endproc
+ 554               	.LFE15:
+ 556               		.section	.text.serial_write_chunk,"ax",@progbits
+ 557               	.global	serial_write_chunk
+ 559               	serial_write_chunk:
+ 560               	.LVL37:
+ 561               	.LFB19:
+ 350:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t b, p;
+ 562               		.loc 1 350 52 is_stmt 1 view -0
+ 563               		.cfi_startproc
+ 564               	/* prologue: function */
+ 565               	/* frame size = 0 */
+ 566               	/* stack size = 0 */
+ 567               	.L__stack_usage = 0
+ 351:keyboards/crkbd/rev1/legacy/serial.c ****     for( p = PARITY, b = 1<<(bit-1); b ; b >>= 1) {
+ 568               		.loc 1 351 5 view .LVU175
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 569               		.loc 1 352 5 view .LVU176
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 570               		.loc 1 352 33 is_stmt 0 view .LVU177
+ 571 0000 6150      		subi r22,1
+ 572 0002 770B      		sbc r23,r23
+ 573               	.LVL38:
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 574               		.loc 1 352 24 view .LVU178
+ 575 0004 91E0      		ldi r25,lo8(1)
+ 576 0006 00C0      		rjmp 2f
+ 577               		1:
+ 578 0008 990F      		lsl r25
+ 579               		2:
+ 580 000a 6A95      		dec r22
+ 581 000c 02F4      		brpl 1b
+ 582               	.LVL39:
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 583               		.loc 1 352 12 view .LVU179
+ 584 000e 20E0      		ldi r18,0
+ 354:keyboards/crkbd/rev1/legacy/serial.c ****         } else {
+ 585               		.loc 1 354 30 view .LVU180
+ 586 0010 31E0      		ldi r19,lo8(1)
+ 587               	.LVL40:
+ 588               	.L26:
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 589               		.loc 1 352 38 is_stmt 1 discriminator 1 view .LVU181
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 590               		.loc 1 352 5 is_stmt 0 discriminator 1 view .LVU182
+ 591 0012 9111      		cpse r25,__zero_reg__
+ 592 0014 00C0      		rjmp .L29
+ 361:keyboards/crkbd/rev1/legacy/serial.c ****     else      { serial_low(); }
+ 593               		.loc 1 361 5 is_stmt 1 view .LVU183
+ 361:keyboards/crkbd/rev1/legacy/serial.c ****     else      { serial_low(); }
+ 594               		.loc 1 361 7 is_stmt 0 view .LVU184
+ 595 0016 2223      		tst r18
+ 596 0018 01F0      		breq .L30
+ 361:keyboards/crkbd/rev1/legacy/serial.c ****     else      { serial_low(); }
+ 597               		.loc 1 361 17 is_stmt 1 view .LVU185
+ 598               	.LBB169:
+ 599               	.LBI169:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 600               		.loc 1 272 6 view .LVU186
+ 601               	.LBB170:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 602               		.loc 1 273 3 view .LVU187
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 603               		.loc 1 273 19 is_stmt 0 view .LVU188
+ 604 001a 5A9A      		sbi 0xb,2
+ 605               	.L31:
+ 606               	.LBE170:
+ 607               	.LBE169:
+ 363:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 608               		.loc 1 363 5 is_stmt 1 view .LVU189
+ 609               	.LBB171:
+ 610               	.LBI171:
+ 228:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY);
+ 611               		.loc 1 228 6 view .LVU190
+ 612               	.LBE171:
+ 229:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 613               		.loc 1 229 3 view .LVU191
+ 614               	.LVL41:
+ 615               	.LBB174:
+ 616               	.LBB172:
+ 617               	.LBI172:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 618               		.loc 2 255 1 view .LVU192
+ 619               	.LBB173:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 620               		.loc 2 257 2 view .LVU193
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 621               		.loc 2 261 2 view .LVU194
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 622               		.loc 2 262 2 view .LVU195
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 623               		.loc 2 263 2 view .LVU196
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 624               		.loc 2 273 3 view .LVU197
+ 625               		.loc 2 276 2 view .LVU198
+ 626 001c 80E2      		ldi r24,lo8(32)
+ 627 001e 8A95      	1:	dec r24
+ 628 0020 01F4      		brne 1b
+ 629               	.LVL42:
+ 630               		.loc 2 276 2 is_stmt 0 view .LVU199
+ 631               	.LBE173:
+ 632               	.LBE172:
+ 633               	.LBE174:
+ 365:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 634               		.loc 1 365 5 is_stmt 1 view .LVU200
+ 635               	.LBB175:
+ 636               	.LBI175:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 637               		.loc 1 266 6 view .LVU201
+ 638               	.LBB176:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 639               		.loc 1 267 3 view .LVU202
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 640               		.loc 1 267 19 is_stmt 0 view .LVU203
+ 641 0022 5A98      		cbi 0xb,2
+ 642               	/* epilogue start */
+ 643               	.LBE176:
+ 644               	.LBE175:
+ 366:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 645               		.loc 1 366 1 view .LVU204
+ 646 0024 0895      		ret
+ 647               	.LVL43:
+ 648               	.L29:
+ 353:keyboards/crkbd/rev1/legacy/serial.c ****             serial_high(); p ^= 1;
+ 649               		.loc 1 353 9 is_stmt 1 view .LVU205
+ 353:keyboards/crkbd/rev1/legacy/serial.c ****             serial_high(); p ^= 1;
+ 650               		.loc 1 353 12 is_stmt 0 view .LVU206
+ 651 0026 492F      		mov r20,r25
+ 652 0028 4823      		and r20,r24
+ 353:keyboards/crkbd/rev1/legacy/serial.c ****             serial_high(); p ^= 1;
+ 653               		.loc 1 353 11 view .LVU207
+ 654 002a 01F0      		breq .L27
+ 354:keyboards/crkbd/rev1/legacy/serial.c ****         } else {
+ 655               		.loc 1 354 13 is_stmt 1 view .LVU208
+ 656               	.LBB177:
+ 657               	.LBI177:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 658               		.loc 1 272 6 view .LVU209
+ 659               	.LBB178:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 660               		.loc 1 273 3 view .LVU210
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 661               		.loc 1 273 19 is_stmt 0 view .LVU211
+ 662 002c 5A9A      		sbi 0xb,2
+ 663               	.LBE178:
+ 664               	.LBE177:
+ 354:keyboards/crkbd/rev1/legacy/serial.c ****         } else {
+ 665               		.loc 1 354 28 is_stmt 1 view .LVU212
+ 354:keyboards/crkbd/rev1/legacy/serial.c ****         } else {
+ 666               		.loc 1 354 30 is_stmt 0 view .LVU213
+ 667 002e 2327      		eor r18,r19
+ 668               	.LVL44:
+ 669               	.L28:
+ 358:keyboards/crkbd/rev1/legacy/serial.c ****     }
+ 670               		.loc 1 358 9 is_stmt 1 discriminator 2 view .LVU214
+ 671               	.LBB179:
+ 672               	.LBI179:
+ 228:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY);
+ 673               		.loc 1 228 6 discriminator 2 view .LVU215
+ 674               	.LBE179:
+ 229:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 675               		.loc 1 229 3 discriminator 2 view .LVU216
+ 676               	.LBB182:
+ 677               	.LBB180:
+ 678               	.LBI180:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 679               		.loc 2 255 1 discriminator 2 view .LVU217
+ 680               	.LBB181:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 681               		.loc 2 257 2 discriminator 2 view .LVU218
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 682               		.loc 2 261 2 discriminator 2 view .LVU219
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 683               		.loc 2 262 2 discriminator 2 view .LVU220
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 684               		.loc 2 263 2 discriminator 2 view .LVU221
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 685               		.loc 2 273 3 discriminator 2 view .LVU222
+ 686               		.loc 2 276 2 discriminator 2 view .LVU223
+ 687 0030 40E2      		ldi r20,lo8(32)
+ 688 0032 4A95      	1:	dec r20
+ 689 0034 01F4      		brne 1b
+ 690               	.LVL45:
+ 691               		.loc 2 276 2 is_stmt 0 discriminator 2 view .LVU224
+ 692               	.LBE181:
+ 693               	.LBE180:
+ 694               	.LBE182:
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 695               		.loc 1 352 42 is_stmt 1 discriminator 2 view .LVU225
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 696               		.loc 1 352 44 is_stmt 0 discriminator 2 view .LVU226
+ 697 0036 9695      		lsr r25
+ 698               	.LVL46:
+ 352:keyboards/crkbd/rev1/legacy/serial.c ****         if(data & b) {
+ 699               		.loc 1 352 44 discriminator 2 view .LVU227
+ 700 0038 00C0      		rjmp .L26
+ 701               	.L27:
+ 356:keyboards/crkbd/rev1/legacy/serial.c ****         }
+ 702               		.loc 1 356 13 is_stmt 1 view .LVU228
+ 703               	.LBB183:
+ 704               	.LBI183:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 705               		.loc 1 266 6 view .LVU229
+ 706               	.LBB184:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 707               		.loc 1 267 3 view .LVU230
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 708               		.loc 1 267 19 is_stmt 0 view .LVU231
+ 709 003a 5A98      		cbi 0xb,2
+ 710               	.LBE184:
+ 711               	.LBE183:
+ 356:keyboards/crkbd/rev1/legacy/serial.c ****         }
+ 712               		.loc 1 356 28 is_stmt 1 view .LVU232
+ 356:keyboards/crkbd/rev1/legacy/serial.c ****         }
+ 713               		.loc 1 356 28 is_stmt 0 view .LVU233
+ 714 003c 00C0      		rjmp .L28
+ 715               	.L30:
+ 362:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay();
+ 716               		.loc 1 362 17 is_stmt 1 view .LVU234
+ 717               	.LBB185:
+ 718               	.LBI185:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 719               		.loc 1 266 6 view .LVU235
+ 720               	.LBB186:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 721               		.loc 1 267 3 view .LVU236
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 722               		.loc 1 267 19 is_stmt 0 view .LVU237
+ 723 003e 5A98      		cbi 0xb,2
+ 724 0040 00C0      		rjmp .L31
+ 725               	.LBE186:
+ 726               	.LBE185:
+ 727               		.cfi_endproc
+ 728               	.LFE19:
+ 730               		.section	.text.serial_send_packet,"ax",@progbits
+ 732               	serial_send_packet:
+ 733               	.LVL47:
+ 734               	.LFB20:
+ 370:keyboards/crkbd/rev1/legacy/serial.c ****   for (uint8_t i = 0; i < size; ++i) {
+ 735               		.loc 1 370 56 is_stmt 1 view -0
+ 736               		.cfi_startproc
+ 370:keyboards/crkbd/rev1/legacy/serial.c ****   for (uint8_t i = 0; i < size; ++i) {
+ 737               		.loc 1 370 56 is_stmt 0 view .LVU239
+ 738 0000 FF92      		push r15
+ 739               	.LCFI8:
+ 740               		.cfi_def_cfa_offset 3
+ 741               		.cfi_offset 15, -2
+ 742 0002 0F93      		push r16
+ 743               	.LCFI9:
+ 744               		.cfi_def_cfa_offset 4
+ 745               		.cfi_offset 16, -3
+ 746 0004 1F93      		push r17
+ 747               	.LCFI10:
+ 748               		.cfi_def_cfa_offset 5
+ 749               		.cfi_offset 17, -4
+ 750 0006 CF93      		push r28
+ 751               	.LCFI11:
+ 752               		.cfi_def_cfa_offset 6
+ 753               		.cfi_offset 28, -5
+ 754 0008 DF93      		push r29
+ 755               	.LCFI12:
+ 756               		.cfi_def_cfa_offset 7
+ 757               		.cfi_offset 29, -6
+ 758               	/* prologue: function */
+ 759               	/* frame size = 0 */
+ 760               	/* stack size = 5 */
+ 761               	.L__stack_usage = 5
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 762               		.loc 1 371 3 is_stmt 1 view .LVU240
+ 763               	.LBB187:
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 764               		.loc 1 371 8 view .LVU241
+ 765               	.LVL48:
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 766               		.loc 1 371 8 is_stmt 0 view .LVU242
+ 767 000a EC01      		movw r28,r24
+ 768 000c 8C01      		movw r16,r24
+ 769 000e 060F      		add r16,r22
+ 770 0010 111D      		adc r17,__zero_reg__
+ 771               	.LVL49:
+ 772               	.L33:
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 773               		.loc 1 371 23 is_stmt 1 discriminator 1 view .LVU243
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 774               		.loc 1 371 3 is_stmt 0 discriminator 1 view .LVU244
+ 775 0012 C017      		cp r28,r16
+ 776 0014 D107      		cpc r29,r17
+ 777 0016 01F4      		brne .L34
+ 778               	/* epilogue start */
+ 779               	.LBE187:
+ 377:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 780               		.loc 1 377 1 view .LVU245
+ 781 0018 DF91      		pop r29
+ 782 001a CF91      		pop r28
+ 783               	.LVL50:
+ 377:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 784               		.loc 1 377 1 view .LVU246
+ 785 001c 1F91      		pop r17
+ 786 001e 0F91      		pop r16
+ 787 0020 FF90      		pop r15
+ 788 0022 0895      		ret
+ 789               	.LVL51:
+ 790               	.L34:
+ 791               	.LBB189:
+ 792               	.LBB188:
+ 372:keyboards/crkbd/rev1/legacy/serial.c ****     data = buffer[i];
+ 793               		.loc 1 372 5 is_stmt 1 discriminator 3 view .LVU247
+ 373:keyboards/crkbd/rev1/legacy/serial.c ****     sync_send();
+ 794               		.loc 1 373 5 discriminator 3 view .LVU248
+ 373:keyboards/crkbd/rev1/legacy/serial.c ****     sync_send();
+ 795               		.loc 1 373 10 is_stmt 0 discriminator 3 view .LVU249
+ 796 0024 F990      		ld r15,Y+
+ 797               	.LVL52:
+ 374:keyboards/crkbd/rev1/legacy/serial.c ****     serial_write_chunk(data,8);
+ 798               		.loc 1 374 5 is_stmt 1 discriminator 3 view .LVU250
+ 799 0026 0E94 0000 		call sync_send
+ 800               	.LVL53:
+ 375:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 801               		.loc 1 375 5 discriminator 3 view .LVU251
+ 802 002a 68E0      		ldi r22,lo8(8)
+ 803 002c 8F2D      		mov r24,r15
+ 804 002e 0E94 0000 		call serial_write_chunk
+ 805               	.LVL54:
+ 806               	.LBE188:
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 807               		.loc 1 371 33 discriminator 3 view .LVU252
+ 371:keyboards/crkbd/rev1/legacy/serial.c ****     uint8_t data;
+ 808               		.loc 1 371 33 is_stmt 0 discriminator 3 view .LVU253
+ 809 0032 00C0      		rjmp .L33
+ 810               	.LBE189:
+ 811               		.cfi_endproc
+ 812               	.LFE20:
+ 814               		.section	.text.__vector_3,"ax",@progbits
+ 815               	.global	__vector_3
+ 817               	__vector_3:
+ 818               	.LFB25:
+ 391:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 392:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 393:keyboards/crkbd/rev1/legacy/serial.c **** void change_sender2reciver(void) {
+ 394:keyboards/crkbd/rev1/legacy/serial.c ****     sync_send();          //0
+ 395:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay_half1(); //1
+ 396:keyboards/crkbd/rev1/legacy/serial.c ****     serial_low();         //2
+ 397:keyboards/crkbd/rev1/legacy/serial.c ****     serial_input_with_pullup(); //2
+ 398:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay_half1(); //3
+ 399:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 400:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 401:keyboards/crkbd/rev1/legacy/serial.c **** inline static
+ 402:keyboards/crkbd/rev1/legacy/serial.c **** void change_reciver2sender(void) {
+ 403:keyboards/crkbd/rev1/legacy/serial.c ****     sync_recv();     //0
+ 404:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay();  //1
+ 405:keyboards/crkbd/rev1/legacy/serial.c ****     serial_low();    //3
+ 406:keyboards/crkbd/rev1/legacy/serial.c ****     serial_output(); //3
+ 407:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay_half1(); //4
+ 408:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 409:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 410:keyboards/crkbd/rev1/legacy/serial.c **** static inline uint8_t nibble_bits_count(uint8_t bits)
+ 411:keyboards/crkbd/rev1/legacy/serial.c **** {
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x5) + (bits >> 1 & 0x5);
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 414:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 415:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 416:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 417:keyboards/crkbd/rev1/legacy/serial.c **** // interrupt handle to be used by the target device
+ 418:keyboards/crkbd/rev1/legacy/serial.c **** ISR(SERIAL_PIN_INTERRUPT) {
+ 819               		.loc 1 418 27 is_stmt 1 view -0
+ 820               		.cfi_startproc
+ 821 0000 1F92      		push r1
+ 822               	.LCFI13:
+ 823               		.cfi_def_cfa_offset 3
+ 824               		.cfi_offset 1, -2
+ 825 0002 0F92      		push r0
+ 826               	.LCFI14:
+ 827               		.cfi_def_cfa_offset 4
+ 828               		.cfi_offset 0, -3
+ 829 0004 0FB6      		in r0,__SREG__
+ 830 0006 0F92      		push r0
+ 831 0008 1124      		clr __zero_reg__
+ 832 000a 0F93      		push r16
+ 833               	.LCFI15:
+ 834               		.cfi_def_cfa_offset 5
+ 835               		.cfi_offset 16, -4
+ 836 000c 1F93      		push r17
+ 837               	.LCFI16:
+ 838               		.cfi_def_cfa_offset 6
+ 839               		.cfi_offset 17, -5
+ 840 000e 2F93      		push r18
+ 841               	.LCFI17:
+ 842               		.cfi_def_cfa_offset 7
+ 843               		.cfi_offset 18, -6
+ 844 0010 3F93      		push r19
+ 845               	.LCFI18:
+ 846               		.cfi_def_cfa_offset 8
+ 847               		.cfi_offset 19, -7
+ 848 0012 4F93      		push r20
+ 849               	.LCFI19:
+ 850               		.cfi_def_cfa_offset 9
+ 851               		.cfi_offset 20, -8
+ 852 0014 5F93      		push r21
+ 853               	.LCFI20:
+ 854               		.cfi_def_cfa_offset 10
+ 855               		.cfi_offset 21, -9
+ 856 0016 6F93      		push r22
+ 857               	.LCFI21:
+ 858               		.cfi_def_cfa_offset 11
+ 859               		.cfi_offset 22, -10
+ 860 0018 7F93      		push r23
+ 861               	.LCFI22:
+ 862               		.cfi_def_cfa_offset 12
+ 863               		.cfi_offset 23, -11
+ 864 001a 8F93      		push r24
+ 865               	.LCFI23:
+ 866               		.cfi_def_cfa_offset 13
+ 867               		.cfi_offset 24, -12
+ 868 001c 9F93      		push r25
+ 869               	.LCFI24:
+ 870               		.cfi_def_cfa_offset 14
+ 871               		.cfi_offset 25, -13
+ 872 001e AF93      		push r26
+ 873               	.LCFI25:
+ 874               		.cfi_def_cfa_offset 15
+ 875               		.cfi_offset 26, -14
+ 876 0020 BF93      		push r27
+ 877               	.LCFI26:
+ 878               		.cfi_def_cfa_offset 16
+ 879               		.cfi_offset 27, -15
+ 880 0022 EF93      		push r30
+ 881               	.LCFI27:
+ 882               		.cfi_def_cfa_offset 17
+ 883               		.cfi_offset 30, -16
+ 884 0024 FF93      		push r31
+ 885               	.LCFI28:
+ 886               		.cfi_def_cfa_offset 18
+ 887               		.cfi_offset 31, -17
+ 888 0026 CF93      		push r28
+ 889               	.LCFI29:
+ 890               		.cfi_def_cfa_offset 19
+ 891               		.cfi_offset 28, -18
+ 892 0028 DF93      		push r29
+ 893               	.LCFI30:
+ 894               		.cfi_def_cfa_offset 20
+ 895               		.cfi_offset 29, -19
+ 896 002a 0F92      		push __tmp_reg__
+ 897               	.LCFI31:
+ 898               		.cfi_def_cfa_offset 21
+ 899 002c CDB7      		in r28,__SP_L__
+ 900 002e DEB7      		in r29,__SP_H__
+ 901               	.LCFI32:
+ 902               		.cfi_def_cfa_register 28
+ 903               	/* prologue: Signal */
+ 904               	/* frame size = 1 */
+ 905               	/* stack size = 20 */
+ 906               	.L__stack_usage = 20
+ 419:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 420:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef SERIAL_USE_MULTI_TRANSACTION
+ 421:keyboards/crkbd/rev1/legacy/serial.c ****   serial_low();
+ 422:keyboards/crkbd/rev1/legacy/serial.c ****   serial_output();
+ 423:keyboards/crkbd/rev1/legacy/serial.c ****   SSTD_t *trans = Transaction_table;
+ 424:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 425:keyboards/crkbd/rev1/legacy/serial.c ****   // recive transaction table index
+ 426:keyboards/crkbd/rev1/legacy/serial.c ****   uint8_t tid, bits;
+ 907               		.loc 1 426 3 view .LVU255
+ 427:keyboards/crkbd/rev1/legacy/serial.c ****   uint8_t pecount = 0;
+ 908               		.loc 1 427 3 view .LVU256
+ 909               		.loc 1 427 11 is_stmt 0 view .LVU257
+ 910 0030 1982      		std Y+1,__zero_reg__
+ 428:keyboards/crkbd/rev1/legacy/serial.c ****   sync_recv();
+ 911               		.loc 1 428 3 is_stmt 1 view .LVU258
+ 912 0032 0E94 0000 		call sync_recv
+ 913               	.LVL55:
+ 429:keyboards/crkbd/rev1/legacy/serial.c ****   bits = serial_read_chunk(&pecount,7);
+ 914               		.loc 1 429 3 view .LVU259
+ 915               		.loc 1 429 10 is_stmt 0 view .LVU260
+ 916 0036 67E0      		ldi r22,lo8(7)
+ 917 0038 CE01      		movw r24,r28
+ 918 003a 0196      		adiw r24,1
+ 919 003c 0E94 0000 		call serial_read_chunk
+ 920               	.LVL56:
+ 430:keyboards/crkbd/rev1/legacy/serial.c ****   tid = bits>>3;
+ 921               		.loc 1 430 3 is_stmt 1 view .LVU261
+ 922               		.loc 1 430 7 is_stmt 0 view .LVU262
+ 923 0040 082F      		mov r16,r24
+ 924 0042 0695      		lsr r16
+ 925 0044 0695      		lsr r16
+ 926 0046 0695      		lsr r16
+ 927               	.LVL57:
+ 431:keyboards/crkbd/rev1/legacy/serial.c ****   bits = (bits&7) != nibble_bits_count(tid);
+ 928               		.loc 1 431 3 is_stmt 1 view .LVU263
+ 929               	.LBB213:
+ 930               	.LBI213:
+ 410:keyboards/crkbd/rev1/legacy/serial.c **** {
+ 931               		.loc 1 410 23 view .LVU264
+ 932               	.LBB214:
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 933               		.loc 1 412 5 view .LVU265
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 934               		.loc 1 412 38 is_stmt 0 view .LVU266
+ 935 0048 982F      		mov r25,r24
+ 936 004a 9295      		swap r25
+ 937 004c 9570      		andi r25,lo8(5)
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 938               		.loc 1 412 18 view .LVU267
+ 939 004e 202F      		mov r18,r16
+ 940 0050 2570      		andi r18,lo8(5)
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 941               		.loc 1 412 10 view .LVU268
+ 942 0052 920F      		add r25,r18
+ 943               	.LVL58:
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 944               		.loc 1 413 5 is_stmt 1 view .LVU269
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 945               		.loc 1 413 18 is_stmt 0 view .LVU270
+ 946 0054 292F      		mov r18,r25
+ 947 0056 2370      		andi r18,lo8(3)
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 948               		.loc 1 413 38 view .LVU271
+ 949 0058 9695      		lsr r25
+ 950 005a 9695      		lsr r25
+ 951               	.LVL59:
+ 414:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 952               		.loc 1 414 5 is_stmt 1 view .LVU272
+ 414:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 953               		.loc 1 414 5 is_stmt 0 view .LVU273
+ 954               	.LBE214:
+ 955               	.LBE213:
+ 432:keyboards/crkbd/rev1/legacy/serial.c ****   if( bits || pecount> 0 || tid > Transaction_table_size ) {
+ 956               		.loc 1 432 3 is_stmt 1 view .LVU274
+ 957               		.loc 1 432 5 is_stmt 0 view .LVU275
+ 958 005c 8770      		andi r24,lo8(7)
+ 959               	.LVL60:
+ 960               	.LBB216:
+ 961               	.LBB215:
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 962               		.loc 1 413 10 view .LVU276
+ 963 005e 920F      		add r25,r18
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 964               		.loc 1 413 10 view .LVU277
+ 965               	.LBE215:
+ 966               	.LBE216:
+ 967               		.loc 1 432 5 view .LVU278
+ 968 0060 8913      		cpse r24,r25
+ 969 0062 00C0      		rjmp .L35
+ 970               		.loc 1 432 12 discriminator 1 view .LVU279
+ 971 0064 8981      		ldd r24,Y+1
+ 972 0066 8111      		cpse r24,__zero_reg__
+ 973 0068 00C0      		rjmp .L35
+ 974               		.loc 1 432 26 discriminator 2 view .LVU280
+ 975 006a 8091 0000 		lds r24,Transaction_table_size
+ 976 006e 8017      		cp r24,r16
+ 977 0070 00F0      		brlo .L35
+ 433:keyboards/crkbd/rev1/legacy/serial.c ****       return;
+ 434:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 435:keyboards/crkbd/rev1/legacy/serial.c ****   serial_delay_half1();
+ 978               		.loc 1 435 3 is_stmt 1 view .LVU281
+ 979               	.LBB217:
+ 980               	.LBI217:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 981               		.loc 1 234 6 view .LVU282
+ 982               	.LBE217:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 983               		.loc 1 235 3 view .LVU283
+ 984               	.LVL61:
+ 985               	.LBB220:
+ 986               	.LBB218:
+ 987               	.LBI218:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 988               		.loc 2 255 1 view .LVU284
+ 989               	.LBB219:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 990               		.loc 2 257 2 view .LVU285
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 991               		.loc 2 261 2 view .LVU286
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 992               		.loc 2 262 2 view .LVU287
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 993               		.loc 2 263 2 view .LVU288
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 994               		.loc 2 273 3 view .LVU289
+ 995               		.loc 2 276 2 view .LVU290
+ 996 0072 20E1      		ldi r18,lo8(16)
+ 997 0074 2A95      	1:	dec r18
+ 998 0076 01F4      		brne 1b
+ 999               	.LVL62:
+ 1000               		.loc 2 276 2 is_stmt 0 view .LVU291
+ 1001               	.LBE219:
+ 1002               	.LBE218:
+ 1003               	.LBE220:
+ 436:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 437:keyboards/crkbd/rev1/legacy/serial.c ****   serial_high(); // response step1 low->high
+ 1004               		.loc 1 437 3 is_stmt 1 view .LVU292
+ 1005               	.LBB221:
+ 1006               	.LBI221:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1007               		.loc 1 272 6 view .LVU293
+ 1008               	.LBB222:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1009               		.loc 1 273 3 view .LVU294
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1010               		.loc 1 273 19 is_stmt 0 view .LVU295
+ 1011 0078 5A9A      		sbi 0xb,2
+ 1012               	.LBE222:
+ 1013               	.LBE221:
+ 438:keyboards/crkbd/rev1/legacy/serial.c ****   serial_output();
+ 1014               		.loc 1 438 3 is_stmt 1 view .LVU296
+ 1015               	.LBB223:
+ 1016               	.LBI223:
+ 246:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 1017               		.loc 1 246 6 view .LVU297
+ 1018               	.LBB224:
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1019               		.loc 1 247 3 view .LVU298
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1020               		.loc 1 247 18 is_stmt 0 view .LVU299
+ 1021 007a 529A      		sbi 0xa,2
+ 1022               	.LBE224:
+ 1023               	.LBE223:
+ 439:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_sub_us(SLAVE_INT_ACK_WIDTH_UNIT*SLAVE_INT_ACK_WIDTH);
+ 1024               		.loc 1 439 3 is_stmt 1 view .LVU300
+ 1025 007c 82E0      		ldi r24,lo8(2)
+ 1026 007e 8A95      	1:	dec r24
+ 1027 0080 01F4      		brne 1b
+ 1028 0082 00C0      		rjmp .
+ 440:keyboards/crkbd/rev1/legacy/serial.c ****   SSTD_t *trans = &Transaction_table[tid];
+ 1029               		.loc 1 440 3 view .LVU301
+ 1030               		.loc 1 440 37 is_stmt 0 view .LVU302
+ 1031 0084 A8E0      		ldi r26,lo8(8)
+ 1032 0086 0A9F      		mul r16,r26
+ 1033 0088 C001      		movw r24,r0
+ 1034 008a 1124      		clr __zero_reg__
+ 1035               		.loc 1 440 11 view .LVU303
+ 1036 008c 0091 0000 		lds r16,Transaction_table
+ 1037 0090 1091 0000 		lds r17,Transaction_table+1
+ 1038               	.LVL63:
+ 1039               		.loc 1 440 11 view .LVU304
+ 1040 0094 080F      		add r16,r24
+ 1041 0096 191F      		adc r17,r25
+ 1042               	.LVL64:
+ 441:keyboards/crkbd/rev1/legacy/serial.c ****   serial_low(); // response step2 ack high->low
+ 1043               		.loc 1 441 3 is_stmt 1 view .LVU305
+ 1044               	.LBB225:
+ 1045               	.LBI225:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 1046               		.loc 1 266 6 view .LVU306
+ 1047               	.LBB226:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1048               		.loc 1 267 3 view .LVU307
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1049               		.loc 1 267 19 is_stmt 0 view .LVU308
+ 1050 0098 5A98      		cbi 0xb,2
+ 1051               	.LBE226:
+ 1052               	.LBE225:
+ 442:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 443:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 444:keyboards/crkbd/rev1/legacy/serial.c ****   // target send phase
+ 445:keyboards/crkbd/rev1/legacy/serial.c ****   if( trans->target2initiator_buffer_size > 0 )
+ 1053               		.loc 1 445 3 is_stmt 1 view .LVU309
+ 1054               		.loc 1 445 12 is_stmt 0 view .LVU310
+ 1055 009a F801      		movw r30,r16
+ 1056 009c 6581      		ldd r22,Z+5
+ 1057               		.loc 1 445 5 view .LVU311
+ 1058 009e 6623      		tst r22
+ 1059 00a0 01F0      		breq .L39
+ 446:keyboards/crkbd/rev1/legacy/serial.c ****       serial_send_packet((uint8_t *)trans->target2initiator_buffer,
+ 1060               		.loc 1 446 7 is_stmt 1 view .LVU312
+ 1061 00a2 8681      		ldd r24,Z+6
+ 1062 00a4 9781      		ldd r25,Z+7
+ 1063 00a6 0E94 0000 		call serial_send_packet
+ 1064               	.LVL65:
+ 1065               	.L39:
+ 447:keyboards/crkbd/rev1/legacy/serial.c ****                          trans->target2initiator_buffer_size);
+ 448:keyboards/crkbd/rev1/legacy/serial.c ****   // target switch to input
+ 449:keyboards/crkbd/rev1/legacy/serial.c ****   change_sender2reciver();
+ 1066               		.loc 1 449 3 view .LVU313
+ 1067               	.LBB227:
+ 1068               	.LBI227:
+ 393:keyboards/crkbd/rev1/legacy/serial.c ****     sync_send();          //0
+ 1069               		.loc 1 393 6 view .LVU314
+ 1070               	.LBB228:
+ 394:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay_half1(); //1
+ 1071               		.loc 1 394 5 view .LVU315
+ 1072 00aa 0E94 0000 		call sync_send
+ 1073               	.LVL66:
+ 395:keyboards/crkbd/rev1/legacy/serial.c ****     serial_low();         //2
+ 1074               		.loc 1 395 5 view .LVU316
+ 1075               	.LBB229:
+ 1076               	.LBI229:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 1077               		.loc 1 234 6 view .LVU317
+ 1078               	.LBE229:
+ 1079               	.LBE228:
+ 1080               	.LBE227:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1081               		.loc 1 235 3 view .LVU318
+ 1082               	.LBB243:
+ 1083               	.LBB241:
+ 1084               	.LBB232:
+ 1085               	.LBB230:
+ 1086               	.LBI230:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 1087               		.loc 2 255 1 view .LVU319
+ 1088               	.LBB231:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 1089               		.loc 2 257 2 view .LVU320
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 1090               		.loc 2 261 2 view .LVU321
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 1091               		.loc 2 262 2 view .LVU322
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 1092               		.loc 2 263 2 view .LVU323
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 1093               		.loc 2 273 3 view .LVU324
+ 1094               		.loc 2 276 2 view .LVU325
+ 1095 00ae F0E1      		ldi r31,lo8(16)
+ 1096 00b0 FA95      	1:	dec r31
+ 1097 00b2 01F4      		brne 1b
+ 1098               	.LVL67:
+ 1099               		.loc 2 276 2 is_stmt 0 view .LVU326
+ 1100               	.LBE231:
+ 1101               	.LBE230:
+ 1102               	.LBE232:
+ 396:keyboards/crkbd/rev1/legacy/serial.c ****     serial_input_with_pullup(); //2
+ 1103               		.loc 1 396 5 is_stmt 1 view .LVU327
+ 1104               	.LBB233:
+ 1105               	.LBI233:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 1106               		.loc 1 266 6 view .LVU328
+ 1107               	.LBB234:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1108               		.loc 1 267 3 view .LVU329
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1109               		.loc 1 267 19 is_stmt 0 view .LVU330
+ 1110 00b4 5A98      		cbi 0xb,2
+ 1111               	.LBE234:
+ 1112               	.LBE233:
+ 397:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay_half1(); //3
+ 1113               		.loc 1 397 5 is_stmt 1 view .LVU331
+ 1114               	.LBB235:
+ 1115               	.LBI235:
+ 253:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR  &= ~SERIAL_PIN_MASK;
+ 1116               		.loc 1 253 6 view .LVU332
+ 1117               	.LBB236:
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1118               		.loc 1 254 3 view .LVU333
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1119               		.loc 1 254 19 is_stmt 0 view .LVU334
+ 1120 00b6 5298      		cbi 0xa,2
+ 255:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1121               		.loc 1 255 3 is_stmt 1 view .LVU335
+ 255:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1122               		.loc 1 255 19 is_stmt 0 view .LVU336
+ 1123 00b8 5A9A      		sbi 0xb,2
+ 1124               	.LBE236:
+ 1125               	.LBE235:
+ 398:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1126               		.loc 1 398 5 is_stmt 1 view .LVU337
+ 1127               	.LBB237:
+ 1128               	.LBI237:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 1129               		.loc 1 234 6 view .LVU338
+ 1130               	.LBE237:
+ 1131               	.LBE241:
+ 1132               	.LBE243:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1133               		.loc 1 235 3 view .LVU339
+ 1134               	.LVL68:
+ 1135               	.LBB244:
+ 1136               	.LBB242:
+ 1137               	.LBB240:
+ 1138               	.LBB238:
+ 1139               	.LBI238:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 1140               		.loc 2 255 1 view .LVU340
+ 1141               	.LBB239:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 1142               		.loc 2 257 2 view .LVU341
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 1143               		.loc 2 261 2 view .LVU342
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 1144               		.loc 2 262 2 view .LVU343
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 1145               		.loc 2 263 2 view .LVU344
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 1146               		.loc 2 273 3 view .LVU345
+ 1147               		.loc 2 276 2 view .LVU346
+ 1148 00ba 20E1      		ldi r18,lo8(16)
+ 1149 00bc 2A95      	1:	dec r18
+ 1150 00be 01F4      		brne 1b
+ 1151               	.LVL69:
+ 1152               		.loc 2 276 2 is_stmt 0 view .LVU347
+ 1153               	.LBE239:
+ 1154               	.LBE238:
+ 1155               	.LBE240:
+ 1156               	.LBE242:
+ 1157               	.LBE244:
+ 450:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 451:keyboards/crkbd/rev1/legacy/serial.c ****   // target recive phase
+ 452:keyboards/crkbd/rev1/legacy/serial.c ****   if( trans->initiator2target_buffer_size > 0 ) {
+ 1158               		.loc 1 452 3 is_stmt 1 view .LVU348
+ 1159               		.loc 1 452 12 is_stmt 0 view .LVU349
+ 1160 00c0 D801      		movw r26,r16
+ 1161 00c2 1296      		adiw r26,2
+ 1162 00c4 6C91      		ld r22,X
+ 1163 00c6 1297      		sbiw r26,2
+ 1164               		.loc 1 452 5 view .LVU350
+ 1165 00c8 6623      		tst r22
+ 1166 00ca 01F0      		breq .L40
+ 453:keyboards/crkbd/rev1/legacy/serial.c ****       if (serial_recive_packet((uint8_t *)trans->initiator2target_buffer,
+ 1167               		.loc 1 453 7 is_stmt 1 view .LVU351
+ 1168               		.loc 1 453 11 is_stmt 0 view .LVU352
+ 1169 00cc 1396      		adiw r26,3
+ 1170 00ce 8D91      		ld r24,X+
+ 1171 00d0 9C91      		ld r25,X
+ 1172 00d2 0E94 0000 		call serial_recive_packet
+ 1173               	.LVL70:
+ 1174 00d6 D801      		movw r26,r16
+ 1175 00d8 ED91      		ld r30,X+
+ 1176 00da FC91      		ld r31,X
+ 1177               		.loc 1 453 10 view .LVU353
+ 1178 00dc 8823      		tst r24
+ 1179 00de 01F0      		breq .L41
+ 1180               	.L46:
+ 454:keyboards/crkbd/rev1/legacy/serial.c ****                                trans->initiator2target_buffer_size) ) {
+ 455:keyboards/crkbd/rev1/legacy/serial.c ****           *trans->status = TRANSACTION_ACCEPTED;
+ 456:keyboards/crkbd/rev1/legacy/serial.c ****       } else {
+ 457:keyboards/crkbd/rev1/legacy/serial.c ****           *trans->status = TRANSACTION_DATA_ERROR;
+ 458:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 459:keyboards/crkbd/rev1/legacy/serial.c ****   } else {
+ 460:keyboards/crkbd/rev1/legacy/serial.c ****       *trans->status = TRANSACTION_ACCEPTED;
+ 1181               		.loc 1 460 22 view .LVU354
+ 1182 00e0 88E0      		ldi r24,lo8(8)
+ 1183 00e2 00C0      		rjmp .L47
+ 1184               	.L41:
+ 457:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 1185               		.loc 1 457 11 is_stmt 1 view .LVU355
+ 457:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 1186               		.loc 1 457 26 is_stmt 0 view .LVU356
+ 1187 00e4 82E0      		ldi r24,lo8(2)
+ 1188               	.L47:
+ 1189               		.loc 1 460 22 view .LVU357
+ 1190 00e6 8083      		st Z,r24
+ 461:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 462:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 463:keyboards/crkbd/rev1/legacy/serial.c ****   sync_recv(); //weit initiator output to high
+ 1191               		.loc 1 463 3 is_stmt 1 view .LVU358
+ 1192 00e8 0E94 0000 		call sync_recv
+ 1193               	.LVL71:
+ 1194               	.L35:
+ 1195               	/* epilogue start */
+ 464:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1196               		.loc 1 464 1 is_stmt 0 view .LVU359
+ 1197 00ec 0F90      		pop __tmp_reg__
+ 1198 00ee DF91      		pop r29
+ 1199 00f0 CF91      		pop r28
+ 1200 00f2 FF91      		pop r31
+ 1201 00f4 EF91      		pop r30
+ 1202 00f6 BF91      		pop r27
+ 1203 00f8 AF91      		pop r26
+ 1204 00fa 9F91      		pop r25
+ 1205 00fc 8F91      		pop r24
+ 1206 00fe 7F91      		pop r23
+ 1207 0100 6F91      		pop r22
+ 1208 0102 5F91      		pop r21
+ 1209 0104 4F91      		pop r20
+ 1210 0106 3F91      		pop r19
+ 1211 0108 2F91      		pop r18
+ 1212 010a 1F91      		pop r17
+ 1213 010c 0F91      		pop r16
+ 1214 010e 0F90      		pop r0
+ 1215 0110 0FBE      		out __SREG__,r0
+ 1216 0112 0F90      		pop r0
+ 1217 0114 1F90      		pop r1
+ 1218 0116 1895      		reti
+ 1219               	.LVL72:
+ 1220               	.L40:
+ 460:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 1221               		.loc 1 460 7 is_stmt 1 view .LVU360
+ 460:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 1222               		.loc 1 460 13 is_stmt 0 view .LVU361
+ 1223 0118 ED91      		ld r30,X+
+ 1224 011a FC91      		ld r31,X
+ 1225 011c 00C0      		rjmp .L46
+ 1226               		.cfi_endproc
+ 1227               	.LFE25:
+ 1229               		.section	.text.soft_serial_transaction,"ax",@progbits
+ 1230               	.global	soft_serial_transaction
+ 1232               	soft_serial_transaction:
+ 1233               	.LVL73:
+ 1234               	.LFB26:
+ 465:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 466:keyboards/crkbd/rev1/legacy/serial.c **** /////////
+ 467:keyboards/crkbd/rev1/legacy/serial.c **** //  start transaction by initiator
+ 468:keyboards/crkbd/rev1/legacy/serial.c **** //
+ 469:keyboards/crkbd/rev1/legacy/serial.c **** // int  soft_serial_transaction(int sstd_index)
+ 470:keyboards/crkbd/rev1/legacy/serial.c **** //
+ 471:keyboards/crkbd/rev1/legacy/serial.c **** // Returns:
+ 472:keyboards/crkbd/rev1/legacy/serial.c **** //    TRANSACTION_END
+ 473:keyboards/crkbd/rev1/legacy/serial.c **** //    TRANSACTION_NO_RESPONSE
+ 474:keyboards/crkbd/rev1/legacy/serial.c **** //    TRANSACTION_DATA_ERROR
+ 475:keyboards/crkbd/rev1/legacy/serial.c **** // this code is very time dependent, so we need to disable interrupts
+ 476:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef SERIAL_USE_MULTI_TRANSACTION
+ 477:keyboards/crkbd/rev1/legacy/serial.c **** int  soft_serial_transaction(void) {
+ 478:keyboards/crkbd/rev1/legacy/serial.c ****   SSTD_t *trans = Transaction_table;
+ 479:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 480:keyboards/crkbd/rev1/legacy/serial.c **** int  soft_serial_transaction(int sstd_index) {
+ 1235               		.loc 1 480 46 is_stmt 1 view -0
+ 1236               		.cfi_startproc
+ 1237               		.loc 1 480 46 is_stmt 0 view .LVU363
+ 1238 0000 0F93      		push r16
+ 1239               	.LCFI33:
+ 1240               		.cfi_def_cfa_offset 3
+ 1241               		.cfi_offset 16, -2
+ 1242 0002 1F93      		push r17
+ 1243               	.LCFI34:
+ 1244               		.cfi_def_cfa_offset 4
+ 1245               		.cfi_offset 17, -3
+ 1246 0004 CF93      		push r28
+ 1247               	.LCFI35:
+ 1248               		.cfi_def_cfa_offset 5
+ 1249               		.cfi_offset 28, -4
+ 1250 0006 DF93      		push r29
+ 1251               	.LCFI36:
+ 1252               		.cfi_def_cfa_offset 6
+ 1253               		.cfi_offset 29, -5
+ 1254               	/* prologue: function */
+ 1255               	/* frame size = 0 */
+ 1256               	/* stack size = 4 */
+ 1257               	.L__stack_usage = 4
+ 481:keyboards/crkbd/rev1/legacy/serial.c ****   if( sstd_index > Transaction_table_size )
+ 1258               		.loc 1 481 3 is_stmt 1 view .LVU364
+ 1259               		.loc 1 481 18 is_stmt 0 view .LVU365
+ 1260 0008 2091 0000 		lds r18,Transaction_table_size
+ 1261               		.loc 1 481 5 view .LVU366
+ 1262 000c 2817      		cp r18,r24
+ 1263 000e 1906      		cpc __zero_reg__,r25
+ 1264 0010 04F4      		brge .+2
+ 1265 0012 00C0      		rjmp .L57
+ 482:keyboards/crkbd/rev1/legacy/serial.c ****       return TRANSACTION_TYPE_ERROR;
+ 483:keyboards/crkbd/rev1/legacy/serial.c ****   SSTD_t *trans = &Transaction_table[sstd_index];
+ 1266               		.loc 1 483 3 is_stmt 1 view .LVU367
+ 1267               		.loc 1 483 37 is_stmt 0 view .LVU368
+ 1268 0014 8C01      		movw r16,r24
+ 1269 0016 93E0      		ldi r25,3
+ 1270               		1:
+ 1271 0018 000F      		lsl r16
+ 1272 001a 111F      		rol r17
+ 1273 001c 9A95      		dec r25
+ 1274 001e 01F4      		brne 1b
+ 1275               		.loc 1 483 11 view .LVU369
+ 1276 0020 C091 0000 		lds r28,Transaction_table
+ 1277 0024 D091 0000 		lds r29,Transaction_table+1
+ 1278 0028 C00F      		add r28,r16
+ 1279 002a D11F      		adc r29,r17
+ 1280               	.LVL74:
+ 484:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 485:keyboards/crkbd/rev1/legacy/serial.c ****   cli();
+ 1281               		.loc 1 485 3 is_stmt 1 view .LVU370
+ 1282               	/* #APP */
+ 1283               	 ;  485 "keyboards/crkbd/rev1/legacy/serial.c" 1
+ 1284 002c F894      		cli
+ 1285               	 ;  0 "" 2
+ 486:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 487:keyboards/crkbd/rev1/legacy/serial.c ****   // signal to the target that we want to start a transaction
+ 488:keyboards/crkbd/rev1/legacy/serial.c ****   serial_output();
+ 1286               		.loc 1 488 3 view .LVU371
+ 1287               	/* #NOAPP */
+ 1288               	.LBB283:
+ 1289               	.LBI283:
+ 246:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 1290               		.loc 1 246 6 view .LVU372
+ 1291               	.LBB284:
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1292               		.loc 1 247 3 view .LVU373
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1293               		.loc 1 247 18 is_stmt 0 view .LVU374
+ 1294 002e 529A      		sbi 0xa,2
+ 1295               	.LBE284:
+ 1296               	.LBE283:
+ 489:keyboards/crkbd/rev1/legacy/serial.c ****   serial_low();
+ 1297               		.loc 1 489 3 is_stmt 1 view .LVU375
+ 1298               	.LBB285:
+ 1299               	.LBI285:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 1300               		.loc 1 266 6 view .LVU376
+ 1301               	.LBB286:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1302               		.loc 1 267 3 view .LVU377
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1303               		.loc 1 267 19 is_stmt 0 view .LVU378
+ 1304 0030 5A98      		cbi 0xb,2
+ 1305               	.LBE286:
+ 1306               	.LBE285:
+ 490:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SLAVE_INT_WIDTH_US);
+ 1307               		.loc 1 490 3 is_stmt 1 view .LVU379
+ 1308               	.LVL75:
+ 1309               	.LBB287:
+ 1310               	.LBI287:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 1311               		.loc 2 255 1 view .LVU380
+ 1312               	.LBB288:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 1313               		.loc 2 257 2 view .LVU381
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 1314               		.loc 2 261 2 view .LVU382
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 1315               		.loc 2 262 2 view .LVU383
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 1316               		.loc 2 263 2 view .LVU384
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 1317               		.loc 2 273 3 view .LVU385
+ 1318               		.loc 2 276 2 view .LVU386
+ 1319 0032 25E0      		ldi r18,lo8(5)
+ 1320 0034 2A95      	1:	dec r18
+ 1321 0036 01F4      		brne 1b
+ 1322 0038 0000      		nop
+ 1323               	.LVL76:
+ 1324               		.loc 2 276 2 is_stmt 0 view .LVU387
+ 1325               	.LBE288:
+ 1326               	.LBE287:
+ 491:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 492:keyboards/crkbd/rev1/legacy/serial.c **** #ifndef SERIAL_USE_MULTI_TRANSACTION
+ 493:keyboards/crkbd/rev1/legacy/serial.c ****   // wait for the target response
+ 494:keyboards/crkbd/rev1/legacy/serial.c ****   serial_input_with_pullup();
+ 495:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SLAVE_INT_RESPONSE_TIME);
+ 496:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 497:keyboards/crkbd/rev1/legacy/serial.c ****   // check if the target is present
+ 498:keyboards/crkbd/rev1/legacy/serial.c ****   if (serial_read_pin()) {
+ 499:keyboards/crkbd/rev1/legacy/serial.c ****     // target failed to pull the line low, assume not present
+ 500:keyboards/crkbd/rev1/legacy/serial.c ****     serial_output();
+ 501:keyboards/crkbd/rev1/legacy/serial.c ****     serial_high();
+ 502:keyboards/crkbd/rev1/legacy/serial.c ****     *trans->status = TRANSACTION_NO_RESPONSE;
+ 503:keyboards/crkbd/rev1/legacy/serial.c ****     sei();
+ 504:keyboards/crkbd/rev1/legacy/serial.c ****     return TRANSACTION_NO_RESPONSE;
+ 505:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 506:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 507:keyboards/crkbd/rev1/legacy/serial.c **** #else
+ 508:keyboards/crkbd/rev1/legacy/serial.c ****   // send transaction table index
+ 509:keyboards/crkbd/rev1/legacy/serial.c ****   int tid = (sstd_index<<3) | (7 & nibble_bits_count(sstd_index));
+ 1327               		.loc 1 509 3 is_stmt 1 view .LVU388
+ 1328               	.LBB289:
+ 1329               	.LBI289:
+ 410:keyboards/crkbd/rev1/legacy/serial.c **** {
+ 1330               		.loc 1 410 23 view .LVU389
+ 1331               	.LBB290:
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 1332               		.loc 1 412 5 view .LVU390
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 1333               		.loc 1 412 38 is_stmt 0 view .LVU391
+ 1334 003a 982F      		mov r25,r24
+ 1335 003c 9695      		lsr r25
+ 1336 003e 9570      		andi r25,lo8(5)
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 1337               		.loc 1 412 18 view .LVU392
+ 1338 0040 8570      		andi r24,lo8(5)
+ 1339               	.LVL77:
+ 412:keyboards/crkbd/rev1/legacy/serial.c ****     bits = (bits & 0x3) + (bits >> 2 & 0x3);
+ 1340               		.loc 1 412 10 view .LVU393
+ 1341 0042 980F      		add r25,r24
+ 1342               	.LVL78:
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 1343               		.loc 1 413 5 is_stmt 1 view .LVU394
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 1344               		.loc 1 413 18 is_stmt 0 view .LVU395
+ 1345 0044 892F      		mov r24,r25
+ 1346 0046 8370      		andi r24,lo8(3)
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 1347               		.loc 1 413 38 view .LVU396
+ 1348 0048 9695      		lsr r25
+ 1349 004a 9695      		lsr r25
+ 1350               	.LVL79:
+ 414:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1351               		.loc 1 414 5 is_stmt 1 view .LVU397
+ 413:keyboards/crkbd/rev1/legacy/serial.c ****     return bits;
+ 1352               		.loc 1 413 10 is_stmt 0 view .LVU398
+ 1353 004c 980F      		add r25,r24
+ 1354               	.LBE290:
+ 1355               	.LBE289:
+ 1356               		.loc 1 509 7 view .LVU399
+ 1357 004e 092B      		or r16,r25
+ 510:keyboards/crkbd/rev1/legacy/serial.c ****   sync_send();
+ 1358               		.loc 1 510 3 is_stmt 1 view .LVU400
+ 1359 0050 0E94 0000 		call sync_send
+ 1360               	.LVL80:
+ 511:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_sub_us(TID_SEND_ADJUST);
+ 1361               		.loc 1 511 3 view .LVU401
+ 1362 0054 00C0      		rjmp .
+ 512:keyboards/crkbd/rev1/legacy/serial.c ****   serial_write_chunk(tid, 7);
+ 1363               		.loc 1 512 3 view .LVU402
+ 1364 0056 67E0      		ldi r22,lo8(7)
+ 1365 0058 802F      		mov r24,r16
+ 1366 005a 0E94 0000 		call serial_write_chunk
+ 1367               	.LVL81:
+ 513:keyboards/crkbd/rev1/legacy/serial.c ****   serial_delay_half1();
+ 1368               		.loc 1 513 3 view .LVU403
+ 1369               	.LBB291:
+ 1370               	.LBI291:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 1371               		.loc 1 234 6 view .LVU404
+ 1372               	.LBE291:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1373               		.loc 1 235 3 view .LVU405
+ 1374               	.LBB294:
+ 1375               	.LBB292:
+ 1376               	.LBI292:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 1377               		.loc 2 255 1 view .LVU406
+ 1378               	.LBB293:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 1379               		.loc 2 257 2 view .LVU407
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 1380               		.loc 2 261 2 view .LVU408
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 1381               		.loc 2 262 2 view .LVU409
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 1382               		.loc 2 263 2 view .LVU410
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 1383               		.loc 2 273 3 view .LVU411
+ 1384               		.loc 2 276 2 view .LVU412
+ 1385 005e 80E1      		ldi r24,lo8(16)
+ 1386 0060 8A95      	1:	dec r24
+ 1387 0062 01F4      		brne 1b
+ 1388               	.LVL82:
+ 1389               		.loc 2 276 2 is_stmt 0 view .LVU413
+ 1390               	.LBE293:
+ 1391               	.LBE292:
+ 1392               	.LBE294:
+ 514:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 515:keyboards/crkbd/rev1/legacy/serial.c ****   // wait for the target response (step1 low->high)
+ 516:keyboards/crkbd/rev1/legacy/serial.c ****   serial_input_with_pullup();
+ 1393               		.loc 1 516 3 is_stmt 1 view .LVU414
+ 1394               	.LBB295:
+ 1395               	.LBI295:
+ 253:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR  &= ~SERIAL_PIN_MASK;
+ 1396               		.loc 1 253 6 view .LVU415
+ 1397               	.LBB296:
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1398               		.loc 1 254 3 view .LVU416
+ 254:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1399               		.loc 1 254 19 is_stmt 0 view .LVU417
+ 1400 0064 5298      		cbi 0xa,2
+ 255:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1401               		.loc 1 255 3 is_stmt 1 view .LVU418
+ 255:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1402               		.loc 1 255 19 is_stmt 0 view .LVU419
+ 1403 0066 5A9A      		sbi 0xb,2
+ 1404               	.L50:
+ 1405               	.LBE296:
+ 1406               	.LBE295:
+ 517:keyboards/crkbd/rev1/legacy/serial.c ****   while( !serial_read_pin() ) {
+ 1407               		.loc 1 517 8 is_stmt 1 view .LVU420
+ 1408               	.LBB297:
+ 1409               	.LBI297:
+ 260:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+ 1410               		.loc 1 260 9 view .LVU421
+ 1411               	.LBB298:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1412               		.loc 1 261 3 view .LVU422
+ 1413               	.LBE298:
+ 1414               	.LBE297:
+ 1415               		.loc 1 517 8 is_stmt 0 view .LVU423
+ 1416 0068 4A9B      		sbis 0x9,2
+ 1417 006a 00C0      		rjmp .L51
+ 1418 006c 87E0      		ldi r24,lo8(7)
+ 1419 006e 90E0      		ldi r25,0
+ 1420               	.L52:
+ 1421               	.LVL83:
+ 1422               	.LBB299:
+ 518:keyboards/crkbd/rev1/legacy/serial.c ****       _delay_sub_us(2);
+ 519:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 520:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 521:keyboards/crkbd/rev1/legacy/serial.c ****   // check if the target is present (step2 high->low)
+ 522:keyboards/crkbd/rev1/legacy/serial.c ****   for( int i = 0; serial_read_pin(); i++ ) {
+ 1423               		.loc 1 522 19 is_stmt 1 discriminator 1 view .LVU424
+ 1424               	.LBB300:
+ 1425               	.LBI300:
+ 260:keyboards/crkbd/rev1/legacy/serial.c ****   return !!(SERIAL_PIN_INPUT & SERIAL_PIN_MASK);
+ 1426               		.loc 1 260 9 discriminator 1 view .LVU425
+ 1427               	.LBB301:
+ 261:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1428               		.loc 1 261 3 discriminator 1 view .LVU426
+ 1429               	.LBE301:
+ 1430               	.LBE300:
+ 1431               		.loc 1 522 3 is_stmt 0 discriminator 1 view .LVU427
+ 1432 0070 4A99      		sbic 0x9,2
+ 1433 0072 00C0      		rjmp .L54
+ 1434               	.LBE299:
+ 523:keyboards/crkbd/rev1/legacy/serial.c ****       if (i > SLAVE_INT_ACK_WIDTH + 1) {
+ 524:keyboards/crkbd/rev1/legacy/serial.c ****           // slave failed to pull the line low, assume not present
+ 525:keyboards/crkbd/rev1/legacy/serial.c ****           serial_output();
+ 526:keyboards/crkbd/rev1/legacy/serial.c ****           serial_high();
+ 527:keyboards/crkbd/rev1/legacy/serial.c ****           *trans->status = TRANSACTION_NO_RESPONSE;
+ 528:keyboards/crkbd/rev1/legacy/serial.c ****           sei();
+ 529:keyboards/crkbd/rev1/legacy/serial.c ****           return TRANSACTION_NO_RESPONSE;
+ 530:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 531:keyboards/crkbd/rev1/legacy/serial.c ****       _delay_sub_us(SLAVE_INT_ACK_WIDTH_UNIT);
+ 532:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 533:keyboards/crkbd/rev1/legacy/serial.c **** #endif
+ 534:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 535:keyboards/crkbd/rev1/legacy/serial.c ****   // initiator recive phase
+ 536:keyboards/crkbd/rev1/legacy/serial.c ****   // if the target is present syncronize with it
+ 537:keyboards/crkbd/rev1/legacy/serial.c ****   if( trans->target2initiator_buffer_size > 0 ) {
+ 1435               		.loc 1 537 3 is_stmt 1 view .LVU428
+ 1436               		.loc 1 537 12 is_stmt 0 view .LVU429
+ 1437 0074 6D81      		ldd r22,Y+5
+ 1438               		.loc 1 537 5 view .LVU430
+ 1439 0076 6623      		tst r22
+ 1440 0078 01F0      		breq .L55
+ 538:keyboards/crkbd/rev1/legacy/serial.c ****       if (!serial_recive_packet((uint8_t *)trans->target2initiator_buffer,
+ 1441               		.loc 1 538 7 is_stmt 1 view .LVU431
+ 1442               		.loc 1 538 12 is_stmt 0 view .LVU432
+ 1443 007a 8E81      		ldd r24,Y+6
+ 1444 007c 9F81      		ldd r25,Y+7
+ 1445               	.LVL84:
+ 1446               		.loc 1 538 12 view .LVU433
+ 1447 007e 0E94 0000 		call serial_recive_packet
+ 1448               	.LVL85:
+ 1449               		.loc 1 538 10 view .LVU434
+ 1450 0082 8111      		cpse r24,__zero_reg__
+ 1451 0084 00C0      		rjmp .L55
+ 539:keyboards/crkbd/rev1/legacy/serial.c ****                                 trans->target2initiator_buffer_size) ) {
+ 540:keyboards/crkbd/rev1/legacy/serial.c ****           serial_output();
+ 1452               		.loc 1 540 11 is_stmt 1 view .LVU435
+ 1453               	.LBB306:
+ 1454               	.LBI306:
+ 246:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 1455               		.loc 1 246 6 view .LVU436
+ 1456               	.LBB307:
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1457               		.loc 1 247 3 view .LVU437
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1458               		.loc 1 247 18 is_stmt 0 view .LVU438
+ 1459 0086 529A      		sbi 0xa,2
+ 1460               	.LBE307:
+ 1461               	.LBE306:
+ 541:keyboards/crkbd/rev1/legacy/serial.c ****           serial_high();
+ 1462               		.loc 1 541 11 is_stmt 1 view .LVU439
+ 1463               	.LBB308:
+ 1464               	.LBI308:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1465               		.loc 1 272 6 view .LVU440
+ 1466               	.LBB309:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1467               		.loc 1 273 3 view .LVU441
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1468               		.loc 1 273 19 is_stmt 0 view .LVU442
+ 1469 0088 5A9A      		sbi 0xb,2
+ 1470               	.LBE309:
+ 1471               	.LBE308:
+ 542:keyboards/crkbd/rev1/legacy/serial.c ****           *trans->status = TRANSACTION_DATA_ERROR;
+ 1472               		.loc 1 542 11 is_stmt 1 view .LVU443
+ 1473               		.loc 1 542 17 is_stmt 0 view .LVU444
+ 1474 008a E881      		ld r30,Y
+ 1475 008c F981      		ldd r31,Y+1
+ 1476               		.loc 1 542 26 view .LVU445
+ 1477 008e 82E0      		ldi r24,lo8(2)
+ 1478 0090 8083      		st Z,r24
+ 543:keyboards/crkbd/rev1/legacy/serial.c ****           sei();
+ 1479               		.loc 1 543 11 is_stmt 1 view .LVU446
+ 1480               	/* #APP */
+ 1481               	 ;  543 "keyboards/crkbd/rev1/legacy/serial.c" 1
+ 1482 0092 7894      		sei
+ 1483               	 ;  0 "" 2
+ 544:keyboards/crkbd/rev1/legacy/serial.c ****           return TRANSACTION_DATA_ERROR;
+ 1484               		.loc 1 544 11 view .LVU447
+ 1485               		.loc 1 544 18 is_stmt 0 view .LVU448
+ 1486               	/* #NOAPP */
+ 1487 0094 82E0      		ldi r24,lo8(2)
+ 1488 0096 90E0      		ldi r25,0
+ 1489 0098 00C0      		rjmp .L48
+ 1490               	.L51:
+ 518:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 1491               		.loc 1 518 7 is_stmt 1 view .LVU449
+ 1492 009a 00C0      		rjmp .
+ 1493 009c 00C0      		rjmp .L50
+ 1494               	.LVL86:
+ 1495               	.L54:
+ 1496               	.LBB310:
+ 523:keyboards/crkbd/rev1/legacy/serial.c ****           // slave failed to pull the line low, assume not present
+ 1497               		.loc 1 523 7 view .LVU450
+ 1498 009e 0197      		sbiw r24,1
+ 1499               	.LVL87:
+ 523:keyboards/crkbd/rev1/legacy/serial.c ****           // slave failed to pull the line low, assume not present
+ 1500               		.loc 1 523 10 is_stmt 0 view .LVU451
+ 1501 00a0 01F4      		brne .L53
+ 525:keyboards/crkbd/rev1/legacy/serial.c ****           serial_high();
+ 1502               		.loc 1 525 11 is_stmt 1 view .LVU452
+ 1503               	.LBB302:
+ 1504               	.LBI302:
+ 246:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 1505               		.loc 1 246 6 view .LVU453
+ 1506               	.LBB303:
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1507               		.loc 1 247 3 view .LVU454
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1508               		.loc 1 247 18 is_stmt 0 view .LVU455
+ 1509 00a2 529A      		sbi 0xa,2
+ 1510               	.LBE303:
+ 1511               	.LBE302:
+ 526:keyboards/crkbd/rev1/legacy/serial.c ****           *trans->status = TRANSACTION_NO_RESPONSE;
+ 1512               		.loc 1 526 11 is_stmt 1 view .LVU456
+ 1513               	.LBB304:
+ 1514               	.LBI304:
+ 272:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT |= SERIAL_PIN_MASK;
+ 1515               		.loc 1 272 6 view .LVU457
+ 1516               	.LBB305:
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1517               		.loc 1 273 3 view .LVU458
+ 273:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1518               		.loc 1 273 19 is_stmt 0 view .LVU459
+ 1519 00a4 5A9A      		sbi 0xb,2
+ 1520               	.LBE305:
+ 1521               	.LBE304:
+ 527:keyboards/crkbd/rev1/legacy/serial.c ****           sei();
+ 1522               		.loc 1 527 11 is_stmt 1 view .LVU460
+ 527:keyboards/crkbd/rev1/legacy/serial.c ****           sei();
+ 1523               		.loc 1 527 17 is_stmt 0 view .LVU461
+ 1524 00a6 E881      		ld r30,Y
+ 1525 00a8 F981      		ldd r31,Y+1
+ 527:keyboards/crkbd/rev1/legacy/serial.c ****           sei();
+ 1526               		.loc 1 527 26 view .LVU462
+ 1527 00aa 81E0      		ldi r24,lo8(1)
+ 1528               	.LVL88:
+ 527:keyboards/crkbd/rev1/legacy/serial.c ****           sei();
+ 1529               		.loc 1 527 26 view .LVU463
+ 1530 00ac 8083      		st Z,r24
+ 528:keyboards/crkbd/rev1/legacy/serial.c ****           return TRANSACTION_NO_RESPONSE;
+ 1531               		.loc 1 528 11 is_stmt 1 view .LVU464
+ 1532               	/* #APP */
+ 1533               	 ;  528 "keyboards/crkbd/rev1/legacy/serial.c" 1
+ 1534 00ae 7894      		sei
+ 1535               	 ;  0 "" 2
+ 529:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 1536               		.loc 1 529 11 view .LVU465
+ 529:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 1537               		.loc 1 529 18 is_stmt 0 view .LVU466
+ 1538               	/* #NOAPP */
+ 1539 00b0 81E0      		ldi r24,lo8(1)
+ 1540 00b2 90E0      		ldi r25,0
+ 1541               	.LVL89:
+ 1542               	.L48:
+ 1543               	/* epilogue start */
+ 529:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 1544               		.loc 1 529 18 view .LVU467
+ 1545               	.LBE310:
+ 545:keyboards/crkbd/rev1/legacy/serial.c ****       }
+ 546:keyboards/crkbd/rev1/legacy/serial.c ****    }
+ 547:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 548:keyboards/crkbd/rev1/legacy/serial.c ****   // initiator switch to output
+ 549:keyboards/crkbd/rev1/legacy/serial.c ****   change_reciver2sender();
+ 550:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 551:keyboards/crkbd/rev1/legacy/serial.c ****   // initiator send phase
+ 552:keyboards/crkbd/rev1/legacy/serial.c ****   if( trans->initiator2target_buffer_size > 0 ) {
+ 553:keyboards/crkbd/rev1/legacy/serial.c ****       serial_send_packet((uint8_t *)trans->initiator2target_buffer,
+ 554:keyboards/crkbd/rev1/legacy/serial.c ****                          trans->initiator2target_buffer_size);
+ 555:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 556:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 557:keyboards/crkbd/rev1/legacy/serial.c ****   // always, release the line when not in use
+ 558:keyboards/crkbd/rev1/legacy/serial.c ****   sync_send();
+ 559:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 560:keyboards/crkbd/rev1/legacy/serial.c ****   *trans->status = TRANSACTION_END;
+ 561:keyboards/crkbd/rev1/legacy/serial.c ****   sei();
+ 562:keyboards/crkbd/rev1/legacy/serial.c ****   return TRANSACTION_END;
+ 563:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1546               		.loc 1 563 1 view .LVU468
+ 1547 00b4 DF91      		pop r29
+ 1548 00b6 CF91      		pop r28
+ 1549 00b8 1F91      		pop r17
+ 1550 00ba 0F91      		pop r16
+ 1551 00bc 0895      		ret
+ 1552               	.LVL90:
+ 1553               	.L53:
+ 1554               	.LBB311:
+ 531:keyboards/crkbd/rev1/legacy/serial.c ****   }
+ 1555               		.loc 1 531 7 is_stmt 1 discriminator 2 view .LVU469
+ 1556 00be 00C0      		rjmp .
+ 522:keyboards/crkbd/rev1/legacy/serial.c ****       if (i > SLAVE_INT_ACK_WIDTH + 1) {
+ 1557               		.loc 1 522 38 discriminator 2 view .LVU470
+ 1558               	.LVL91:
+ 522:keyboards/crkbd/rev1/legacy/serial.c ****       if (i > SLAVE_INT_ACK_WIDTH + 1) {
+ 1559               		.loc 1 522 38 is_stmt 0 discriminator 2 view .LVU471
+ 1560 00c0 00C0      		rjmp .L52
+ 1561               	.LVL92:
+ 1562               	.L55:
+ 522:keyboards/crkbd/rev1/legacy/serial.c ****       if (i > SLAVE_INT_ACK_WIDTH + 1) {
+ 1563               		.loc 1 522 38 discriminator 2 view .LVU472
+ 1564               	.LBE311:
+ 549:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 1565               		.loc 1 549 3 is_stmt 1 view .LVU473
+ 1566               	.LBB312:
+ 1567               	.LBI312:
+ 402:keyboards/crkbd/rev1/legacy/serial.c ****     sync_recv();     //0
+ 1568               		.loc 1 402 6 view .LVU474
+ 1569               	.LBB313:
+ 403:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay();  //1
+ 1570               		.loc 1 403 5 view .LVU475
+ 1571 00c2 0E94 0000 		call sync_recv
+ 1572               	.LVL93:
+ 404:keyboards/crkbd/rev1/legacy/serial.c ****     serial_low();    //3
+ 1573               		.loc 1 404 5 view .LVU476
+ 1574               	.LBB314:
+ 1575               	.LBI314:
+ 228:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY);
+ 1576               		.loc 1 228 6 view .LVU477
+ 1577               	.LBE314:
+ 1578               	.LBE313:
+ 1579               	.LBE312:
+ 229:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1580               		.loc 1 229 3 view .LVU478
+ 1581               	.LBB328:
+ 1582               	.LBB326:
+ 1583               	.LBB317:
+ 1584               	.LBB315:
+ 1585               	.LBI315:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 1586               		.loc 2 255 1 view .LVU479
+ 1587               	.LBB316:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 1588               		.loc 2 257 2 view .LVU480
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 1589               		.loc 2 261 2 view .LVU481
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 1590               		.loc 2 262 2 view .LVU482
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 1591               		.loc 2 263 2 view .LVU483
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 1592               		.loc 2 273 3 view .LVU484
+ 1593               		.loc 2 276 2 view .LVU485
+ 1594 00c6 20E2      		ldi r18,lo8(32)
+ 1595 00c8 2A95      	1:	dec r18
+ 1596 00ca 01F4      		brne 1b
+ 1597               	.LVL94:
+ 1598               		.loc 2 276 2 is_stmt 0 view .LVU486
+ 1599               	.LBE316:
+ 1600               	.LBE315:
+ 1601               	.LBE317:
+ 405:keyboards/crkbd/rev1/legacy/serial.c ****     serial_output(); //3
+ 1602               		.loc 1 405 5 is_stmt 1 view .LVU487
+ 1603               	.LBB318:
+ 1604               	.LBI318:
+ 266:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_PORT &= ~SERIAL_PIN_MASK;
+ 1605               		.loc 1 266 6 view .LVU488
+ 1606               	.LBB319:
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1607               		.loc 1 267 3 view .LVU489
+ 267:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1608               		.loc 1 267 19 is_stmt 0 view .LVU490
+ 1609 00cc 5A98      		cbi 0xb,2
+ 1610               	.LBE319:
+ 1611               	.LBE318:
+ 406:keyboards/crkbd/rev1/legacy/serial.c ****     serial_delay_half1(); //4
+ 1612               		.loc 1 406 5 is_stmt 1 view .LVU491
+ 1613               	.LBB320:
+ 1614               	.LBI320:
+ 246:keyboards/crkbd/rev1/legacy/serial.c ****   SERIAL_PIN_DDR |= SERIAL_PIN_MASK;
+ 1615               		.loc 1 246 6 view .LVU492
+ 1616               	.LBB321:
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1617               		.loc 1 247 3 view .LVU493
+ 247:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1618               		.loc 1 247 18 is_stmt 0 view .LVU494
+ 1619 00ce 529A      		sbi 0xa,2
+ 1620               	.LBE321:
+ 1621               	.LBE320:
+ 407:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1622               		.loc 1 407 5 is_stmt 1 view .LVU495
+ 1623               	.LBB322:
+ 1624               	.LBI322:
+ 234:keyboards/crkbd/rev1/legacy/serial.c ****   _delay_us(SERIAL_DELAY_HALF1);
+ 1625               		.loc 1 234 6 view .LVU496
+ 1626               	.LBE322:
+ 1627               	.LBE326:
+ 1628               	.LBE328:
+ 235:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1629               		.loc 1 235 3 view .LVU497
+ 1630               	.LVL95:
+ 1631               	.LBB329:
+ 1632               	.LBB327:
+ 1633               	.LBB325:
+ 1634               	.LBB323:
+ 1635               	.LBI323:
+ 255:c:\msys64\mingw64\avr\include\util\delay.h **** {
+ 1636               		.loc 2 255 1 view .LVU498
+ 1637               	.LBB324:
+ 257:c:\msys64\mingw64\avr\include\util\delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 1638               		.loc 2 257 2 view .LVU499
+ 261:c:\msys64\mingw64\avr\include\util\delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 1639               		.loc 2 261 2 view .LVU500
+ 262:c:\msys64\mingw64\avr\include\util\delay.h **** 	__tmp = ((F_CPU) / 1e6) * __us;
+ 1640               		.loc 2 262 2 view .LVU501
+ 263:c:\msys64\mingw64\avr\include\util\delay.h **** 
+ 1641               		.loc 2 263 2 view .LVU502
+ 273:c:\msys64\mingw64\avr\include\util\delay.h **** 	#endif
+ 1642               		.loc 2 273 3 view .LVU503
+ 1643               		.loc 2 276 2 view .LVU504
+ 1644 00d0 80E1      		ldi r24,lo8(16)
+ 1645 00d2 8A95      	1:	dec r24
+ 1646 00d4 01F4      		brne 1b
+ 1647               	.LVL96:
+ 1648               		.loc 2 276 2 is_stmt 0 view .LVU505
+ 1649               	.LBE324:
+ 1650               	.LBE323:
+ 1651               	.LBE325:
+ 1652               	.LBE327:
+ 1653               	.LBE329:
+ 552:keyboards/crkbd/rev1/legacy/serial.c ****       serial_send_packet((uint8_t *)trans->initiator2target_buffer,
+ 1654               		.loc 1 552 3 is_stmt 1 view .LVU506
+ 552:keyboards/crkbd/rev1/legacy/serial.c ****       serial_send_packet((uint8_t *)trans->initiator2target_buffer,
+ 1655               		.loc 1 552 12 is_stmt 0 view .LVU507
+ 1656 00d6 6A81      		ldd r22,Y+2
+ 552:keyboards/crkbd/rev1/legacy/serial.c ****       serial_send_packet((uint8_t *)trans->initiator2target_buffer,
+ 1657               		.loc 1 552 5 view .LVU508
+ 1658 00d8 6623      		tst r22
+ 1659 00da 01F0      		breq .L56
+ 553:keyboards/crkbd/rev1/legacy/serial.c ****                          trans->initiator2target_buffer_size);
+ 1660               		.loc 1 553 7 is_stmt 1 view .LVU509
+ 1661 00dc 8B81      		ldd r24,Y+3
+ 1662 00de 9C81      		ldd r25,Y+4
+ 1663 00e0 0E94 0000 		call serial_send_packet
+ 1664               	.LVL97:
+ 1665               	.L56:
+ 558:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 1666               		.loc 1 558 3 view .LVU510
+ 1667 00e4 0E94 0000 		call sync_send
+ 1668               	.LVL98:
+ 560:keyboards/crkbd/rev1/legacy/serial.c ****   sei();
+ 1669               		.loc 1 560 3 view .LVU511
+ 560:keyboards/crkbd/rev1/legacy/serial.c ****   sei();
+ 1670               		.loc 1 560 9 is_stmt 0 view .LVU512
+ 1671 00e8 E881      		ld r30,Y
+ 1672 00ea F981      		ldd r31,Y+1
+ 560:keyboards/crkbd/rev1/legacy/serial.c ****   sei();
+ 1673               		.loc 1 560 18 view .LVU513
+ 1674 00ec 1082      		st Z,__zero_reg__
+ 561:keyboards/crkbd/rev1/legacy/serial.c ****   return TRANSACTION_END;
+ 1675               		.loc 1 561 3 is_stmt 1 view .LVU514
+ 1676               	/* #APP */
+ 1677               	 ;  561 "keyboards/crkbd/rev1/legacy/serial.c" 1
+ 1678 00ee 7894      		sei
+ 1679               	 ;  0 "" 2
+ 562:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1680               		.loc 1 562 3 view .LVU515
+ 562:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1681               		.loc 1 562 10 is_stmt 0 view .LVU516
+ 1682               	/* #NOAPP */
+ 1683 00f0 90E0      		ldi r25,0
+ 1684 00f2 80E0      		ldi r24,0
+ 1685 00f4 00C0      		rjmp .L48
+ 1686               	.LVL99:
+ 1687               	.L57:
+ 482:keyboards/crkbd/rev1/legacy/serial.c ****   SSTD_t *trans = &Transaction_table[sstd_index];
+ 1688               		.loc 1 482 14 view .LVU517
+ 1689 00f6 84E0      		ldi r24,lo8(4)
+ 1690 00f8 90E0      		ldi r25,0
+ 1691               	.LVL100:
+ 482:keyboards/crkbd/rev1/legacy/serial.c ****   SSTD_t *trans = &Transaction_table[sstd_index];
+ 1692               		.loc 1 482 14 view .LVU518
+ 1693 00fa 00C0      		rjmp .L48
+ 1694               		.cfi_endproc
+ 1695               	.LFE26:
+ 1697               		.section	.text.soft_serial_get_and_clean_status,"ax",@progbits
+ 1698               	.global	soft_serial_get_and_clean_status
+ 1700               	soft_serial_get_and_clean_status:
+ 1701               	.LVL101:
+ 1702               	.LFB27:
+ 564:keyboards/crkbd/rev1/legacy/serial.c **** 
+ 565:keyboards/crkbd/rev1/legacy/serial.c **** #ifdef SERIAL_USE_MULTI_TRANSACTION
+ 566:keyboards/crkbd/rev1/legacy/serial.c **** int soft_serial_get_and_clean_status(int sstd_index) {
+ 1703               		.loc 1 566 54 is_stmt 1 view -0
+ 1704               		.cfi_startproc
+ 1705               	/* prologue: function */
+ 1706               	/* frame size = 0 */
+ 1707               	/* stack size = 0 */
+ 1708               	.L__stack_usage = 0
+ 567:keyboards/crkbd/rev1/legacy/serial.c ****     SSTD_t *trans = &Transaction_table[sstd_index];
+ 1709               		.loc 1 567 5 view .LVU520
+ 1710               		.loc 1 567 39 is_stmt 0 view .LVU521
+ 1711 0000 23E0      		ldi r18,3
+ 1712               		1:
+ 1713 0002 880F      		lsl r24
+ 1714 0004 991F      		rol r25
+ 1715 0006 2A95      		dec r18
+ 1716 0008 01F4      		brne 1b
+ 1717               	.LVL102:
+ 1718               		.loc 1 567 13 view .LVU522
+ 1719 000a 2091 0000 		lds r18,Transaction_table
+ 1720 000e 3091 0000 		lds r19,Transaction_table+1
+ 1721 0012 280F      		add r18,r24
+ 1722 0014 391F      		adc r19,r25
+ 1723               	.LVL103:
+ 568:keyboards/crkbd/rev1/legacy/serial.c ****     cli();
+ 1724               		.loc 1 568 5 is_stmt 1 view .LVU523
+ 1725               	/* #APP */
+ 1726               	 ;  568 "keyboards/crkbd/rev1/legacy/serial.c" 1
+ 1727 0016 F894      		cli
+ 1728               	 ;  0 "" 2
+ 569:keyboards/crkbd/rev1/legacy/serial.c ****     int retval = *trans->status;
+ 1729               		.loc 1 569 5 view .LVU524
+ 1730               		.loc 1 569 24 is_stmt 0 view .LVU525
+ 1731               	/* #NOAPP */
+ 1732 0018 D901      		movw r26,r18
+ 1733 001a ED91      		ld r30,X+
+ 1734 001c FC91      		ld r31,X
+ 1735               		.loc 1 569 9 view .LVU526
+ 1736 001e 8081      		ld r24,Z
+ 1737 0020 90E0      		ldi r25,0
+ 1738               	.LVL104:
+ 570:keyboards/crkbd/rev1/legacy/serial.c ****     *trans->status = 0;;
+ 1739               		.loc 1 570 5 is_stmt 1 view .LVU527
+ 1740               		.loc 1 570 20 is_stmt 0 view .LVU528
+ 1741 0022 1082      		st Z,__zero_reg__
+ 1742               		.loc 1 570 24 is_stmt 1 view .LVU529
+ 571:keyboards/crkbd/rev1/legacy/serial.c ****     sei();
+ 1743               		.loc 1 571 5 view .LVU530
+ 1744               	/* #APP */
+ 1745               	 ;  571 "keyboards/crkbd/rev1/legacy/serial.c" 1
+ 1746 0024 7894      		sei
+ 1747               	 ;  0 "" 2
+ 572:keyboards/crkbd/rev1/legacy/serial.c ****     return retval;
+ 1748               		.loc 1 572 5 view .LVU531
+ 1749               	/* #NOAPP */
+ 1750               	/* epilogue start */
+ 573:keyboards/crkbd/rev1/legacy/serial.c **** }
+ 1751               		.loc 1 573 1 is_stmt 0 view .LVU532
+ 1752 0026 0895      		ret
+ 1753               		.cfi_endproc
+ 1754               	.LFE27:
+ 1756               		.section	.bss.Transaction_table_size,"aw",@nobits
+ 1759               	Transaction_table_size:
+ 1760 0000 00        		.zero	1
+ 1761               		.section	.bss.Transaction_table,"aw",@nobits
+ 1764               	Transaction_table:
+ 1765 0000 0000      		.zero	2
+ 1766               		.text
+ 1767               	.Letext0:
+ 1768               		.file 3 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
+ 1769               		.file 4 "keyboards/crkbd/rev1/legacy/serial.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 serial.c
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:12     .text.sync_recv:0000000000000000 sync_recv
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:74     .text.sync_send:0000000000000000 sync_send
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:137    .text.serial_read_chunk:0000000000000000 serial_read_chunk
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:350    .text.serial_recive_packet:0000000000000000 serial_recive_packet
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:463    .text.soft_serial_initiator_init:0000000000000000 soft_serial_initiator_init
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:1764   .bss.Transaction_table:0000000000000000 Transaction_table
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:1759   .bss.Transaction_table_size:0000000000000000 Transaction_table_size
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:508    .text.soft_serial_target_init:0000000000000000 soft_serial_target_init
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:559    .text.serial_write_chunk:0000000000000000 serial_write_chunk
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:732    .text.serial_send_packet:0000000000000000 serial_send_packet
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:817    .text.__vector_3:0000000000000000 __vector_3
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:1232   .text.soft_serial_transaction:0000000000000000 soft_serial_transaction
+C:\Users\renep\AppData\Local\Temp\cc1YLmYh.s:1700   .text.soft_serial_get_and_clean_status:0000000000000000 soft_serial_get_and_clean_status
+
+UNDEFINED SYMBOLS
+__do_clear_bss
