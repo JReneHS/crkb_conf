@@ -7180,33 +7180,33 @@
  5008               		.file 12 "c:\\msys64\\mingw64\\avr\\include\\avr\\eeprom.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 EndpointStream_AVR8.c
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:13     .text.Endpoint_Discard_Stream:0000000000000000 Endpoint_Discard_Stream
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:178    .text.Endpoint_Null_Stream:0000000000000000 Endpoint_Null_Stream
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:341    .text.Endpoint_Write_Stream_LE:0000000000000000 Endpoint_Write_Stream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:546    .text.Endpoint_Write_Stream_BE:0000000000000000 Endpoint_Write_Stream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:760    .text.Endpoint_Read_Stream_LE:0000000000000000 Endpoint_Read_Stream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:963    .text.Endpoint_Read_Stream_BE:0000000000000000 Endpoint_Read_Stream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:1175   .text.Endpoint_Write_PStream_LE:0000000000000000 Endpoint_Write_PStream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:1393   .text.Endpoint_Write_PStream_BE:0000000000000000 Endpoint_Write_PStream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:1620   .text.Endpoint_Write_EStream_LE:0000000000000000 Endpoint_Write_EStream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:1826   .text.Endpoint_Write_EStream_BE:0000000000000000 Endpoint_Write_EStream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:2041   .text.Endpoint_Read_EStream_LE:0000000000000000 Endpoint_Read_EStream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:2246   .text.Endpoint_Read_EStream_BE:0000000000000000 Endpoint_Read_EStream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:2460   .text.Endpoint_Write_Control_Stream_LE:0000000000000000 Endpoint_Write_Control_Stream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:2737   .text.Endpoint_Write_Control_Stream_BE:0000000000000000 Endpoint_Write_Control_Stream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:3017   .text.Endpoint_Read_Control_Stream_LE:0000000000000000 Endpoint_Read_Control_Stream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:3199   .text.Endpoint_Read_Control_Stream_BE:0000000000000000 Endpoint_Read_Control_Stream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:3390   .text.Endpoint_Write_Control_PStream_LE:0000000000000000 Endpoint_Write_Control_PStream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:3678   .text.Endpoint_Write_Control_PStream_BE:0000000000000000 Endpoint_Write_Control_PStream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:3968   .text.Endpoint_Write_Control_EStream_LE:0000000000000000 Endpoint_Write_Control_EStream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:4274   .text.Endpoint_Write_Control_EStream_BE:0000000000000000 Endpoint_Write_Control_EStream_BE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:4587   .text.Endpoint_Read_Control_EStream_LE:0000000000000000 Endpoint_Read_Control_EStream_LE
-C:\Users\renep\AppData\Local\Temp\ccKYzWHG.s:4792   .text.Endpoint_Read_Control_EStream_BE:0000000000000000 Endpoint_Read_Control_EStream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:13     .text.Endpoint_Discard_Stream:0000000000000000 Endpoint_Discard_Stream
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:178    .text.Endpoint_Null_Stream:0000000000000000 Endpoint_Null_Stream
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:341    .text.Endpoint_Write_Stream_LE:0000000000000000 Endpoint_Write_Stream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:546    .text.Endpoint_Write_Stream_BE:0000000000000000 Endpoint_Write_Stream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:760    .text.Endpoint_Read_Stream_LE:0000000000000000 Endpoint_Read_Stream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:963    .text.Endpoint_Read_Stream_BE:0000000000000000 Endpoint_Read_Stream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:1175   .text.Endpoint_Write_PStream_LE:0000000000000000 Endpoint_Write_PStream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:1393   .text.Endpoint_Write_PStream_BE:0000000000000000 Endpoint_Write_PStream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:1620   .text.Endpoint_Write_EStream_LE:0000000000000000 Endpoint_Write_EStream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:1826   .text.Endpoint_Write_EStream_BE:0000000000000000 Endpoint_Write_EStream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:2041   .text.Endpoint_Read_EStream_LE:0000000000000000 Endpoint_Read_EStream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:2246   .text.Endpoint_Read_EStream_BE:0000000000000000 Endpoint_Read_EStream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:2460   .text.Endpoint_Write_Control_Stream_LE:0000000000000000 Endpoint_Write_Control_Stream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:2737   .text.Endpoint_Write_Control_Stream_BE:0000000000000000 Endpoint_Write_Control_Stream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:3017   .text.Endpoint_Read_Control_Stream_LE:0000000000000000 Endpoint_Read_Control_Stream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:3199   .text.Endpoint_Read_Control_Stream_BE:0000000000000000 Endpoint_Read_Control_Stream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:3390   .text.Endpoint_Write_Control_PStream_LE:0000000000000000 Endpoint_Write_Control_PStream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:3678   .text.Endpoint_Write_Control_PStream_BE:0000000000000000 Endpoint_Write_Control_PStream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:3968   .text.Endpoint_Write_Control_EStream_LE:0000000000000000 Endpoint_Write_Control_EStream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:4274   .text.Endpoint_Write_Control_EStream_BE:0000000000000000 Endpoint_Write_Control_EStream_BE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:4587   .text.Endpoint_Read_Control_EStream_LE:0000000000000000 Endpoint_Read_Control_EStream_LE
+C:\Users\renep\AppData\Local\Temp\ccnCOFvJ.s:4792   .text.Endpoint_Read_Control_EStream_BE:0000000000000000 Endpoint_Read_Control_EStream_BE
 
 UNDEFINED SYMBOLS
 Endpoint_WaitUntilReady

@@ -901,15 +901,15 @@
  474               		.file 8 "lib/lufa/LUFA/Drivers/USB/Core/HostStandardReq.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ConfigDescriptors.c
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:12     .text.USB_GetNextDescriptor:0000000000000000 USB_GetNextDescriptor
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:81     .text.USB_GetNextDescriptorOfType:0000000000000000 USB_GetNextDescriptorOfType
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:158    .text.USB_GetNextDescriptorOfTypeBefore:0000000000000000 USB_GetNextDescriptorOfTypeBefore
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:251    .text.USB_GetNextDescriptorOfTypeAfter:0000000000000000 USB_GetNextDescriptorOfTypeAfter
-C:\Users\renep\AppData\Local\Temp\ccHi6toa.s:336    .text.USB_GetNextDescriptorComp:0000000000000000 USB_GetNextDescriptorComp
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:12     .text.USB_GetNextDescriptor:0000000000000000 USB_GetNextDescriptor
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:81     .text.USB_GetNextDescriptorOfType:0000000000000000 USB_GetNextDescriptorOfType
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:158    .text.USB_GetNextDescriptorOfTypeBefore:0000000000000000 USB_GetNextDescriptorOfTypeBefore
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:251    .text.USB_GetNextDescriptorOfTypeAfter:0000000000000000 USB_GetNextDescriptorOfTypeAfter
+C:\Users\renep\AppData\Local\Temp\ccGZqVf5.s:336    .text.USB_GetNextDescriptorComp:0000000000000000 USB_GetNextDescriptorComp
 
 NO UNDEFINED SYMBOLS

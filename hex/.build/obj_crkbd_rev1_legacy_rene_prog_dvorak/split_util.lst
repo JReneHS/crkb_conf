@@ -665,17 +665,17 @@
  259               		.file 5 "keyboards/crkbd/rev1/legacy/split_scomm.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 split_util.c
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:13     .text.waitForUsb:0000000000000000 waitForUsb
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:97     .text.has_usb:0000000000000000 has_usb
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:247    .bss.usbstate.1898:0000000000000000 usbstate.1898
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:165    .text.is_keyboard_left:0000000000000000 is_keyboard_left
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:188    .text.split_keyboard_setup:0000000000000000 split_keyboard_setup
-C:\Users\renep\AppData\Local\Temp\cc84LRqd.s:253    .data.isLeftHand:0000000000000000 isLeftHand
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:13     .text.waitForUsb:0000000000000000 waitForUsb
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:97     .text.has_usb:0000000000000000 has_usb
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:247    .bss.usbstate.1898:0000000000000000 usbstate.1898
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:165    .text.is_keyboard_left:0000000000000000 is_keyboard_left
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:188    .text.split_keyboard_setup:0000000000000000 split_keyboard_setup
+C:\Users\renep\AppData\Local\Temp\ccDvG5eg.s:253    .data.isLeftHand:0000000000000000 isLeftHand
 
 UNDEFINED SYMBOLS
 serial_master_init

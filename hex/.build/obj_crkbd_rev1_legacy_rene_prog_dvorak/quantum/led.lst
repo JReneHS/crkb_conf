@@ -290,16 +290,16 @@
  163               		.file 21 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 led.c
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:13     .text.led_set_user:0000000000000000 led_set_user
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:33     .text.led_set_kb:0000000000000000 led_set_kb
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:52     .text.led_update_user:0000000000000000 led_update_user
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:74     .text.led_update_kb:0000000000000000 led_update_kb
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:94     .text.led_init_ports:0000000000000000 led_init_ports
-C:\Users\renep\AppData\Local\Temp\ccJLVkc0.s:111    .text.led_set:0000000000000000 led_set
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:13     .text.led_set_user:0000000000000000 led_set_user
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:33     .text.led_set_kb:0000000000000000 led_set_kb
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:52     .text.led_update_user:0000000000000000 led_update_user
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:74     .text.led_update_kb:0000000000000000 led_update_kb
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:94     .text.led_init_ports:0000000000000000 led_init_ports
+C:\Users\renep\AppData\Local\Temp\ccrzWpMj.s:111    .text.led_set:0000000000000000 led_set
 
 NO UNDEFINED SYMBOLS

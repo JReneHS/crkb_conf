@@ -33,10 +33,10 @@
   33               		.file 23 "tmk_core/protocol/lufa/lufa.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 legacy.c
-C:\Users\renep\AppData\Local\Temp\ccrlUIgm.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccrlUIgm.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccrlUIgm.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccrlUIgm.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccrlUIgm.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccXGdmyU.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccXGdmyU.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccXGdmyU.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccXGdmyU.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccXGdmyU.s:6      *ABS*:0000000000000001 __zero_reg__
 
 NO UNDEFINED SYMBOLS

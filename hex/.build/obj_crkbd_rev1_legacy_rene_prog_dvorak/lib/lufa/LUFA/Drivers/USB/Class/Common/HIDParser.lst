@@ -2627,15 +2627,15 @@
  1927               		.file 4 "lib/lufa/LUFA/Drivers/USB/Class/Common/HIDParser.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 HIDParser.c
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:13     .text.USB_ProcessHIDReport:0000000000000000 USB_ProcessHIDReport
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:1450   .text.USB_GetHIDReportItemInfo:0000000000000000 USB_GetHIDReportItemInfo
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:1645   .text.USB_SetHIDReportItemInfo:0000000000000000 USB_SetHIDReportItemInfo
-C:\Users\renep\AppData\Local\Temp\cclSNyWm.s:1836   .text.USB_GetHIDReportSize:0000000000000000 USB_GetHIDReportSize
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:13     .text.USB_ProcessHIDReport:0000000000000000 USB_ProcessHIDReport
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:1450   .text.USB_GetHIDReportItemInfo:0000000000000000 USB_GetHIDReportItemInfo
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:1645   .text.USB_SetHIDReportItemInfo:0000000000000000 USB_SetHIDReportItemInfo
+C:\Users\renep\AppData\Local\Temp\ccztFq8j.s:1836   .text.USB_GetHIDReportSize:0000000000000000 USB_GetHIDReportSize
 
 UNDEFINED SYMBOLS
 CALLBACK_HIDParser_FilterHIDReportItem

@@ -176,12 +176,12 @@
   52               		.file 24 "tmk_core/protocol/lufa/lufa.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 rev1.c
-C:\Users\renep\AppData\Local\Temp\cceZtktJ.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cceZtktJ.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cceZtktJ.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cceZtktJ.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cceZtktJ.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cceZtktJ.s:13     .text.matrix_init_kb:0000000000000000 matrix_init_kb
+C:\Users\renep\AppData\Local\Temp\ccuKUxik.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccuKUxik.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccuKUxik.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccuKUxik.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccuKUxik.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccuKUxik.s:13     .text.matrix_init_kb:0000000000000000 matrix_init_kb
 
 UNDEFINED SYMBOLS
 matrix_init_user

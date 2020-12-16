@@ -2379,41 +2379,41 @@
  1464               		.file 26 "c:\\msys64\\mingw64\\avr\\include\\string.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 matrix.c
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:12     .text.unselect_rows:0000000000000000 unselect_rows
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1417   .rodata.row_pins:0000000000000000 row_pins
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:91     .text.matrix_init_user:0000000000000000 matrix_init_user
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:91     .text.matrix_init_user:0000000000000000 matrix_init_user.localalias.0
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:109    .text.matrix_init_kb:0000000000000000 matrix_init_kb
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:126    .text.matrix_scan_user:0000000000000000 matrix_scan_user
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:141    .text.matrix_scan_kb:0000000000000000 matrix_scan_kb
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:158    .text.matrix_rows:0000000000000000 matrix_rows
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:177    .text.matrix_cols:0000000000000000 matrix_cols
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:196    .text.tx_rx_leds_init:0000000000000000 tx_rx_leds_init
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:221    .text.tx_led_on:0000000000000000 tx_led_on
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:240    .text.tx_led_off:0000000000000000 tx_led_off
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:259    .text.rx_led_on:0000000000000000 rx_led_on
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:278    .text.rx_led_off:0000000000000000 rx_led_off
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:297    .text.matrix_init:0000000000000000 matrix_init
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1407   .rodata.col_pins:0000000000000000 col_pins
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1402   .bss.matrix:0000000000000000 matrix
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1397   .bss.matrix_debouncing:0000000000000000 matrix_debouncing
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1427   .bss.is_master:0000000000000000 is_master
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:413    .text._matrix_scan:0000000000000000 _matrix_scan
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1437   .data.debouncing:0000000000000000 debouncing
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:783    .text.serial_transaction:0000000000000000 serial_transaction
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:884    .text.matrix_slave_scan:0000000000000000 matrix_slave_scan
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:967    .text.matrix_scan:0000000000000000 matrix_scan
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1432   .bss.error_count:0000000000000000 error_count
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1205   .text.matrix_is_modified:0000000000000000 matrix_is_modified
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1229   .text.matrix_is_on:0000000000000000 matrix_is_on
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1275   .text.matrix_get_row:0000000000000000 matrix_get_row
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1302   .text.matrix_print:0000000000000000 matrix_print
-C:\Users\renep\AppData\Local\Temp\ccOIedDe.s:1324   .text.matrix_key_count:0000000000000000 matrix_key_count
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:12     .text.unselect_rows:0000000000000000 unselect_rows
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1417   .rodata.row_pins:0000000000000000 row_pins
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:91     .text.matrix_init_user:0000000000000000 matrix_init_user
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:91     .text.matrix_init_user:0000000000000000 matrix_init_user.localalias.0
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:109    .text.matrix_init_kb:0000000000000000 matrix_init_kb
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:126    .text.matrix_scan_user:0000000000000000 matrix_scan_user
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:141    .text.matrix_scan_kb:0000000000000000 matrix_scan_kb
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:158    .text.matrix_rows:0000000000000000 matrix_rows
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:177    .text.matrix_cols:0000000000000000 matrix_cols
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:196    .text.tx_rx_leds_init:0000000000000000 tx_rx_leds_init
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:221    .text.tx_led_on:0000000000000000 tx_led_on
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:240    .text.tx_led_off:0000000000000000 tx_led_off
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:259    .text.rx_led_on:0000000000000000 rx_led_on
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:278    .text.rx_led_off:0000000000000000 rx_led_off
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:297    .text.matrix_init:0000000000000000 matrix_init
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1407   .rodata.col_pins:0000000000000000 col_pins
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1402   .bss.matrix:0000000000000000 matrix
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1397   .bss.matrix_debouncing:0000000000000000 matrix_debouncing
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1427   .bss.is_master:0000000000000000 is_master
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:413    .text._matrix_scan:0000000000000000 _matrix_scan
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1437   .data.debouncing:0000000000000000 debouncing
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:783    .text.serial_transaction:0000000000000000 serial_transaction
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:884    .text.matrix_slave_scan:0000000000000000 matrix_slave_scan
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:967    .text.matrix_scan:0000000000000000 matrix_scan
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1432   .bss.error_count:0000000000000000 error_count
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1205   .text.matrix_is_modified:0000000000000000 matrix_is_modified
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1229   .text.matrix_is_on:0000000000000000 matrix_is_on
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1275   .text.matrix_get_row:0000000000000000 matrix_get_row
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1302   .text.matrix_print:0000000000000000 matrix_print
+C:\Users\renep\AppData\Local\Temp\cc0F1bgo.s:1324   .text.matrix_key_count:0000000000000000 matrix_key_count
 
 UNDEFINED SYMBOLS
 split_keyboard_setup

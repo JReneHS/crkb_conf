@@ -347,23 +347,23 @@
  249               		.file 4 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 split_scomm.c
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:13     .text.serial_master_init:0000000000000000 serial_master_init
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:187    .data.transactions:0000000000000000 transactions
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:35     .text.serial_slave_init:0000000000000000 serial_slave_init
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:56     .text.serial_update_buffers:0000000000000000 serial_update_buffers
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:213    .data.s_change_old:0000000000000000 s_change_old
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:207    .data.s_change_new:0000000000000000 s_change_new
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:181    .bss.need_retry.1591:0000000000000000 need_retry.1591
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:219    .bss.slave_buffer_change_count:0000000000000000 slave_buffer_change_count
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:231    .bss.status_com:0000000000000000 status_com
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:237    .bss.serial_master_buffer:0000000000000000 serial_master_buffer
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:225    .bss.status1:0000000000000000 status1
-C:\Users\renep\AppData\Local\Temp\ccJvg0WC.s:243    .bss.serial_slave_buffer:0000000000000000 serial_slave_buffer
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:13     .text.serial_master_init:0000000000000000 serial_master_init
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:187    .data.transactions:0000000000000000 transactions
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:35     .text.serial_slave_init:0000000000000000 serial_slave_init
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:56     .text.serial_update_buffers:0000000000000000 serial_update_buffers
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:213    .data.s_change_old:0000000000000000 s_change_old
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:207    .data.s_change_new:0000000000000000 s_change_new
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:181    .bss.need_retry.1591:0000000000000000 need_retry.1591
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:219    .bss.slave_buffer_change_count:0000000000000000 slave_buffer_change_count
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:231    .bss.status_com:0000000000000000 status_com
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:237    .bss.serial_master_buffer:0000000000000000 serial_master_buffer
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:225    .bss.status1:0000000000000000 status1
+C:\Users\renep\AppData\Local\Temp\ccxYEdjX.s:243    .bss.serial_slave_buffer:0000000000000000 serial_slave_buffer
 
 UNDEFINED SYMBOLS
 soft_serial_initiator_init

@@ -132,21 +132,21 @@
   87               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Events.c
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 USB_Event_Stub
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_StartOfFrame
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Reset
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_WakeUp
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Suspend
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_ConfigurationChanged
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_ControlRequest
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Disconnect
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Connect
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:47     .text.USB_Event_Stub_2:0000000000000000 USB_Event_Stub_2
-C:\Users\renep\AppData\Local\Temp\ccurjC0E.s:67     .text.USB_Event_Stub_3:0000000000000000 USB_Event_Stub_3
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 USB_Event_Stub
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_StartOfFrame
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Reset
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_WakeUp
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Suspend
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_ConfigurationChanged
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_ControlRequest
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Disconnect
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:13     .text.USB_Event_Stub:0000000000000000 EVENT_USB_Device_Connect
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:47     .text.USB_Event_Stub_2:0000000000000000 USB_Event_Stub_2
+C:\Users\renep\AppData\Local\Temp\ccaOfcRx.s:67     .text.USB_Event_Stub_3:0000000000000000 USB_Event_Stub_3
 
 NO UNDEFINED SYMBOLS

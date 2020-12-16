@@ -913,37 +913,37 @@
  730               		.file 5 "c:\\msys64\\mingw64\\avr\\include\\avr\\eeprom.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 eeconfig.c
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:13     .text.eeconfig_enable:0000000000000000 eeconfig_enable
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:35     .text.eeconfig_disable:0000000000000000 eeconfig_disable
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:56     .text.eeconfig_is_enabled:0000000000000000 eeconfig_is_enabled
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:87     .text.eeconfig_is_disabled:0000000000000000 eeconfig_is_disabled
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:117    .text.eeconfig_read_debug:0000000000000000 eeconfig_read_debug
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:137    .text.eeconfig_update_debug:0000000000000000 eeconfig_update_debug
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:161    .text.eeconfig_read_default_layer:0000000000000000 eeconfig_read_default_layer
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:181    .text.eeconfig_update_default_layer:0000000000000000 eeconfig_update_default_layer
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:205    .text.eeconfig_read_keymap:0000000000000000 eeconfig_read_keymap
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:241    .text.eeconfig_update_keymap:0000000000000000 eeconfig_update_keymap
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:280    .text.eeconfig_read_backlight:0000000000000000 eeconfig_read_backlight
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:300    .text.eeconfig_update_backlight:0000000000000000 eeconfig_update_backlight
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:324    .text.eeconfig_read_audio:0000000000000000 eeconfig_read_audio
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:344    .text.eeconfig_update_audio:0000000000000000 eeconfig_update_audio
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:368    .text.eeconfig_read_kb:0000000000000000 eeconfig_read_kb
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:388    .text.eeconfig_update_kb:0000000000000000 eeconfig_update_kb
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:412    .text.eeconfig_read_user:0000000000000000 eeconfig_read_user
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:432    .text.eeconfig_update_user:0000000000000000 eeconfig_update_user
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:456    .text.eeconfig_init_user:0000000000000000 eeconfig_init_user
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:476    .text.eeconfig_init_kb:0000000000000000 eeconfig_init_kb
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:499    .text.eeconfig_init_quantum:0000000000000000 eeconfig_init_quantum
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:613    .text.eeconfig_init:0000000000000000 eeconfig_init
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:630    .text.eeconfig_read_haptic:0000000000000000 eeconfig_read_haptic
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:650    .text.eeconfig_update_haptic:0000000000000000 eeconfig_update_haptic
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:674    .text.eeconfig_read_handedness:0000000000000000 eeconfig_read_handedness
-C:\Users\renep\AppData\Local\Temp\ccCYcblP.s:704    .text.eeconfig_update_handedness:0000000000000000 eeconfig_update_handedness
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:13     .text.eeconfig_enable:0000000000000000 eeconfig_enable
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:35     .text.eeconfig_disable:0000000000000000 eeconfig_disable
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:56     .text.eeconfig_is_enabled:0000000000000000 eeconfig_is_enabled
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:87     .text.eeconfig_is_disabled:0000000000000000 eeconfig_is_disabled
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:117    .text.eeconfig_read_debug:0000000000000000 eeconfig_read_debug
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:137    .text.eeconfig_update_debug:0000000000000000 eeconfig_update_debug
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:161    .text.eeconfig_read_default_layer:0000000000000000 eeconfig_read_default_layer
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:181    .text.eeconfig_update_default_layer:0000000000000000 eeconfig_update_default_layer
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:205    .text.eeconfig_read_keymap:0000000000000000 eeconfig_read_keymap
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:241    .text.eeconfig_update_keymap:0000000000000000 eeconfig_update_keymap
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:280    .text.eeconfig_read_backlight:0000000000000000 eeconfig_read_backlight
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:300    .text.eeconfig_update_backlight:0000000000000000 eeconfig_update_backlight
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:324    .text.eeconfig_read_audio:0000000000000000 eeconfig_read_audio
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:344    .text.eeconfig_update_audio:0000000000000000 eeconfig_update_audio
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:368    .text.eeconfig_read_kb:0000000000000000 eeconfig_read_kb
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:388    .text.eeconfig_update_kb:0000000000000000 eeconfig_update_kb
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:412    .text.eeconfig_read_user:0000000000000000 eeconfig_read_user
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:432    .text.eeconfig_update_user:0000000000000000 eeconfig_update_user
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:456    .text.eeconfig_init_user:0000000000000000 eeconfig_init_user
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:476    .text.eeconfig_init_kb:0000000000000000 eeconfig_init_kb
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:499    .text.eeconfig_init_quantum:0000000000000000 eeconfig_init_quantum
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:613    .text.eeconfig_init:0000000000000000 eeconfig_init
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:630    .text.eeconfig_read_haptic:0000000000000000 eeconfig_read_haptic
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:650    .text.eeconfig_update_haptic:0000000000000000 eeconfig_update_haptic
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:674    .text.eeconfig_read_handedness:0000000000000000 eeconfig_read_handedness
+C:\Users\renep\AppData\Local\Temp\ccfMChTe.s:704    .text.eeconfig_update_handedness:0000000000000000 eeconfig_update_handedness
 
 UNDEFINED SYMBOLS
 eeprom_update_word

@@ -442,24 +442,24 @@
  366               		.file 13 "quantum/keycode_config.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 host.c
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:13     .text.host_set_driver:0000000000000000 host_set_driver
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:351    .bss.driver:0000000000000000 driver
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:36     .text.host_get_driver:0000000000000000 host_get_driver
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:56     .text.host_keyboard_leds:0000000000000000 host_keyboard_leds
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:89     .text.host_keyboard_led_state:0000000000000000 host_keyboard_led_state
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:125    .text.host_keyboard_send:0000000000000000 host_keyboard_send
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:180    .text.host_mouse_send:0000000000000000 host_mouse_send
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:213    .text.host_system_send:0000000000000000 host_system_send
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:346    .bss.last_system_report:0000000000000000 last_system_report
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:257    .text.host_consumer_send:0000000000000000 host_consumer_send
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:341    .bss.last_consumer_report:0000000000000000 last_consumer_report
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:301    .text.host_last_system_report:0000000000000000 host_last_system_report
-C:\Users\renep\AppData\Local\Temp\ccrMYrci.s:321    .text.host_last_consumer_report:0000000000000000 host_last_consumer_report
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:13     .text.host_set_driver:0000000000000000 host_set_driver
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:351    .bss.driver:0000000000000000 driver
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:36     .text.host_get_driver:0000000000000000 host_get_driver
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:56     .text.host_keyboard_leds:0000000000000000 host_keyboard_leds
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:89     .text.host_keyboard_led_state:0000000000000000 host_keyboard_led_state
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:125    .text.host_keyboard_send:0000000000000000 host_keyboard_send
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:180    .text.host_mouse_send:0000000000000000 host_mouse_send
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:213    .text.host_system_send:0000000000000000 host_system_send
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:346    .bss.last_system_report:0000000000000000 last_system_report
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:257    .text.host_consumer_send:0000000000000000 host_consumer_send
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:341    .bss.last_consumer_report:0000000000000000 last_consumer_report
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:301    .text.host_last_system_report:0000000000000000 host_last_system_report
+C:\Users\renep\AppData\Local\Temp\ccPWhhsr.s:321    .text.host_last_consumer_report:0000000000000000 host_last_consumer_report
 
 UNDEFINED SYMBOLS
 keyboard_protocol

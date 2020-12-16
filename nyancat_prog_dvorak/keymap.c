@@ -3,7 +3,7 @@
 #include QMK_KEYBOARD_H
 
 extern keymap_config_t keymap_config;
-char wpm_str[10];
+char wpm_str[6];
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
 extern rgblight_config_t rgblight_config;
@@ -67,11 +67,11 @@ TD(TD_CAPLOCK), KC_A,   KC_O,    KC_E,    KC_U,    KC_I,                        
 
     [_LOWER] = LAYOUT(
   //|-----------------------------------------------------|                    |-----------------------------------------------------|
-    KC_P7,   KC_P8,   KC_P9,    KC_LBRC,  KC_LCBR,  KC_LPRN,                     KC_RPRN, KC_RCBR, KC_RBRC,TD(TD_EQL),TD(TD_SLSH), KC_BSPC,
+    KC_7,   KC_8,   KC_9,    KC_LBRC,  KC_LCBR,  KC_LPRN,                     KC_RPRN, KC_RCBR, KC_RBRC,TD(TD_EQL),TD(TD_SLSH), KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    KC_P4,      KC_P5,   KC_P6,   KC_DLR, KC_AMPR, KC_HASH,                      KC_LEFT , KC_DOWN, KC_UP, KC_RGHT, TD(TD_BSLS), KC_DEL,
+    KC_4,      KC_5,   KC_6,   KC_DLR, KC_AMPR, KC_HASH,                      KC_LEFT , KC_DOWN, KC_UP, KC_RGHT, TD(TD_BSLS), KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    KC_P1,    KC_P2,    KC_P3,  KC_P0, TD(TD_BACKF), KC_ESC,                       KC_APP , KC_ASTR, KC_CIRC, KC_EXLM,TD(TD_MINS), KC_RCTL,
+    KC_1,    KC_2,    KC_3,  KC_0, TD(TD_BACKF), KC_ESC,                       KC_APP , KC_ASTR, KC_CIRC, KC_EXLM,TD(TD_MINS), KC_RCTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         KC_LGUI, KC_TRNS, KC_SPC,        KC_ENT, RAISE, TD(TD_ALT)
                                       //|--------------------------|  |--------------------------|
@@ -256,7 +256,7 @@ void render_logo(void) {
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0};
     oled_write_P(corne_logo, false);
-    oled_write_P(PSTR("GioKim"), false);
+    oled_write_P(PSTR("gio.k"), false);
 }
 
 void render_logo2(void) {
@@ -265,7 +265,7 @@ void render_logo2(void) {
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0};
     oled_write_P(corne_logo, false);
-    sprintf(wpm_str,"WPM: %03d", get_current_wpm());
+    sprintf(wpm_str,">>%03d", get_current_wpm());
     oled_write(wpm_str,false);
 }
 
@@ -311,7 +311,7 @@ void render_status_secondary(void) {
 }
 
 void oled_task_user(void) {
-    if (timer_elapsed32(oled_timer) > 1000000) {
+    if (timer_elapsed32(oled_timer) >  1500000) {
         oled_off();
         return;
     }

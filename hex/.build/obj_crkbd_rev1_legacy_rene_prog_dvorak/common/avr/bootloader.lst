@@ -910,13 +910,13 @@
  152               		.file 8 "c:\\msys64\\mingw64\\avr\\include\\stdio.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bootloader.c
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:13     .text.bootloader_jump:0000000000000000 bootloader_jump
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:66     .init3:0000000000000000 bootloader_jump_after_watchdog_reset
-C:\Users\renep\AppData\Local\Temp\ccTzSjak.s:143    .noinit:0000000000000000 reset_key
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:13     .text.bootloader_jump:0000000000000000 bootloader_jump
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:66     .init3:0000000000000000 bootloader_jump_after_watchdog_reset
+C:\Users\renep\AppData\Local\Temp\cctq0dXW.s:143    .noinit:0000000000000000 reset_key
 
 NO UNDEFINED SYMBOLS

@@ -903,21 +903,21 @@
  621               		.file 13 "tmk_core/common/util.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 report.c
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:13     .text.has_anykey:0000000000000000 has_anykey
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:79     .text.get_first_key:0000000000000000 get_first_key
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:172    .text.is_key_pressed:0000000000000000 is_key_pressed
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:276    .text.add_key_byte:0000000000000000 add_key_byte
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:352    .text.del_key_byte:0000000000000000 del_key_byte
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:400    .text.add_key_bit:0000000000000000 add_key_bit
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:452    .text.del_key_bit:0000000000000000 del_key_bit
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:505    .text.add_key_to_report:0000000000000000 add_key_to_report
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:536    .text.del_key_from_report:0000000000000000 del_key_from_report
-C:\Users\renep\AppData\Local\Temp\ccjyTYzm.s:567    .text.clear_keys_from_report:0000000000000000 clear_keys_from_report
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:13     .text.has_anykey:0000000000000000 has_anykey
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:79     .text.get_first_key:0000000000000000 get_first_key
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:172    .text.is_key_pressed:0000000000000000 is_key_pressed
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:276    .text.add_key_byte:0000000000000000 add_key_byte
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:352    .text.del_key_byte:0000000000000000 del_key_byte
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:400    .text.add_key_bit:0000000000000000 add_key_bit
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:452    .text.del_key_bit:0000000000000000 del_key_bit
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:505    .text.add_key_to_report:0000000000000000 add_key_to_report
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:536    .text.del_key_from_report:0000000000000000 del_key_from_report
+C:\Users\renep\AppData\Local\Temp\ccbmp1lZ.s:567    .text.clear_keys_from_report:0000000000000000 clear_keys_from_report
 
 UNDEFINED SYMBOLS
 keyboard_protocol

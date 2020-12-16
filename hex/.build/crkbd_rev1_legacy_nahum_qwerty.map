@@ -934,7 +934,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000     0x5082
+.text           0x0000000000000000     0x507e
  *(.vectors)
  .vectors       0x0000000000000000       0xac c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
                 0x0000000000000000                __vector_default
@@ -957,142 +957,142 @@ END GROUP
  .progmem.data.lower_layer.6245
                 0x00000000000000cc       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.__c.6238
-                0x00000000000000dc        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000dc        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.corne_logo.6237
-                0x00000000000000e6       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000e2       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.shift_off_2.6223
-                0x00000000000000f6        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000f2        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.shift_on_2.6225
-                0x00000000000000f9        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000f5        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_off_2.6227
-                0x00000000000000fc        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000f8        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_on_2.6231
-                0x00000000000000fe        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000fa        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.on_off_2.6229
-                0x0000000000000100        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000fc        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.ctrl_off_2.6219
-                0x0000000000000102        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x00000000000000fe        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.ctrl_on_2.6221
-                0x0000000000000105        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000101        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.shift_off_1.6222
-                0x0000000000000108        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000104        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.shift_on_1.6224
-                0x000000000000010b        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000107        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_off_1.6226
-                0x000000000000010e        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000010a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_on_1.6230
-                0x0000000000000110        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000010c        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.on_off_1.6228
-                0x0000000000000112        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000010e        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.on_on_1.6232
-                0x0000000000000114        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000110        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.ctrl_off_1.6218
-                0x0000000000000116        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000112        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.ctrl_on_1.6220
-                0x0000000000000119        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000115        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.alt_off_2.6204
-                0x000000000000011c        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000118        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.alt_on_2.6206
-                0x000000000000011f        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000011b        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_off_2.6208
-                0x0000000000000122        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000011e        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_on_2.6212
-                0x0000000000000124        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000120        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.on_off_2.6210
-                0x0000000000000126        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000122        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.gui_off_2.6200
-                0x0000000000000128        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000124        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.gui_on_2.6202
-                0x000000000000012b        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000127        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.alt_off_1.6203
-                0x000000000000012e        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000012a        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.alt_on_1.6205
-                0x0000000000000131        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000012d        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_off_1.6207
-                0x0000000000000134        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000130        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.off_on_1.6211
-                0x0000000000000136        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000132        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.on_off_1.6209
-                0x0000000000000138        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000134        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.on_on_1.6213
-                0x000000000000013a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000136        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.gui_off_1.6199
-                0x000000000000013c        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000138        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.gui_on_1.6201
-                0x000000000000013f        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000013b        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.__c.6194
-                0x0000000000000142        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000013e        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
  .progmem.data.keymaps
-                0x0000000000000148      0x120 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000148                keymaps
+                0x0000000000000144      0x120 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000144                keymaps
  .progmem.data.display_off.2196
-                0x0000000000000268        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000000264        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .progmem.data.display_on.2192
-                0x000000000000026a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000000266        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .progmem.data.display_setup2.2029
-                0x000000000000026c        0xd .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000000268        0xd .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .progmem.data.display_flipped.2028
-                0x0000000000000279        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000000275        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .progmem.data.display_normal.2027
-                0x000000000000027c        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000000278        0x3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .progmem.data.display_setup1.2026
-                0x000000000000027f        0xd .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x000000000000027b        0xd .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .progmem.data.font
-                0x000000000000028c      0x540 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x000000000000028c                font
+                0x0000000000000288      0x540 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000000288                font
  .progmem.data.SerialNumberString
-                0x00000000000007cc        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x00000000000007cc                SerialNumberString
+                0x00000000000007c8        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x00000000000007c8                SerialNumberString
  .progmem.data.ProductString
-                0x00000000000007d2       0x4a .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x00000000000007d2                ProductString
+                0x00000000000007ce       0x4a .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x00000000000007ce                ProductString
  .progmem.data.ManufacturerString
-                0x000000000000081c       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x000000000000081c                ManufacturerString
+                0x0000000000000818       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x0000000000000818                ManufacturerString
  .progmem.data.LanguageString
-                0x000000000000082e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x000000000000082e                LanguageString
+                0x000000000000082a        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x000000000000082a                LanguageString
  .progmem.data.ConfigurationDescriptor
-                0x0000000000000832       0x3b .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x0000000000000832                ConfigurationDescriptor
+                0x000000000000082e       0x3b .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x000000000000082e                ConfigurationDescriptor
  .progmem.data.DeviceDescriptor
-                0x000000000000086d       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x000000000000086d                DeviceDescriptor
+                0x0000000000000869       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x0000000000000869                DeviceDescriptor
  .progmem.data.SharedReport
-                0x000000000000087f       0x6d .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x000000000000087f                SharedReport
+                0x000000000000087b       0x6d .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x000000000000087b                SharedReport
  .progmem.data.KeyboardReport
-                0x00000000000008ec       0x40 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x00000000000008ec                KeyboardReport
-                0x000000000000092c                . = ALIGN (0x2)
+                0x00000000000008e8       0x40 .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x00000000000008e8                KeyboardReport
+                0x0000000000000928                . = ALIGN (0x2)
  *(.lowtext)
  *(.lowtext*)
-                0x000000000000092c                __ctors_start = .
+                0x0000000000000928                __ctors_start = .
  *(.ctors)
-                0x000000000000092c                __ctors_end = .
-                0x000000000000092c                __dtors_start = .
+                0x0000000000000928                __ctors_end = .
+                0x0000000000000928                __dtors_start = .
  *(.dtors)
-                0x000000000000092c                __dtors_end = .
+                0x0000000000000928                __dtors_end = .
  SORT_BY_NAME(*)(.ctors)
  SORT_BY_NAME(*)(.dtors)
  *(.init0)
- .init0         0x000000000000092c        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
-                0x000000000000092c                __init
+ .init0         0x0000000000000928        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+                0x0000000000000928                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x000000000000092c        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+ .init2         0x0000000000000928        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
  *(.init2)
  *(.init3)
- .init3         0x0000000000000938       0x54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/bootloader.o
-                0x0000000000000938                bootloader_jump_after_watchdog_reset
+ .init3         0x0000000000000934       0x54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/bootloader.o
+                0x0000000000000934                bootloader_jump_after_watchdog_reset
  *(.init3)
  *(.init4)
- .init4         0x000000000000098c       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_copy_data.o)
-                0x000000000000098c                __do_copy_data
- .init4         0x00000000000009a2       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_clear_bss.o)
-                0x00000000000009a2                __do_clear_bss
+ .init4         0x0000000000000988       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_copy_data.o)
+                0x0000000000000988                __do_copy_data
+ .init4         0x000000000000099e       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_clear_bss.o)
+                0x000000000000099e                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -1103,851 +1103,851 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000000000009b2        0x8 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+ .init9         0x00000000000009ae        0x8 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
  *(.init9)
  *(.text)
- .text          0x00000000000009ba        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
-                0x00000000000009ba                __vector_38
-                0x00000000000009ba                __vector_22
-                0x00000000000009ba                __vector_28
-                0x00000000000009ba                __vector_1
-                0x00000000000009ba                __vector_32
-                0x00000000000009ba                __vector_34
-                0x00000000000009ba                __vector_24
-                0x00000000000009ba                __bad_interrupt
-                0x00000000000009ba                __vector_6
-                0x00000000000009ba                __vector_31
-                0x00000000000009ba                __vector_35
-                0x00000000000009ba                __vector_39
-                0x00000000000009ba                __vector_23
-                0x00000000000009ba                __vector_30
-                0x00000000000009ba                __vector_25
-                0x00000000000009ba                __vector_13
-                0x00000000000009ba                __vector_17
-                0x00000000000009ba                __vector_19
-                0x00000000000009ba                __vector_7
-                0x00000000000009ba                __vector_41
-                0x00000000000009ba                __vector_27
-                0x00000000000009ba                __vector_5
-                0x00000000000009ba                __vector_33
-                0x00000000000009ba                __vector_37
-                0x00000000000009ba                __vector_4
-                0x00000000000009ba                __vector_9
-                0x00000000000009ba                __vector_2
-                0x00000000000009ba                __vector_15
-                0x00000000000009ba                __vector_36
-                0x00000000000009ba                __vector_29
-                0x00000000000009ba                __vector_40
-                0x00000000000009ba                __vector_8
-                0x00000000000009ba                __vector_26
-                0x00000000000009ba                __vector_14
-                0x00000000000009ba                __vector_16
-                0x00000000000009ba                __vector_18
-                0x00000000000009ba                __vector_20
-                0x00000000000009ba                __vector_42
-                0x00000000000009be                . = ALIGN (0x2)
+ .text          0x00000000000009b6        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+                0x00000000000009b6                __vector_38
+                0x00000000000009b6                __vector_22
+                0x00000000000009b6                __vector_28
+                0x00000000000009b6                __vector_1
+                0x00000000000009b6                __vector_32
+                0x00000000000009b6                __vector_34
+                0x00000000000009b6                __vector_24
+                0x00000000000009b6                __bad_interrupt
+                0x00000000000009b6                __vector_6
+                0x00000000000009b6                __vector_31
+                0x00000000000009b6                __vector_35
+                0x00000000000009b6                __vector_39
+                0x00000000000009b6                __vector_23
+                0x00000000000009b6                __vector_30
+                0x00000000000009b6                __vector_25
+                0x00000000000009b6                __vector_13
+                0x00000000000009b6                __vector_17
+                0x00000000000009b6                __vector_19
+                0x00000000000009b6                __vector_7
+                0x00000000000009b6                __vector_41
+                0x00000000000009b6                __vector_27
+                0x00000000000009b6                __vector_5
+                0x00000000000009b6                __vector_33
+                0x00000000000009b6                __vector_37
+                0x00000000000009b6                __vector_4
+                0x00000000000009b6                __vector_9
+                0x00000000000009b6                __vector_2
+                0x00000000000009b6                __vector_15
+                0x00000000000009b6                __vector_36
+                0x00000000000009b6                __vector_29
+                0x00000000000009b6                __vector_40
+                0x00000000000009b6                __vector_8
+                0x00000000000009b6                __vector_26
+                0x00000000000009b6                __vector_14
+                0x00000000000009b6                __vector_16
+                0x00000000000009b6                __vector_18
+                0x00000000000009b6                __vector_20
+                0x00000000000009b6                __vector_42
+                0x00000000000009ba                . = ALIGN (0x2)
  *(.text.*)
  .text.unselect_rows
-                0x00000000000009be       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x00000000000009ba       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
  .text.matrix_init_user
-                0x0000000000000a00        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a00                matrix_init_user
+                0x00000000000009fc        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x00000000000009fc                matrix_init_user
  .text.matrix_scan_user
-                0x0000000000000a02        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a02                matrix_scan_user
+                0x00000000000009fe        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x00000000000009fe                matrix_scan_user
  .text.matrix_scan_kb
-                0x0000000000000a04        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a04                matrix_scan_kb
+                0x0000000000000a00        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a00                matrix_scan_kb
  .text.tx_rx_leds_init
-                0x0000000000000a08        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a08                tx_rx_leds_init
+                0x0000000000000a04        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a04                tx_rx_leds_init
  .text.tx_led_on
-                0x0000000000000a12        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a12                tx_led_on
+                0x0000000000000a0e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a0e                tx_led_on
  .text.tx_led_off
-                0x0000000000000a16        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a16                tx_led_off
+                0x0000000000000a12        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a12                tx_led_off
  .text.rx_led_on
-                0x0000000000000a1a        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a1a                rx_led_on
+                0x0000000000000a16        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a16                rx_led_on
  .text.rx_led_off
-                0x0000000000000a1e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a1e                rx_led_off
+                0x0000000000000a1a        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a1a                rx_led_off
  .text.matrix_init
-                0x0000000000000a22       0x62 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a22                matrix_init
+                0x0000000000000a1e       0x62 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a1e                matrix_init
  .text._matrix_scan
-                0x0000000000000a84      0x134 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000a84                _matrix_scan
+                0x0000000000000a80      0x134 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000a80                _matrix_scan
  .text.serial_transaction
-                0x0000000000000bb8       0x5e .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000bb8                serial_transaction
+                0x0000000000000bb4       0x5e .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000bb4                serial_transaction
  .text.matrix_slave_scan
-                0x0000000000000c16       0x44 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000c16                matrix_slave_scan
+                0x0000000000000c12       0x44 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000c12                matrix_slave_scan
  .text.matrix_scan
-                0x0000000000000c5a       0xe8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000c5a                matrix_scan
+                0x0000000000000c56       0xe8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000c56                matrix_scan
  .text.matrix_get_row
-                0x0000000000000d42        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000d42                matrix_get_row
+                0x0000000000000d3e        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000d3e                matrix_get_row
  .text.matrix_print
-                0x0000000000000d4e        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
-                0x0000000000000d4e                matrix_print
- .text.has_usb  0x0000000000000d50       0x38 .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
-                0x0000000000000d50                has_usb
+                0x0000000000000d4a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
+                0x0000000000000d4a                matrix_print
+ .text.has_usb  0x0000000000000d4c       0x38 .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
+                0x0000000000000d4c                has_usb
  .text.is_keyboard_left
-                0x0000000000000d88        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
-                0x0000000000000d88                is_keyboard_left
+                0x0000000000000d84        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
+                0x0000000000000d84                is_keyboard_left
  .text.split_keyboard_setup
-                0x0000000000000d92       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
-                0x0000000000000d92                split_keyboard_setup
+                0x0000000000000d8e       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
+                0x0000000000000d8e                split_keyboard_setup
  .text.serial_master_init
-                0x0000000000000db0        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
-                0x0000000000000db0                serial_master_init
+                0x0000000000000dac        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
+                0x0000000000000dac                serial_master_init
  .text.serial_slave_init
-                0x0000000000000dbc        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
-                0x0000000000000dbc                serial_slave_init
+                0x0000000000000db8        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
+                0x0000000000000db8                serial_slave_init
  .text.serial_update_buffers
-                0x0000000000000dc8       0x7a .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
-                0x0000000000000dc8                serial_update_buffers
+                0x0000000000000dc4       0x7a .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
+                0x0000000000000dc4                serial_update_buffers
  .text.matrix_init_kb
-                0x0000000000000e42        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/rev1/rev1.o
-                0x0000000000000e42                matrix_init_kb
+                0x0000000000000e3e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/rev1/rev1.o
+                0x0000000000000e3e                matrix_init_kb
  .text.oled_init_user
-                0x0000000000000e46        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000e46                oled_init_user
+                0x0000000000000e42        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000e42                oled_init_user
  .text.render_space
-                0x0000000000000e4a        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000e4a                render_space
+                0x0000000000000e46        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000e46                render_space
  .text.render_mod_status_gui_alt
-                0x0000000000000e54       0xb0 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000e54                render_mod_status_gui_alt
+                0x0000000000000e50       0xb0 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000e50                render_mod_status_gui_alt
  .text.render_mod_status_ctrl_shift
-                0x0000000000000f04       0xb0 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000f04                render_mod_status_ctrl_shift
+                0x0000000000000f00       0xb0 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000f00                render_mod_status_ctrl_shift
  .text.render_logo
-                0x0000000000000fb4       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000fb4                render_logo
+                0x0000000000000fb0       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000fb0                render_logo
  .text.render_layer_state
-                0x0000000000000fc8       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000fc8                render_layer_state
+                0x0000000000000fc4       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000fc4                render_layer_state
  .text.render_status_main
-                0x0000000000000ff4       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000000ff4                render_status_main
+                0x0000000000000ff0       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000000ff0                render_status_main
  .text.oled_task_user
-                0x0000000000001028       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000001028                oled_task_user
+                0x0000000000001024       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x0000000000001024                oled_task_user
  .text.process_record_user
-                0x0000000000001052       0x5e .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
-                0x0000000000001052                process_record_user
+                0x000000000000104e       0x5e .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+                0x000000000000104e                process_record_user
  .text.do_code16
-                0x00000000000010b0       0x6e .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x00000000000010ac       0x6e .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
  .text.register_code16
-                0x000000000000111e       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x000000000000111e                register_code16
+                0x000000000000111a       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x000000000000111a                register_code16
  .text.unregister_code16
-                0x0000000000001148       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001148                unregister_code16
+                0x0000000000001144       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001144                unregister_code16
  .text.process_action_kb
-                0x0000000000001172        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001172                process_action_kb
+                0x000000000000116e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x000000000000116e                process_action_kb
  .text.process_record_kb
-                0x0000000000001176        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001176                process_record_kb
+                0x0000000000001172        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001172                process_record_kb
  .text.post_process_record_user
-                0x000000000000117a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x000000000000117a                post_process_record_user
+                0x0000000000001176        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001176                post_process_record_user
  .text.post_process_record_kb
-                0x000000000000117c        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x000000000000117c                post_process_record_kb
+                0x0000000000001178        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001178                post_process_record_kb
  .text.get_event_keycode
-                0x0000000000001180       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001180                get_event_keycode
+                0x000000000000117c       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x000000000000117c                get_event_keycode
  .text.get_record_keycode
-                0x00000000000011e6       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x00000000000011e6                get_record_keycode
+                0x00000000000011e2       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x00000000000011e2                get_record_keycode
  .text.post_process_record_quantum
-                0x00000000000011f8       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x00000000000011f8                post_process_record_quantum
+                0x00000000000011f4       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x00000000000011f4                post_process_record_quantum
  .text.matrix_init_quantum
-                0x000000000000120e       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x000000000000120e                matrix_init_quantum
+                0x000000000000120a       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x000000000000120a                matrix_init_quantum
  .text.matrix_scan_quantum
-                0x000000000000121e        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x000000000000121e                matrix_scan_quantum
+                0x000000000000121a        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x000000000000121a                matrix_scan_quantum
  .text.shutdown_user
-                0x0000000000001226        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001226                shutdown_user
+                0x0000000000001222        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001222                shutdown_user
  .text.reset_keyboard
-                0x0000000000001228       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001228                reset_keyboard
+                0x0000000000001224       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001224                reset_keyboard
  .text.process_record_quantum
-                0x0000000000001246       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
-                0x0000000000001246                process_record_quantum
+                0x0000000000001242       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+                0x0000000000001242                process_record_quantum
  .text.led_set_user
-                0x00000000000012d2        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
-                0x00000000000012d2                led_set_user
+                0x00000000000012ce        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
+                0x00000000000012ce                led_set_user
  .text.led_set_kb
-                0x00000000000012d4        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
-                0x00000000000012d4                led_set_kb
+                0x00000000000012d0        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
+                0x00000000000012d0                led_set_kb
  .text.led_update_user
-                0x00000000000012d8        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
-                0x00000000000012d8                led_update_user
+                0x00000000000012d4        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
+                0x00000000000012d4                led_update_user
  .text.led_update_kb
-                0x00000000000012dc        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
-                0x00000000000012dc                led_update_kb
- .text.led_set  0x00000000000012e0       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
-                0x00000000000012e0                led_set
+                0x00000000000012d8        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
+                0x00000000000012d8                led_update_kb
+ .text.led_set  0x00000000000012dc       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
+                0x00000000000012dc                led_set
  .text.keymap_key_to_keycode
-                0x00000000000012f0       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keymap_common.o
-                0x00000000000012f0                keymap_key_to_keycode
+                0x00000000000012ec       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keymap_common.o
+                0x00000000000012ec                keymap_key_to_keycode
  .text.action_for_key
-                0x0000000000001318      0x1d8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keymap_common.o
-                0x0000000000001318                action_for_key
+                0x0000000000001314      0x1d8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keymap_common.o
+                0x0000000000001314                action_for_key
  .text.keycode_config
-                0x00000000000014f0      0x12e .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keycode_config.o
-                0x00000000000014f0                keycode_config
+                0x00000000000014ec      0x12e .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keycode_config.o
+                0x00000000000014ec                keycode_config
  .text.mod_config
-                0x000000000000161e       0x86 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keycode_config.o
-                0x000000000000161e                mod_config
+                0x000000000000161a       0x86 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keycode_config.o
+                0x000000000000161a                mod_config
  .text.i2c_transmit_P.constprop.2
-                0x00000000000016a4       0x60 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x00000000000016a0       0x60 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
  .text.oled_clear
-                0x0000000000001704       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x0000000000001704                oled_clear
+                0x0000000000001700       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000001700                oled_clear
  .text.oled_init
-                0x000000000000172e       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x000000000000172e                oled_init
+                0x000000000000172a       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x000000000000172a                oled_init
  .text.oled_set_cursor
-                0x00000000000017ba       0x2e .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x00000000000017ba                oled_set_cursor
+                0x00000000000017b6       0x2e .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x00000000000017b6                oled_set_cursor
  .text.oled_advance_char
-                0x00000000000017e8       0x3e .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x00000000000017e8                oled_advance_char
+                0x00000000000017e4       0x3e .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x00000000000017e4                oled_advance_char
  .text.oled_write_char
-                0x0000000000001826       0xf4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x0000000000001826                oled_write_char
+                0x0000000000001822       0xf4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000001822                oled_write_char
  .text.oled_advance_page
-                0x000000000000191a       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x000000000000191a                oled_advance_page
+                0x0000000000001916       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000001916                oled_advance_page
  .text.oled_write_P
-                0x0000000000001980       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x0000000000001980                oled_write_P
- .text.oled_on  0x00000000000019a4       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x00000000000019a4                oled_on
+                0x000000000000197c       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x000000000000197c                oled_write_P
+ .text.oled_on  0x00000000000019a0       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x00000000000019a0                oled_on
  .text.oled_render
-                0x00000000000019e6      0x1e6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x00000000000019e6                oled_render
+                0x00000000000019e2      0x1e6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x00000000000019e2                oled_render
  .text.oled_off
-                0x0000000000001bcc       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x0000000000001bcc                oled_off
+                0x0000000000001bc8       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000001bc8                oled_off
  .text.oled_task
-                0x0000000000001bf8       0x52 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
-                0x0000000000001bf8                oled_task
+                0x0000000000001bf4       0x52 .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+                0x0000000000001bf4                oled_task
  .text.perform_space_cadet
-                0x0000000000001c4a      0x116 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_space_cadet.o
-                0x0000000000001c4a                perform_space_cadet
+                0x0000000000001c46      0x116 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_space_cadet.o
+                0x0000000000001c46                perform_space_cadet
  .text.process_space_cadet
-                0x0000000000001d60       0xa4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_space_cadet.o
-                0x0000000000001d60                process_space_cadet
+                0x0000000000001d5c       0xa4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_space_cadet.o
+                0x0000000000001d5c                process_space_cadet
  .text.process_magic
-                0x0000000000001e04      0x246 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_magic.o
-                0x0000000000001e04                process_magic
+                0x0000000000001e00      0x246 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_magic.o
+                0x0000000000001e00                process_magic
  .text.process_grave_esc
-                0x000000000000204a       0x54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_grave_esc.o
-                0x000000000000204a                process_grave_esc
+                0x0000000000002046       0x54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_grave_esc.o
+                0x0000000000002046                process_grave_esc
  .text.process_tap_dance_action_on_dance_finished.part.0
-                0x000000000000209e       0x36 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x000000000000209a       0x36 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
  .text.qk_tap_dance_pair_on_each_tap
-                0x00000000000020d4       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x00000000000020d4                qk_tap_dance_pair_on_each_tap
+                0x00000000000020d0       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x00000000000020d0                qk_tap_dance_pair_on_each_tap
  .text.qk_tap_dance_pair_finished
-                0x00000000000020f4       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x00000000000020f4                qk_tap_dance_pair_finished
+                0x00000000000020f0       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x00000000000020f0                qk_tap_dance_pair_finished
  .text.qk_tap_dance_pair_reset
-                0x0000000000002114       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x0000000000002114                qk_tap_dance_pair_reset
+                0x0000000000002110       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x0000000000002110                qk_tap_dance_pair_reset
  .text.reset_tap_dance
-                0x0000000000002134       0x8a .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x0000000000002134                reset_tap_dance
+                0x0000000000002130       0x8a .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x0000000000002130                reset_tap_dance
  .text.preprocess_tap_dance
-                0x00000000000021be       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x00000000000021be                preprocess_tap_dance
+                0x00000000000021ba       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x00000000000021ba                preprocess_tap_dance
  .text.process_tap_dance
-                0x000000000000224a       0xb4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x000000000000224a                process_tap_dance
+                0x0000000000002246       0xb4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x0000000000002246                process_tap_dance
  .text.matrix_scan_tap_dance
-                0x00000000000022fe       0xae .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
-                0x00000000000022fe                matrix_scan_tap_dance
+                0x00000000000022fa       0xae .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+                0x00000000000022fa                matrix_scan_tap_dance
  .text.sync_recv
-                0x00000000000023ac       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x00000000000023a8       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
  .text.sync_send
-                0x00000000000023bc        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x00000000000023b8        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
  .text.serial_read_chunk
-                0x00000000000023c8       0x5a .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x00000000000023c4       0x5a .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
  .text.serial_recive_packet
-                0x0000000000002422       0x50 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x000000000000241e       0x50 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
  .text.soft_serial_initiator_init
-                0x0000000000002472       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
-                0x0000000000002472                soft_serial_initiator_init
+                0x000000000000246e       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x000000000000246e                soft_serial_initiator_init
  .text.soft_serial_target_init
-                0x0000000000002484       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
-                0x0000000000002484                soft_serial_target_init
+                0x0000000000002480       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x0000000000002480                soft_serial_target_init
  .text.serial_write_chunk
-                0x00000000000024a2       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
-                0x00000000000024a2                serial_write_chunk
+                0x000000000000249e       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x000000000000249e                serial_write_chunk
  .text.serial_send_packet
-                0x00000000000024e4       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x00000000000024e0       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
  .text.__vector_3
-                0x0000000000002518      0x11e .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
-                0x0000000000002518                __vector_3
+                0x0000000000002514      0x11e .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x0000000000002514                __vector_3
  .text.soft_serial_transaction
-                0x0000000000002636       0xfc .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
-                0x0000000000002636                soft_serial_transaction
+                0x0000000000002632       0xfc .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+                0x0000000000002632                soft_serial_transaction
  .text.i2c_init
-                0x0000000000002732        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
-                0x0000000000002732                i2c_init
+                0x000000000000272e        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+                0x000000000000272e                i2c_init
  .text.i2c_start
-                0x000000000000273e       0xb8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
-                0x000000000000273e                i2c_start
+                0x000000000000273a       0xb8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+                0x000000000000273a                i2c_start
  .text.i2c_write
-                0x00000000000027f6       0x5e .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
-                0x00000000000027f6                i2c_write
+                0x00000000000027f2       0x5e .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+                0x00000000000027f2                i2c_write
  .text.i2c_transmit
-                0x0000000000002854       0x4e .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
-                0x0000000000002854                i2c_transmit
+                0x0000000000002850       0x4e .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+                0x0000000000002850                i2c_transmit
  .text.i2c_writeReg
-                0x00000000000028a2       0x5a .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
-                0x00000000000028a2                i2c_writeReg
+                0x000000000000289e       0x5a .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+                0x000000000000289e                i2c_writeReg
  .text.i2c_stop
-                0x00000000000028fc        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
-                0x00000000000028fc                i2c_stop
+                0x00000000000028f8        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+                0x00000000000028f8                i2c_stop
  .text.host_set_driver
-                0x0000000000002904        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
-                0x0000000000002904                host_set_driver
+                0x0000000000002900        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
+                0x0000000000002900                host_set_driver
  .text.host_keyboard_leds
-                0x000000000000290e       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
-                0x000000000000290e                host_keyboard_leds
+                0x000000000000290a       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
+                0x000000000000290a                host_keyboard_leds
  .text.host_keyboard_send
-                0x0000000000002926       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
-                0x0000000000002926                host_keyboard_send
+                0x0000000000002922       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
+                0x0000000000002922                host_keyboard_send
  .text.host_system_send
-                0x000000000000295a       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
-                0x000000000000295a                host_system_send
+                0x0000000000002956       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
+                0x0000000000002956                host_system_send
  .text.host_consumer_send
-                0x0000000000002986       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
-                0x0000000000002986                host_consumer_send
+                0x0000000000002982       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
+                0x0000000000002982                host_consumer_send
  .text.disable_jtag
-                0x00000000000029b2        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029b2                disable_jtag
+                0x00000000000029ae        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029ae                disable_jtag
  .text.keyboard_pre_init_user
-                0x00000000000029c0        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029c0                keyboard_pre_init_user
+                0x00000000000029bc        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029bc                keyboard_pre_init_user
  .text.matrix_setup
-                0x00000000000029c2        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029c2                matrix_setup
+                0x00000000000029be        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029be                matrix_setup
  .text.keyboard_pre_init_kb
-                0x00000000000029c4        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029c4                keyboard_pre_init_kb
+                0x00000000000029c0        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029c0                keyboard_pre_init_kb
  .text.keyboard_post_init_user
-                0x00000000000029c8        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029c8                keyboard_post_init_user
+                0x00000000000029c4        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029c4                keyboard_post_init_user
  .text.keyboard_post_init_kb
-                0x00000000000029ca        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029ca                keyboard_post_init_kb
+                0x00000000000029c6        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029c6                keyboard_post_init_kb
  .text.keyboard_setup
-                0x00000000000029ce        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029ce                keyboard_setup
+                0x00000000000029ca        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029ca                keyboard_setup
  .text.is_keyboard_master
-                0x00000000000029da        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029da                is_keyboard_master
+                0x00000000000029d6        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029d6                is_keyboard_master
  .text.should_process_keypress
-                0x00000000000029de        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029de                should_process_keypress
+                0x00000000000029da        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029da                should_process_keypress
  .text.keyboard_init
-                0x00000000000029e2       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029e2                keyboard_init
+                0x00000000000029de       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029de                keyboard_init
  .text.keyboard_task
-                0x00000000000029f8      0x13e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
-                0x00000000000029f8                keyboard_task
+                0x00000000000029f4      0x13e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+                0x00000000000029f4                keyboard_task
  .text.action_exec
-                0x0000000000002b36       0x54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002b36                action_exec
+                0x0000000000002b32       0x54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002b32                action_exec
  .text.process_record_tap_hint
-                0x0000000000002b8a        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002b8a                process_record_tap_hint
+                0x0000000000002b86        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002b86                process_record_tap_hint
  .text.register_code
-                0x0000000000002b94       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002b94                register_code
+                0x0000000000002b90       0x8c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002b90                register_code
  .text.unregister_code
-                0x0000000000002c20       0x50 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002c20                unregister_code
+                0x0000000000002c1c       0x50 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002c1c                unregister_code
  .text.tap_code
-                0x0000000000002c70       0x26 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002c70                tap_code
+                0x0000000000002c6c       0x26 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002c6c                tap_code
  .text.register_mods
-                0x0000000000002c96        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002c96                register_mods
+                0x0000000000002c92        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002c92                register_mods
  .text.unregister_mods
-                0x0000000000002ca4        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002ca4                unregister_mods
+                0x0000000000002ca0        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002ca0                unregister_mods
  .text.process_action
-                0x0000000000002cb2      0x3f4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000002cb2                process_action
+                0x0000000000002cae      0x3f4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000002cae                process_action
  .text.process_record_handler
-                0x00000000000030a6       0x2e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x00000000000030a6                process_record_handler
+                0x00000000000030a2       0x2e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x00000000000030a2                process_record_handler
  .text.process_record
-                0x00000000000030d4       0x50 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x00000000000030d4                process_record
+                0x00000000000030d0       0x50 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x00000000000030d0                process_record
  .text.register_weak_mods
-                0x0000000000003124        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000003124                register_weak_mods
+                0x0000000000003120        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000003120                register_weak_mods
  .text.unregister_weak_mods
-                0x0000000000003132        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000003132                unregister_weak_mods
+                0x000000000000312e        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x000000000000312e                unregister_weak_mods
  .text.clear_keyboard_but_mods_and_keys
-                0x0000000000003140       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000003140                clear_keyboard_but_mods_and_keys
+                0x000000000000313c       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x000000000000313c                clear_keyboard_but_mods_and_keys
  .text.clear_keyboard_but_mods
-                0x000000000000315c        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x000000000000315c                clear_keyboard_but_mods
+                0x0000000000003158        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000003158                clear_keyboard_but_mods
  .text.clear_keyboard
-                0x0000000000003164        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x0000000000003164                clear_keyboard
+                0x0000000000003160        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000003160                clear_keyboard
  .text.is_tap_action
-                0x000000000000316c       0x3e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x000000000000316c                is_tap_action
+                0x0000000000003168       0x3e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000003168                is_tap_action
  .text.is_tap_key
-                0x00000000000031aa        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x00000000000031aa                is_tap_key
+                0x00000000000031a6        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x00000000000031a6                is_tap_key
  .text.debug_event
-                0x00000000000031b2       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x00000000000031b2                debug_event
+                0x00000000000031ae       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x00000000000031ae                debug_event
  .text.debug_record
-                0x00000000000031d0       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
-                0x00000000000031d0                debug_record
+                0x00000000000031cc       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x00000000000031cc                debug_record
  .text.debug_waiting_buffer
-                0x00000000000031f0       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+                0x00000000000031ec       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
  .text.debug_tapping_key
-                0x0000000000003232       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+                0x000000000000322e       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
  .text.waiting_buffer_scan_tap
-                0x000000000000324e       0xac .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+                0x000000000000324a       0xac .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
  .text.process_tapping
-                0x00000000000032fa      0x356 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+                0x00000000000032f6      0x356 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
  .text.get_tapping_term
-                0x0000000000003650        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
-                0x0000000000003650                get_tapping_term
+                0x000000000000364c        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+                0x000000000000364c                get_tapping_term
  .text.action_tapping_process
-                0x0000000000003656      0x134 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
-                0x0000000000003656                action_tapping_process
+                0x0000000000003652      0x134 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+                0x0000000000003652                action_tapping_process
  .text.default_layer_state_set_user
-                0x000000000000378a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000378a                default_layer_state_set_user
+                0x0000000000003786        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003786                default_layer_state_set_user
  .text.default_layer_state_set_kb
-                0x000000000000378c        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000378c                default_layer_state_set_kb
+                0x0000000000003788        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003788                default_layer_state_set_kb
  .text.default_layer_state_set
-                0x0000000000003790       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x000000000000378c       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
  .text.default_layer_debug
-                0x00000000000037a8        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000037a8                default_layer_debug
+                0x00000000000037a4        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000037a4                default_layer_debug
  .text.default_layer_set
-                0x00000000000037aa        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000037aa                default_layer_set
+                0x00000000000037a6        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000037a6                default_layer_set
  .text.default_layer_or
-                0x00000000000037ae       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000037ae                default_layer_or
+                0x00000000000037aa       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000037aa                default_layer_or
  .text.default_layer_and
-                0x00000000000037d2       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000037d2                default_layer_and
+                0x00000000000037ce       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000037ce                default_layer_and
  .text.default_layer_xor
-                0x00000000000037f6       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000037f6                default_layer_xor
+                0x00000000000037f2       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000037f2                default_layer_xor
  .text.layer_state_set_user
-                0x000000000000381a        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000381a                layer_state_set_user
+                0x0000000000003816        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003816                layer_state_set_user
  .text.layer_state_set_kb
-                0x000000000000381e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000381e                layer_state_set_kb
+                0x000000000000381a        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x000000000000381a                layer_state_set_kb
  .text.layer_state_set
-                0x0000000000003822       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003822                layer_state_set
+                0x000000000000381e       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x000000000000381e                layer_state_set
  .text.layer_clear
-                0x000000000000383a        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000383a                layer_clear
+                0x0000000000003836        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003836                layer_clear
  .text.layer_state_cmp
-                0x0000000000003844       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003844                layer_state_cmp
+                0x0000000000003840       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003840                layer_state_cmp
  .text.layer_state_is
-                0x000000000000386e       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000386e                layer_state_is
+                0x000000000000386a       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x000000000000386a                layer_state_is
  .text.layer_move
-                0x0000000000003884       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003884                layer_move
+                0x0000000000003880       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003880                layer_move
  .text.layer_on
-                0x00000000000038ae       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000038ae                layer_on
+                0x00000000000038aa       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000038aa                layer_on
  .text.layer_off
-                0x00000000000038f0       0x46 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000038f0                layer_off
+                0x00000000000038ec       0x46 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000038ec                layer_off
  .text.layer_invert
-                0x0000000000003936       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003936                layer_invert
+                0x0000000000003932       0x42 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003932                layer_invert
  .text.layer_or
-                0x0000000000003978       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003978                layer_or
+                0x0000000000003974       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003974                layer_or
  .text.layer_and
-                0x000000000000399c       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x000000000000399c                layer_and
+                0x0000000000003998       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003998                layer_and
  .text.layer_xor
-                0x00000000000039c0       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000039c0                layer_xor
+                0x00000000000039bc       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000039bc                layer_xor
  .text.layer_debug
-                0x00000000000039e4        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000039e4                layer_debug
+                0x00000000000039e0        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000039e0                layer_debug
  .text.update_source_layers_cache
-                0x00000000000039e6       0x5c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x00000000000039e6                update_source_layers_cache
+                0x00000000000039e2       0x5c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x00000000000039e2                update_source_layers_cache
  .text.read_source_layers_cache
-                0x0000000000003a42       0x52 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003a42                read_source_layers_cache
+                0x0000000000003a3e       0x52 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003a3e                read_source_layers_cache
  .text.layer_switch_get_layer
-                0x0000000000003a94       0x84 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003a94                layer_switch_get_layer
+                0x0000000000003a90       0x84 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003a90                layer_switch_get_layer
  .text.layer_switch_get_action
-                0x0000000000003b18       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003b18                layer_switch_get_action
+                0x0000000000003b14       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003b14                layer_switch_get_action
  .text.store_or_get_action
-                0x0000000000003b2c       0x48 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
-                0x0000000000003b2c                store_or_get_action
- .text.add_key  0x0000000000003b74        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003b74                add_key
- .text.del_key  0x0000000000003b82        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003b82                del_key
+                0x0000000000003b28       0x48 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+                0x0000000000003b28                store_or_get_action
+ .text.add_key  0x0000000000003b70        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003b70                add_key
+ .text.del_key  0x0000000000003b7e        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003b7e                del_key
  .text.clear_keys
-                0x0000000000003b90        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003b90                clear_keys
+                0x0000000000003b8c        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003b8c                clear_keys
  .text.get_oneshot_layer
-                0x0000000000003b9c        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003b9c                get_oneshot_layer
+                0x0000000000003b98        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003b98                get_oneshot_layer
  .text.get_oneshot_layer_state
-                0x0000000000003ba8        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003ba8                get_oneshot_layer_state
+                0x0000000000003ba4        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003ba4                get_oneshot_layer_state
  .text.is_oneshot_layer_active
-                0x0000000000003bb0        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bb0                is_oneshot_layer_active
+                0x0000000000003bac        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003bac                is_oneshot_layer_active
  .text.get_mods
-                0x0000000000003bbe        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bbe                get_mods
+                0x0000000000003bba        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003bba                get_mods
  .text.add_mods
-                0x0000000000003bc4        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bc4                add_mods
+                0x0000000000003bc0        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003bc0                add_mods
  .text.del_mods
-                0x0000000000003bd0        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bd0                del_mods
+                0x0000000000003bcc        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003bcc                del_mods
  .text.clear_mods
-                0x0000000000003bde        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bde                clear_mods
+                0x0000000000003bda        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003bda                clear_mods
  .text.get_weak_mods
-                0x0000000000003be4        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003be4                get_weak_mods
+                0x0000000000003be0        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003be0                get_weak_mods
  .text.add_weak_mods
-                0x0000000000003bea        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bea                add_weak_mods
+                0x0000000000003be6        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003be6                add_weak_mods
  .text.del_weak_mods
-                0x0000000000003bf6        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003bf6                del_weak_mods
+                0x0000000000003bf2        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003bf2                del_weak_mods
  .text.clear_weak_mods
-                0x0000000000003c04        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c04                clear_weak_mods
+                0x0000000000003c00        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c00                clear_weak_mods
  .text.clear_macro_mods
-                0x0000000000003c0a        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c0a                clear_macro_mods
+                0x0000000000003c06        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c06                clear_macro_mods
  .text.get_oneshot_mods
-                0x0000000000003c10        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c10                get_oneshot_mods
+                0x0000000000003c0c        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c0c                get_oneshot_mods
  .text.oneshot_mods_changed_user
-                0x0000000000003c16        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c16                oneshot_mods_changed_user
+                0x0000000000003c12        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c12                oneshot_mods_changed_user
  .text.oneshot_mods_changed_kb
-                0x0000000000003c18        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c18                oneshot_mods_changed_kb
+                0x0000000000003c14        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c14                oneshot_mods_changed_kb
  .text.set_oneshot_mods
-                0x0000000000003c1c       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c1c                set_oneshot_mods
+                0x0000000000003c18       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c18                set_oneshot_mods
  .text.clear_oneshot_mods
-                0x0000000000003c2e       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c2e                clear_oneshot_mods
+                0x0000000000003c2a       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c2a                clear_oneshot_mods
  .text.send_keyboard_report
-                0x0000000000003c42       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003c42                send_keyboard_report
+                0x0000000000003c3e       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003c3e                send_keyboard_report
  .text.oneshot_layer_changed_user
-                0x0000000000003ca8        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003ca8                oneshot_layer_changed_user
+                0x0000000000003ca4        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003ca4                oneshot_layer_changed_user
  .text.oneshot_layer_changed_kb
-                0x0000000000003caa        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003caa                oneshot_layer_changed_kb
+                0x0000000000003ca6        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003ca6                oneshot_layer_changed_kb
  .text.set_oneshot_layer
-                0x0000000000003cae       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003cae                set_oneshot_layer
+                0x0000000000003caa       0x20 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003caa                set_oneshot_layer
  .text.reset_oneshot_layer
-                0x0000000000003cce        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003cce                reset_oneshot_layer
+                0x0000000000003cca        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003cca                reset_oneshot_layer
  .text.clear_oneshot_layer_state
-                0x0000000000003cd8       0x30 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
-                0x0000000000003cd8                clear_oneshot_layer_state
+                0x0000000000003cd4       0x30 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+                0x0000000000003cd4                clear_oneshot_layer_state
  .text.eeconfig_is_enabled
-                0x0000000000003d08       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d08                eeconfig_is_enabled
+                0x0000000000003d04       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d04                eeconfig_is_enabled
  .text.eeconfig_read_debug
-                0x0000000000003d1e        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d1e                eeconfig_read_debug
+                0x0000000000003d1a        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d1a                eeconfig_read_debug
  .text.eeconfig_read_default_layer
-                0x0000000000003d26        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d26                eeconfig_read_default_layer
+                0x0000000000003d22        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d22                eeconfig_read_default_layer
  .text.eeconfig_read_keymap
-                0x0000000000003d2e       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d2e                eeconfig_read_keymap
+                0x0000000000003d2a       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d2a                eeconfig_read_keymap
  .text.eeconfig_update_keymap
-                0x0000000000003d4a       0x1a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d4a                eeconfig_update_keymap
+                0x0000000000003d46       0x1a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d46                eeconfig_update_keymap
  .text.eeconfig_update_kb
-                0x0000000000003d64        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d64                eeconfig_update_kb
+                0x0000000000003d60        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d60                eeconfig_update_kb
  .text.eeconfig_update_user
-                0x0000000000003d70        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d70                eeconfig_update_user
+                0x0000000000003d6c        0xc .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d6c                eeconfig_update_user
  .text.eeconfig_init_user
-                0x0000000000003d7c        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d7c                eeconfig_init_user
+                0x0000000000003d78        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d78                eeconfig_init_user
  .text.eeconfig_init_kb
-                0x0000000000003d86        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d86                eeconfig_init_kb
+                0x0000000000003d82        0xe .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d82                eeconfig_init_kb
  .text.eeconfig_init_quantum
-                0x0000000000003d94       0xae .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003d94                eeconfig_init_quantum
+                0x0000000000003d90       0xae .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003d90                eeconfig_init_quantum
  .text.eeconfig_init
-                0x0000000000003e42        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003e42                eeconfig_init
+                0x0000000000003e3e        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003e3e                eeconfig_init
  .text.eeconfig_update_handedness
-                0x0000000000003e46        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
-                0x0000000000003e46                eeconfig_update_handedness
+                0x0000000000003e42        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+                0x0000000000003e42                eeconfig_update_handedness
  .text.has_anykey
-                0x0000000000003e50       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003e50                has_anykey
+                0x0000000000003e4c       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003e4c                has_anykey
  .text.is_key_pressed
-                0x0000000000003e78       0x60 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003e78                is_key_pressed
+                0x0000000000003e74       0x60 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003e74                is_key_pressed
  .text.add_key_byte
-                0x0000000000003ed8       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003ed8                add_key_byte
+                0x0000000000003ed4       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003ed4                add_key_byte
  .text.del_key_byte
-                0x0000000000003f0c       0x1a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003f0c                del_key_byte
+                0x0000000000003f08       0x1a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003f08                del_key_byte
  .text.add_key_bit
-                0x0000000000003f26       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003f26                add_key_bit
+                0x0000000000003f22       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003f22                add_key_bit
  .text.del_key_bit
-                0x0000000000003f4e       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003f4e                del_key_bit
+                0x0000000000003f4a       0x2a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003f4a                del_key_bit
  .text.add_key_to_report
-                0x0000000000003f78       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003f78                add_key_to_report
+                0x0000000000003f74       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003f74                add_key_to_report
  .text.del_key_from_report
-                0x0000000000003f8e       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003f8e                del_key_from_report
+                0x0000000000003f8a       0x16 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003f8a                del_key_from_report
  .text.clear_keys_from_report
-                0x0000000000003fa4       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
-                0x0000000000003fa4                clear_keys_from_report
+                0x0000000000003fa0       0x24 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+                0x0000000000003fa0                clear_keys_from_report
  .text.matrix_power_up
-                0x0000000000003fc8        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000003fc8                matrix_power_up
+                0x0000000000003fc4        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x0000000000003fc4                matrix_power_up
  .text.suspend_power_down_user
-                0x0000000000003fca        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000003fca                suspend_power_down_user
+                0x0000000000003fc6        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x0000000000003fc6                suspend_power_down_user
  .text.suspend_power_down_kb
-                0x0000000000003fcc        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000003fcc                suspend_power_down_kb
+                0x0000000000003fc8        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x0000000000003fc8                suspend_power_down_kb
  .text.suspend_power_down
-                0x0000000000003fd0       0x60 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000003fd0                suspend_power_down
+                0x0000000000003fcc       0x60 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x0000000000003fcc                suspend_power_down
  .text.matrix_power_down
-                0x0000000000004030        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000004030                matrix_power_down
+                0x000000000000402c        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x000000000000402c                matrix_power_down
  .text.suspend_wakeup_condition
-                0x0000000000004032       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000004032                suspend_wakeup_condition
+                0x000000000000402e       0x28 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x000000000000402e                suspend_wakeup_condition
  .text.suspend_wakeup_init_user
-                0x000000000000405a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x000000000000405a                suspend_wakeup_init_user
+                0x0000000000004056        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x0000000000004056                suspend_wakeup_init_user
  .text.suspend_wakeup_init_kb
-                0x000000000000405c        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x000000000000405c                suspend_wakeup_init_kb
+                0x0000000000004058        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x0000000000004058                suspend_wakeup_init_kb
  .text.suspend_wakeup_init
-                0x0000000000004060       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000004060                suspend_wakeup_init
+                0x000000000000405c       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x000000000000405c                suspend_wakeup_init
  .text.__vector_12
-                0x0000000000004070       0x4e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
-                0x0000000000004070                __vector_12
+                0x000000000000406c       0x4e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+                0x000000000000406c                __vector_12
  .text.timer_init
-                0x00000000000040be       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
-                0x00000000000040be                timer_init
+                0x00000000000040ba       0x12 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+                0x00000000000040ba                timer_init
  .text.timer_read
-                0x00000000000040d0       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
-                0x00000000000040d0                timer_read
+                0x00000000000040cc       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+                0x00000000000040cc                timer_read
  .text.timer_read32
-                0x00000000000040e8       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
-                0x00000000000040e8                timer_read32
+                0x00000000000040e4       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+                0x00000000000040e4                timer_read32
  .text.timer_elapsed
-                0x0000000000004100       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
-                0x0000000000004100                timer_elapsed
+                0x00000000000040fc       0x1e .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+                0x00000000000040fc                timer_elapsed
  .text.timer_elapsed32
-                0x000000000000411e       0x38 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
-                0x000000000000411e                timer_elapsed32
+                0x000000000000411a       0x38 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+                0x000000000000411a                timer_elapsed32
  .text.__vector_21
-                0x0000000000004156       0x48 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
-                0x0000000000004156                __vector_21
+                0x0000000000004152       0x48 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+                0x0000000000004152                __vector_21
  .text.bootloader_jump
-                0x000000000000419e       0x22 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/bootloader.o
-                0x000000000000419e                bootloader_jump
- .text.magic    0x00000000000041c0       0x44 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/magic.o
-                0x00000000000041c0                magic
+                0x000000000000419a       0x22 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/bootloader.o
+                0x000000000000419a                bootloader_jump
+ .text.magic    0x00000000000041bc       0x44 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/magic.o
+                0x00000000000041bc                magic
  .text.keyboard_leds
-                0x0000000000004204        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004200        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
  .text.send_mouse
-                0x000000000000420a        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004206        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
  .text.send_extra
-                0x000000000000420c       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004208       0x66 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
  .text.send_consumer
-                0x0000000000004272        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x000000000000426e        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
  .text.send_system
-                0x000000000000427a        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004276        0x8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
  .text.send_keyboard
-                0x0000000000004282       0x80 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x000000000000427e       0x80 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
  .text.EVENT_USB_Device_Connect
-                0x0000000000004302       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x0000000000004302                EVENT_USB_Device_Connect
+                0x00000000000042fe       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x00000000000042fe                EVENT_USB_Device_Connect
  .text.EVENT_USB_Device_Disconnect
-                0x000000000000431e        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x000000000000431e                EVENT_USB_Device_Disconnect
+                0x000000000000431a        0x6 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x000000000000431a                EVENT_USB_Device_Disconnect
  .text.EVENT_USB_Device_Reset
-                0x0000000000004324        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x0000000000004324                EVENT_USB_Device_Reset
+                0x0000000000004320        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004320                EVENT_USB_Device_Reset
  .text.EVENT_USB_Device_Suspend
-                0x0000000000004326        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x0000000000004326                EVENT_USB_Device_Suspend
+                0x0000000000004322        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004322                EVENT_USB_Device_Suspend
  .text.EVENT_USB_Device_WakeUp
-                0x0000000000004328        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x0000000000004328                EVENT_USB_Device_WakeUp
+                0x0000000000004324        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004324                EVENT_USB_Device_WakeUp
  .text.EVENT_USB_Device_ConfigurationChanged
-                0x000000000000432c       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x000000000000432c                EVENT_USB_Device_ConfigurationChanged
+                0x0000000000004328       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004328                EVENT_USB_Device_ConfigurationChanged
  .text.EVENT_USB_Device_ControlRequest
-                0x0000000000004340      0x16e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x0000000000004340                EVENT_USB_Device_ControlRequest
+                0x000000000000433c      0x16e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x000000000000433c                EVENT_USB_Device_ControlRequest
  .text.startup.main
-                0x00000000000044ae       0x7e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x00000000000044ae                main
+                0x00000000000044aa       0x7e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x00000000000044aa                main
  .text.CALLBACK_USB_GetDescriptor
-                0x000000000000452c        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
-                0x000000000000452c                CALLBACK_USB_GetDescriptor
+                0x0000000000004528        0x4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+                0x0000000000004528                CALLBACK_USB_GetDescriptor
  .text.get_usb_descriptor
-                0x0000000000004530       0xbc .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
-                0x0000000000004530                get_usb_descriptor
+                0x000000000000452c       0xbc .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+                0x000000000000452c                get_usb_descriptor
  .text.USB_Device_SendRemoteWakeup
-                0x00000000000045ec       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
-                0x00000000000045ec                USB_Device_SendRemoteWakeup
+                0x00000000000045e8       0x2c .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
+                0x00000000000045e8                USB_Device_SendRemoteWakeup
  .text.Endpoint_Write_Stream_LE
-                0x0000000000004618       0x9e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
-                0x0000000000004618                Endpoint_Write_Stream_LE
+                0x0000000000004614       0x9e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+                0x0000000000004614                Endpoint_Write_Stream_LE
  .text.Endpoint_Write_Control_Stream_LE
-                0x00000000000046b6       0xbc .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
-                0x00000000000046b6                Endpoint_Write_Control_Stream_LE
+                0x00000000000046b2       0xbc .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+                0x00000000000046b2                Endpoint_Write_Control_Stream_LE
  .text.Endpoint_Write_Control_PStream_LE
-                0x0000000000004772       0xbe .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
-                0x0000000000004772                Endpoint_Write_Control_PStream_LE
+                0x000000000000476e       0xbe .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+                0x000000000000476e                Endpoint_Write_Control_PStream_LE
  .text.Endpoint_ConfigureEndpoint_Prv
-                0x0000000000004830       0x68 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
-                0x0000000000004830                Endpoint_ConfigureEndpoint_Prv
+                0x000000000000482c       0x68 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+                0x000000000000482c                Endpoint_ConfigureEndpoint_Prv
  .text.Endpoint_ClearStatusStage
-                0x0000000000004898       0x3e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
-                0x0000000000004898                Endpoint_ClearStatusStage
+                0x0000000000004894       0x3e .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+                0x0000000000004894                Endpoint_ClearStatusStage
  .text.Endpoint_WaitUntilReady
-                0x00000000000048d6       0x62 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
-                0x00000000000048d6                Endpoint_WaitUntilReady
+                0x00000000000048d2       0x62 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+                0x00000000000048d2                Endpoint_WaitUntilReady
  .text.USB_Disable
-                0x0000000000004938       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
-                0x0000000000004938                USB_Disable
+                0x0000000000004934       0x34 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+                0x0000000000004934                USB_Disable
  .text.USB_ResetInterface
-                0x000000000000496c       0x86 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
-                0x000000000000496c                USB_ResetInterface
+                0x0000000000004968       0x86 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+                0x0000000000004968                USB_ResetInterface
  .text.USB_Init
-                0x00000000000049f2       0x22 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
-                0x00000000000049f2                USB_Init
+                0x00000000000049ee       0x22 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+                0x00000000000049ee                USB_Init
  .text.USB_INT_DisableAllInterrupts
-                0x0000000000004a14       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x0000000000004a14                USB_INT_DisableAllInterrupts
+                0x0000000000004a10       0x10 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x0000000000004a10                USB_INT_DisableAllInterrupts
  .text.USB_INT_ClearAllInterrupts
-                0x0000000000004a24        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x0000000000004a24                USB_INT_ClearAllInterrupts
+                0x0000000000004a20        0xa .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x0000000000004a20                USB_INT_ClearAllInterrupts
  .text.__vector_10
-                0x0000000000004a2e      0x1a8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x0000000000004a2e                __vector_10
+                0x0000000000004a2a      0x1a8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x0000000000004a2a                __vector_10
  .text.__vector_11
-                0x0000000000004bd6       0x88 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x0000000000004bd6                __vector_11
+                0x0000000000004bd2       0x88 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x0000000000004bd2                __vector_11
  .text.USB_Device_ProcessControlRequest
-                0x0000000000004c5e      0x2a4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
-                0x0000000000004c5e                USB_Device_ProcessControlRequest
+                0x0000000000004c5a      0x2a4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+                0x0000000000004c5a                USB_Device_ProcessControlRequest
  .text.USB_Event_Stub
-                0x0000000000004f02        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/Events.o
-                0x0000000000004f02                EVENT_USB_Device_StartOfFrame
-                0x0000000000004f02                USB_Event_Stub
+                0x0000000000004efe        0x2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/Events.o
+                0x0000000000004efe                EVENT_USB_Device_StartOfFrame
+                0x0000000000004efe                USB_Event_Stub
  .text.USB_USBTask
-                0x0000000000004f04       0x36 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
-                0x0000000000004f04                USB_USBTask
+                0x0000000000004f00       0x36 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
+                0x0000000000004f00                USB_USBTask
  .text.libgcc.div
-                0x0000000000004f3a       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodqi4.o)
-                0x0000000000004f3a                __udivmodqi4
+                0x0000000000004f36       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodqi4.o)
+                0x0000000000004f36                __udivmodqi4
  .text.libgcc.div
-                0x0000000000004f52       0x28 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodhi4.o)
-                0x0000000000004f52                __udivmodhi4
- .text.libgcc   0x0000000000004f7a        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x0000000000004f7a                __tablejump2__
+                0x0000000000004f4e       0x28 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodhi4.o)
+                0x0000000000004f4e                __udivmodhi4
+ .text.libgcc   0x0000000000004f76        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x0000000000004f76                __tablejump2__
  .text.avr-libc
-                0x0000000000004f86       0x12 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
-                0x0000000000004f86                memcpy_P
+                0x0000000000004f82       0x12 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+                0x0000000000004f82                memcpy_P
  .text.avr-libc
-                0x0000000000004f98       0x1a c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcmp.o)
-                0x0000000000004f98                memcmp
+                0x0000000000004f94       0x1a c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcmp.o)
+                0x0000000000004f94                memcmp
  .text.avr-libc
-                0x0000000000004fb2       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_byte.o)
-                0x0000000000004fb2                eeprom_read_byte
+                0x0000000000004fae       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_byte.o)
+                0x0000000000004fae                eeprom_read_byte
  .text.avr-libc
-                0x0000000000004fc2        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_word.o)
-                0x0000000000004fc2                eeprom_read_word
+                0x0000000000004fbe        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_word.o)
+                0x0000000000004fbe                eeprom_read_word
  .text.avr-libc
-                0x0000000000004fce       0x24 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_byte.o)
-                0x0000000000004fce                eeprom_update_byte
-                0x0000000000004fd0                eeprom_update_r18
+                0x0000000000004fca       0x24 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_byte.o)
+                0x0000000000004fca                eeprom_update_byte
+                0x0000000000004fcc                eeprom_update_r18
  .text.avr-libc
-                0x0000000000004ff2       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_dword.o)
-                0x0000000000004ff2                eeprom_update_float
-                0x0000000000004ff2                eeprom_update_dword
+                0x0000000000004fee       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_dword.o)
+                0x0000000000004fee                eeprom_update_float
+                0x0000000000004fee                eeprom_update_dword
  .text.avr-libc
-                0x000000000000500a        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_word.o)
-                0x000000000000500a                eeprom_update_word
+                0x0000000000005006        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_word.o)
+                0x0000000000005006                eeprom_update_word
  .text.avr-libc
-                0x0000000000005016       0x20 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_block.o)
-                0x0000000000005016                eeprom_read_block
-                0x000000000000501a                eeprom_read_blraw
-                0x0000000000005036                . = ALIGN (0x2)
+                0x0000000000005012       0x20 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_block.o)
+                0x0000000000005012                eeprom_read_block
+                0x0000000000005016                eeprom_read_blraw
+                0x0000000000005032                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000000000005036        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
-                0x0000000000005036                _exit
-                0x0000000000005036                exit
+ .fini9         0x0000000000005032        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
+                0x0000000000005032                _exit
+                0x0000000000005032                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1966,23 +1966,23 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000000000005036        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000000000005032        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
  *(.hightext)
  *(.hightext*)
  *(.progmemx.*)
-                0x000000000000503a                . = ALIGN (0x2)
+                0x0000000000005036                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
  .jumptables.gcc.process_action
-                0x000000000000503a       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x0000000000005036       0x18 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
  .jumptables.gcc.is_tap_action
-                0x0000000000005052       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+                0x000000000000504e       0x1c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
  .jumptables.gcc.USB_Device_ProcessControlRequest
-                0x000000000000506e       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
-                0x0000000000005082                _etext = .
+                0x000000000000506a       0x14 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+                0x000000000000507e                _etext = .
 
-.data           0x0000000000800100       0xf8 load address 0x0000000000005082
+.data           0x0000000000800100       0xf8 load address 0x000000000000507e
                 0x0000000000800100                PROVIDE (__data_start = .)
  *(.data)
  *(.data*)
@@ -2181,8 +2181,8 @@ END GROUP
                 0x0000000000800519                USB_DeviceState
                 0x000000000080051a                USB_ControlRequest
                 0x0000000000800522                PROVIDE (__bss_end = .)
-                0x0000000000005082                __data_load_start = LOADADDR (.data)
-                0x000000000000517a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000000000000507e                __data_load_start = LOADADDR (.data)
+                0x0000000000005176                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0000000000800522        0x4
                 [!provide]                        PROVIDE (__noinit_start = .)
@@ -2375,48 +2375,48 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x22193
+.debug_info     0x0000000000000000    0x2217e
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000      0x9f4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
  .debug_info    0x00000000000009f4     0x10fb .build/obj_crkbd_rev1_legacy_nahum_qwerty/matrix.o
  .debug_info    0x0000000000001aef      0x35e .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_util.o
  .debug_info    0x0000000000001e4d      0x2eb .build/obj_crkbd_rev1_legacy_nahum_qwerty/split_scomm.o
  .debug_info    0x0000000000002138      0x8d2 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/rev1/rev1.o
- .debug_info    0x0000000000002a0a     0x2319 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
- .debug_info    0x0000000000004d23     0x2b54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
- .debug_info    0x0000000000007877      0x955 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
- .debug_info    0x00000000000081cc     0x20bc .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keymap_common.o
- .debug_info    0x000000000000a288      0x63c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keycode_config.o
- .debug_info    0x000000000000a8c4     0x14eb .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
- .debug_info    0x000000000000bdaf     0x18f3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_space_cadet.o
- .debug_info    0x000000000000d6a2     0x13ac .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_magic.o
- .debug_info    0x000000000000ea4e     0x180c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_grave_esc.o
- .debug_info    0x000000000001025a     0x1ab8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
- .debug_info    0x0000000000011d12      0xf0d .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
- .debug_info    0x0000000000012c1f      0x718 .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
- .debug_info    0x0000000000013337      0x88d .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
- .debug_info    0x0000000000013bc4      0x96c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
- .debug_info    0x0000000000014530     0x1fca .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
- .debug_info    0x00000000000164fa      0xf99 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
- .debug_info    0x0000000000017493      0xc9a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
- .debug_info    0x000000000001812d      0xd97 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
- .debug_info    0x0000000000018ec4      0x110 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/debug.o
- .debug_info    0x0000000000018fd4      0x8e9 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
- .debug_info    0x00000000000198bd      0xc7f .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
- .debug_info    0x000000000001a53c      0x771 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
- .debug_info    0x000000000001acad      0x443 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
- .debug_info    0x000000000001b0f0      0x357 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/bootloader.o
- .debug_info    0x000000000001b447      0x550 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/magic.o
- .debug_info    0x000000000001b997     0x16c7 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
- .debug_info    0x000000000001d05e      0x9ee .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
- .debug_info    0x000000000001da4c      0x1c0 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
- .debug_info    0x000000000001dc0c     0x1da4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
- .debug_info    0x000000000001f9b0      0x75d .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
- .debug_info    0x000000000002010d      0x606 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
- .debug_info    0x0000000000020713      0xa43 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
- .debug_info    0x0000000000021156      0xc59 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
- .debug_info    0x0000000000021daf       0xe9 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/Events.o
- .debug_info    0x0000000000021e98      0x2fb .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
+ .debug_info    0x0000000000002a0a     0x2304 .build/obj_crkbd_rev1_legacy_nahum_qwerty/keyboards/crkbd/keymaps/nahum_qwerty/keymap.o
+ .debug_info    0x0000000000004d0e     0x2b54 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/quantum.o
+ .debug_info    0x0000000000007862      0x955 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/led.o
+ .debug_info    0x00000000000081b7     0x20bc .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keymap_common.o
+ .debug_info    0x000000000000a273      0x63c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/keycode_config.o
+ .debug_info    0x000000000000a8af     0x14eb .build/obj_crkbd_rev1_legacy_nahum_qwerty/oled_driver.o
+ .debug_info    0x000000000000bd9a     0x18f3 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_space_cadet.o
+ .debug_info    0x000000000000d68d     0x13ac .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_magic.o
+ .debug_info    0x000000000000ea39     0x180c .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_grave_esc.o
+ .debug_info    0x0000000000010245     0x1ab8 .build/obj_crkbd_rev1_legacy_nahum_qwerty/quantum/process_keycode/process_tap_dance.o
+ .debug_info    0x0000000000011cfd      0xf0d .build/obj_crkbd_rev1_legacy_nahum_qwerty/serial.a(serial.o)
+ .debug_info    0x0000000000012c0a      0x718 .build/obj_crkbd_rev1_legacy_nahum_qwerty/i2c_master.a(i2c_master.o)
+ .debug_info    0x0000000000013322      0x88d .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/host.o
+ .debug_info    0x0000000000013baf      0x96c .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/keyboard.o
+ .debug_info    0x000000000001451b     0x1fca .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action.o
+ .debug_info    0x00000000000164e5      0xf99 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_tapping.o
+ .debug_info    0x000000000001747e      0xc9a .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_layer.o
+ .debug_info    0x0000000000018118      0xd97 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/action_util.o
+ .debug_info    0x0000000000018eaf      0x110 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/debug.o
+ .debug_info    0x0000000000018fbf      0x8e9 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/eeconfig.o
+ .debug_info    0x00000000000198a8      0xc7f .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/report.o
+ .debug_info    0x000000000001a527      0x771 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/suspend.o
+ .debug_info    0x000000000001ac98      0x443 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/timer.o
+ .debug_info    0x000000000001b0db      0x357 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/avr/bootloader.o
+ .debug_info    0x000000000001b432      0x550 .build/obj_crkbd_rev1_legacy_nahum_qwerty/common/magic.o
+ .debug_info    0x000000000001b982     0x16c7 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lufa.o
+ .debug_info    0x000000000001d049      0x9ee .build/obj_crkbd_rev1_legacy_nahum_qwerty/usb_descriptor.o
+ .debug_info    0x000000000001da37      0x1c0 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
+ .debug_info    0x000000000001dbf7     0x1da4 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+ .debug_info    0x000000000001f99b      0x75d .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+ .debug_info    0x00000000000200f8      0x606 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+ .debug_info    0x00000000000206fe      0xa43 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+ .debug_info    0x0000000000021141      0xc59 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+ .debug_info    0x0000000000021d9a       0xe9 .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/Events.o
+ .debug_info    0x0000000000021e83      0x2fb .build/obj_crkbd_rev1_legacy_nahum_qwerty/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
 
 .debug_abbrev   0x0000000000000000     0x6dc7
  *(.debug_abbrev)

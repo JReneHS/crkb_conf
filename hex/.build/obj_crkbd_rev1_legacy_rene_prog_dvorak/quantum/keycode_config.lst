@@ -723,13 +723,13 @@
  468               		.file 5 "quantum/keycode_config.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keycode_config.c
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:13     .text.keycode_config:0000000000000000 keycode_config
-C:\Users\renep\AppData\Local\Temp\ccr7CVWa.s:289    .text.mod_config:0000000000000000 mod_config
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:13     .text.keycode_config:0000000000000000 keycode_config
+C:\Users\renep\AppData\Local\Temp\cczEs1BB.s:289    .text.mod_config:0000000000000000 mod_config
 
 UNDEFINED SYMBOLS
 keymap_config

@@ -2945,24 +2945,24 @@
  1769               		.file 4 "keyboards/crkbd/rev1/legacy/serial.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 serial.c
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:12     .text.sync_recv:0000000000000000 sync_recv
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:74     .text.sync_send:0000000000000000 sync_send
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:137    .text.serial_read_chunk:0000000000000000 serial_read_chunk
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:350    .text.serial_recive_packet:0000000000000000 serial_recive_packet
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:463    .text.soft_serial_initiator_init:0000000000000000 soft_serial_initiator_init
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:1764   .bss.Transaction_table:0000000000000000 Transaction_table
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:1759   .bss.Transaction_table_size:0000000000000000 Transaction_table_size
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:508    .text.soft_serial_target_init:0000000000000000 soft_serial_target_init
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:559    .text.serial_write_chunk:0000000000000000 serial_write_chunk
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:732    .text.serial_send_packet:0000000000000000 serial_send_packet
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:817    .text.__vector_3:0000000000000000 __vector_3
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:1232   .text.soft_serial_transaction:0000000000000000 soft_serial_transaction
-C:\Users\renep\AppData\Local\Temp\ccnDf0vb.s:1700   .text.soft_serial_get_and_clean_status:0000000000000000 soft_serial_get_and_clean_status
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:12     .text.sync_recv:0000000000000000 sync_recv
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:74     .text.sync_send:0000000000000000 sync_send
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:137    .text.serial_read_chunk:0000000000000000 serial_read_chunk
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:350    .text.serial_recive_packet:0000000000000000 serial_recive_packet
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:463    .text.soft_serial_initiator_init:0000000000000000 soft_serial_initiator_init
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:1764   .bss.Transaction_table:0000000000000000 Transaction_table
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:1759   .bss.Transaction_table_size:0000000000000000 Transaction_table_size
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:508    .text.soft_serial_target_init:0000000000000000 soft_serial_target_init
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:559    .text.serial_write_chunk:0000000000000000 serial_write_chunk
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:732    .text.serial_send_packet:0000000000000000 serial_send_packet
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:817    .text.__vector_3:0000000000000000 __vector_3
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:1232   .text.soft_serial_transaction:0000000000000000 soft_serial_transaction
+C:\Users\renep\AppData\Local\Temp\ccF6YTNk.s:1700   .text.soft_serial_get_and_clean_status:0000000000000000 soft_serial_get_and_clean_status
 
 UNDEFINED SYMBOLS
 __do_clear_bss

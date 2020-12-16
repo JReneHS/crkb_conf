@@ -1473,24 +1473,24 @@
  1101               		.file 23 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_tap_dance.c
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:12     .text.process_tap_dance_action_on_dance_finished.part.0:0000000000000000 process_tap_dance_action_on_dance_finished.part.0
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:97     .text.qk_tap_dance_pair_on_each_tap:0000000000000000 qk_tap_dance_pair_on_each_tap
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:149    .text.qk_tap_dance_pair_finished:0000000000000000 qk_tap_dance_pair_finished
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:200    .text.qk_tap_dance_pair_reset:0000000000000000 qk_tap_dance_pair_reset
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:251    .text.qk_tap_dance_dual_role_on_each_tap:0000000000000000 qk_tap_dance_dual_role_on_each_tap
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:302    .text.qk_tap_dance_dual_role_finished:0000000000000000 qk_tap_dance_dual_role_finished
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:354    .text.qk_tap_dance_dual_role_reset:0000000000000000 qk_tap_dance_dual_role_reset
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:390    .text.reset_tap_dance:0000000000000000 reset_tap_dance
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:1076   .bss.last_td:0000000000000000 last_td
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:540    .text.preprocess_tap_dance:0000000000000000 preprocess_tap_dance
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:1071   .data.highest_td:0000000000000000 highest_td
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:700    .text.process_tap_dance:0000000000000000 process_tap_dance
-C:\Users\renep\AppData\Local\Temp\ccTkLeVR.s:894    .text.matrix_scan_tap_dance:0000000000000000 matrix_scan_tap_dance
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:12     .text.process_tap_dance_action_on_dance_finished.part.0:0000000000000000 process_tap_dance_action_on_dance_finished.part.0
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:97     .text.qk_tap_dance_pair_on_each_tap:0000000000000000 qk_tap_dance_pair_on_each_tap
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:149    .text.qk_tap_dance_pair_finished:0000000000000000 qk_tap_dance_pair_finished
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:200    .text.qk_tap_dance_pair_reset:0000000000000000 qk_tap_dance_pair_reset
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:251    .text.qk_tap_dance_dual_role_on_each_tap:0000000000000000 qk_tap_dance_dual_role_on_each_tap
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:302    .text.qk_tap_dance_dual_role_finished:0000000000000000 qk_tap_dance_dual_role_finished
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:354    .text.qk_tap_dance_dual_role_reset:0000000000000000 qk_tap_dance_dual_role_reset
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:390    .text.reset_tap_dance:0000000000000000 reset_tap_dance
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:1076   .bss.last_td:0000000000000000 last_td
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:540    .text.preprocess_tap_dance:0000000000000000 preprocess_tap_dance
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:1071   .data.highest_td:0000000000000000 highest_td
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:700    .text.process_tap_dance:0000000000000000 process_tap_dance
+C:\Users\renep\AppData\Local\Temp\ccErqpkG.s:894    .text.matrix_scan_tap_dance:0000000000000000 matrix_scan_tap_dance
 
 UNDEFINED SYMBOLS
 add_mods

@@ -529,20 +529,20 @@
  464               		.file 22 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 wpm.c
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:13     .text.set_current_wpm:0000000000000000 set_current_wpm
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:440    .bss.current_wpm:0000000000000000 current_wpm
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:35     .text.get_current_wpm:0000000000000000 get_current_wpm
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:54     .text.wpm_keycode_user:0000000000000000 wpm_keycode_user
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:140    .text.wpm_keycode_kb:0000000000000000 wpm_keycode_kb
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:160    .text.wpm_keycode:0000000000000000 wpm_keycode
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:184    .text.update_wpm:0000000000000000 update_wpm
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:435    .bss.wpm_timer:0000000000000000 wpm_timer
-C:\Users\renep\AppData\Local\Temp\cconwJ5l.s:329    .text.decay_wpm:0000000000000000 decay_wpm
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:13     .text.set_current_wpm:0000000000000000 set_current_wpm
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:440    .bss.current_wpm:0000000000000000 current_wpm
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:35     .text.get_current_wpm:0000000000000000 get_current_wpm
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:54     .text.wpm_keycode_user:0000000000000000 wpm_keycode_user
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:140    .text.wpm_keycode_kb:0000000000000000 wpm_keycode_kb
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:160    .text.wpm_keycode:0000000000000000 wpm_keycode
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:184    .text.update_wpm:0000000000000000 update_wpm
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:435    .bss.wpm_timer:0000000000000000 wpm_timer
+C:\Users\renep\AppData\Local\Temp\ccgKNqc3.s:329    .text.decay_wpm:0000000000000000 decay_wpm
 
 UNDEFINED SYMBOLS
 __floatsisf

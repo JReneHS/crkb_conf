@@ -93,7 +93,7 @@ oled_buffer         0x200             .build/obj_crkbd_rev1_legacy_rene_prog_dvo
 USB_DeviceState     0x1               .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
 USB_Device_ConfigurationNumber
                     0x1               .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
-wpm_str             0xa               .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+wpm_str             0x6               .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
 USB_Device_CurrentlySelfPowered
                     0x1               .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
 oled_timeout        0x4               .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
@@ -1107,7 +1107,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000     0x575c
+.text           0x0000000000000000     0x575a
  *(.vectors)
  .vectors       0x0000000000000000       0xac c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
                 0x0000000000000000                __vector_default
@@ -1132,143 +1132,142 @@ END GROUP
  .progmem.data.corne_logo.6261
                 0x00000000000000dc       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.__c.6256
-                0x00000000000000ec        0x7 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x00000000000000ec        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.corne_logo.6255
-                0x00000000000000f3       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x00000000000000f2       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.shift_off_2.6241
-                0x0000000000000103        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000102        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.shift_on_2.6243
-                0x0000000000000106        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000105        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_off_2.6245
-                0x0000000000000109        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000108        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_on_2.6249
-                0x000000000000010b        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000010a        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.on_off_2.6247
-                0x000000000000010d        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000010c        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.ctrl_off_2.6237
-                0x000000000000010f        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000010e        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.ctrl_on_2.6239
-                0x0000000000000112        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000111        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.shift_off_1.6240
-                0x0000000000000115        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000114        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.shift_on_1.6242
-                0x0000000000000118        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000117        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_off_1.6244
-                0x000000000000011b        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000011a        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_on_1.6248
-                0x000000000000011d        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000011c        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.on_off_1.6246
-                0x000000000000011f        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000011e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.on_on_1.6250
-                0x0000000000000121        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000120        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.ctrl_off_1.6236
-                0x0000000000000123        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000122        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.ctrl_on_1.6238
-                0x0000000000000126        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000125        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.alt_off_2.6222
-                0x0000000000000129        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000128        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.alt_on_2.6224
-                0x000000000000012c        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000012b        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_off_2.6226
-                0x000000000000012f        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000012e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_on_2.6230
-                0x0000000000000131        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000130        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.on_off_2.6228
-                0x0000000000000133        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000132        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.gui_off_2.6218
-                0x0000000000000135        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000134        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.gui_on_2.6220
-                0x0000000000000138        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000137        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.alt_off_1.6221
-                0x000000000000013b        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000013a        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.alt_on_1.6223
-                0x000000000000013e        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000013d        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_off_1.6225
-                0x0000000000000141        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000140        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.off_on_1.6229
-                0x0000000000000143        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000142        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.on_off_1.6227
-                0x0000000000000145        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000144        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.on_on_1.6231
-                0x0000000000000147        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000146        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.gui_off_1.6217
-                0x0000000000000149        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000148        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.gui_on_1.6219
-                0x000000000000014c        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000014b        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.__c.6212
-                0x000000000000014f        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000014e        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .progmem.data.keymaps
-                0x0000000000000155      0x120 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000155                keymaps
+                0x0000000000000154      0x120 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000154                keymaps
  .progmem.data.display_off.2196
-                0x0000000000000275        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000000274        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .progmem.data.display_on.2192
-                0x0000000000000277        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000000276        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .progmem.data.display_setup2.2029
-                0x0000000000000279        0xd .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000000278        0xd .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .progmem.data.display_flipped.2028
-                0x0000000000000286        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000000285        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .progmem.data.display_normal.2027
-                0x0000000000000289        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000000288        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .progmem.data.display_setup1.2026
-                0x000000000000028c        0xd .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x000000000000028b        0xd .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .progmem.data.font
-                0x0000000000000299      0x540 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000000299                font
+                0x0000000000000298      0x540 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000000298                font
  .progmem.data.SerialNumberString
-                0x00000000000007d9        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x00000000000007d9                SerialNumberString
+                0x00000000000007d8        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x00000000000007d8                SerialNumberString
  .progmem.data.ProductString
-                0x00000000000007df       0x4a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x00000000000007df                ProductString
+                0x00000000000007de       0x4a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x00000000000007de                ProductString
  .progmem.data.ManufacturerString
-                0x0000000000000829       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x0000000000000829                ManufacturerString
+                0x0000000000000828       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x0000000000000828                ManufacturerString
  .progmem.data.LanguageString
-                0x000000000000083b        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x000000000000083b                LanguageString
+                0x000000000000083a        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x000000000000083a                LanguageString
  .progmem.data.ConfigurationDescriptor
-                0x000000000000083f       0x3b .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x000000000000083f                ConfigurationDescriptor
+                0x000000000000083e       0x3b .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x000000000000083e                ConfigurationDescriptor
  .progmem.data.DeviceDescriptor
-                0x000000000000087a       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x000000000000087a                DeviceDescriptor
+                0x0000000000000879       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x0000000000000879                DeviceDescriptor
  .progmem.data.SharedReport
-                0x000000000000088c       0x6d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x000000000000088c                SharedReport
+                0x000000000000088b       0x6d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x000000000000088b                SharedReport
  .progmem.data.KeyboardReport
-                0x00000000000008f9       0x40 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x00000000000008f9                KeyboardReport
-                0x000000000000093a                . = ALIGN (0x2)
- *fill*         0x0000000000000939        0x1 
+                0x00000000000008f8       0x40 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x00000000000008f8                KeyboardReport
+                0x0000000000000938                . = ALIGN (0x2)
  *(.lowtext)
  *(.lowtext*)
-                0x000000000000093a                __ctors_start = .
+                0x0000000000000938                __ctors_start = .
  *(.ctors)
-                0x000000000000093a                __ctors_end = .
-                0x000000000000093a                __dtors_start = .
+                0x0000000000000938                __ctors_end = .
+                0x0000000000000938                __dtors_start = .
  *(.dtors)
-                0x000000000000093a                __dtors_end = .
+                0x0000000000000938                __dtors_end = .
  SORT_BY_NAME(*)(.ctors)
  SORT_BY_NAME(*)(.dtors)
  *(.init0)
- .init0         0x000000000000093a        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
-                0x000000000000093a                __init
+ .init0         0x0000000000000938        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+                0x0000000000000938                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x000000000000093a        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+ .init2         0x0000000000000938        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
  *(.init2)
  *(.init3)
- .init3         0x0000000000000946       0x54 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
-                0x0000000000000946                bootloader_jump_after_watchdog_reset
+ .init3         0x0000000000000944       0x54 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
+                0x0000000000000944                bootloader_jump_after_watchdog_reset
  *(.init3)
  *(.init4)
- .init4         0x000000000000099a       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_copy_data.o)
-                0x000000000000099a                __do_copy_data
- .init4         0x00000000000009b0       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_clear_bss.o)
-                0x00000000000009b0                __do_clear_bss
+ .init4         0x0000000000000998       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_copy_data.o)
+                0x0000000000000998                __do_copy_data
+ .init4         0x00000000000009ae       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_clear_bss.o)
+                0x00000000000009ae                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -1279,931 +1278,931 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000000000009c0        0x8 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+ .init9         0x00000000000009be        0x8 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
  *(.init9)
  *(.text)
- .text          0x00000000000009c8        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
-                0x00000000000009c8                __vector_38
-                0x00000000000009c8                __vector_22
-                0x00000000000009c8                __vector_28
-                0x00000000000009c8                __vector_1
-                0x00000000000009c8                __vector_32
-                0x00000000000009c8                __vector_34
-                0x00000000000009c8                __vector_24
-                0x00000000000009c8                __bad_interrupt
-                0x00000000000009c8                __vector_6
-                0x00000000000009c8                __vector_31
-                0x00000000000009c8                __vector_35
-                0x00000000000009c8                __vector_39
-                0x00000000000009c8                __vector_23
-                0x00000000000009c8                __vector_30
-                0x00000000000009c8                __vector_25
-                0x00000000000009c8                __vector_13
-                0x00000000000009c8                __vector_17
-                0x00000000000009c8                __vector_19
-                0x00000000000009c8                __vector_7
-                0x00000000000009c8                __vector_41
-                0x00000000000009c8                __vector_27
-                0x00000000000009c8                __vector_5
-                0x00000000000009c8                __vector_33
-                0x00000000000009c8                __vector_37
-                0x00000000000009c8                __vector_4
-                0x00000000000009c8                __vector_9
-                0x00000000000009c8                __vector_2
-                0x00000000000009c8                __vector_15
-                0x00000000000009c8                __vector_36
-                0x00000000000009c8                __vector_29
-                0x00000000000009c8                __vector_40
-                0x00000000000009c8                __vector_8
-                0x00000000000009c8                __vector_26
-                0x00000000000009c8                __vector_14
-                0x00000000000009c8                __vector_16
-                0x00000000000009c8                __vector_18
-                0x00000000000009c8                __vector_20
-                0x00000000000009c8                __vector_42
-                0x00000000000009cc                . = ALIGN (0x2)
+ .text          0x00000000000009c6        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
+                0x00000000000009c6                __vector_38
+                0x00000000000009c6                __vector_22
+                0x00000000000009c6                __vector_28
+                0x00000000000009c6                __vector_1
+                0x00000000000009c6                __vector_32
+                0x00000000000009c6                __vector_34
+                0x00000000000009c6                __vector_24
+                0x00000000000009c6                __bad_interrupt
+                0x00000000000009c6                __vector_6
+                0x00000000000009c6                __vector_31
+                0x00000000000009c6                __vector_35
+                0x00000000000009c6                __vector_39
+                0x00000000000009c6                __vector_23
+                0x00000000000009c6                __vector_30
+                0x00000000000009c6                __vector_25
+                0x00000000000009c6                __vector_13
+                0x00000000000009c6                __vector_17
+                0x00000000000009c6                __vector_19
+                0x00000000000009c6                __vector_7
+                0x00000000000009c6                __vector_41
+                0x00000000000009c6                __vector_27
+                0x00000000000009c6                __vector_5
+                0x00000000000009c6                __vector_33
+                0x00000000000009c6                __vector_37
+                0x00000000000009c6                __vector_4
+                0x00000000000009c6                __vector_9
+                0x00000000000009c6                __vector_2
+                0x00000000000009c6                __vector_15
+                0x00000000000009c6                __vector_36
+                0x00000000000009c6                __vector_29
+                0x00000000000009c6                __vector_40
+                0x00000000000009c6                __vector_8
+                0x00000000000009c6                __vector_26
+                0x00000000000009c6                __vector_14
+                0x00000000000009c6                __vector_16
+                0x00000000000009c6                __vector_18
+                0x00000000000009c6                __vector_20
+                0x00000000000009c6                __vector_42
+                0x00000000000009ca                . = ALIGN (0x2)
  *(.text.*)
  .text.unselect_rows
-                0x00000000000009cc       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x00000000000009ca       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
  .text.matrix_init_user
-                0x0000000000000a0e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a0e                matrix_init_user
+                0x0000000000000a0c        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a0c                matrix_init_user
  .text.matrix_scan_user
-                0x0000000000000a10        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a10                matrix_scan_user
+                0x0000000000000a0e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a0e                matrix_scan_user
  .text.matrix_scan_kb
-                0x0000000000000a12        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a12                matrix_scan_kb
+                0x0000000000000a10        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a10                matrix_scan_kb
  .text.tx_rx_leds_init
-                0x0000000000000a16        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a16                tx_rx_leds_init
+                0x0000000000000a14        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a14                tx_rx_leds_init
  .text.tx_led_on
-                0x0000000000000a20        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a20                tx_led_on
+                0x0000000000000a1e        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a1e                tx_led_on
  .text.tx_led_off
-                0x0000000000000a24        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a24                tx_led_off
+                0x0000000000000a22        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a22                tx_led_off
  .text.rx_led_on
-                0x0000000000000a28        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a28                rx_led_on
+                0x0000000000000a26        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a26                rx_led_on
  .text.rx_led_off
-                0x0000000000000a2c        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a2c                rx_led_off
+                0x0000000000000a2a        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a2a                rx_led_off
  .text.matrix_init
-                0x0000000000000a30       0x62 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a30                matrix_init
+                0x0000000000000a2e       0x62 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a2e                matrix_init
  .text._matrix_scan
-                0x0000000000000a92      0x134 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000a92                _matrix_scan
+                0x0000000000000a90      0x134 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000a90                _matrix_scan
  .text.serial_transaction
-                0x0000000000000bc6       0x5e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000bc6                serial_transaction
+                0x0000000000000bc4       0x5e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000bc4                serial_transaction
  .text.matrix_slave_scan
-                0x0000000000000c24       0x44 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000c24                matrix_slave_scan
+                0x0000000000000c22       0x44 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000c22                matrix_slave_scan
  .text.matrix_scan
-                0x0000000000000c68       0xe8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000c68                matrix_scan
+                0x0000000000000c66       0xe8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000c66                matrix_scan
  .text.matrix_get_row
-                0x0000000000000d50        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000d50                matrix_get_row
+                0x0000000000000d4e        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000d4e                matrix_get_row
  .text.matrix_print
-                0x0000000000000d5c        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x0000000000000d5c                matrix_print
- .text.has_usb  0x0000000000000d5e       0x38 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
-                0x0000000000000d5e                has_usb
+                0x0000000000000d5a        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x0000000000000d5a                matrix_print
+ .text.has_usb  0x0000000000000d5c       0x38 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
+                0x0000000000000d5c                has_usb
  .text.is_keyboard_left
-                0x0000000000000d96        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
-                0x0000000000000d96                is_keyboard_left
+                0x0000000000000d94        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
+                0x0000000000000d94                is_keyboard_left
  .text.split_keyboard_setup
-                0x0000000000000da0       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
-                0x0000000000000da0                split_keyboard_setup
+                0x0000000000000d9e       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
+                0x0000000000000d9e                split_keyboard_setup
  .text.serial_master_init
-                0x0000000000000dbe        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000000dbe                serial_master_init
+                0x0000000000000dbc        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x0000000000000dbc                serial_master_init
  .text.serial_slave_init
-                0x0000000000000dca        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000000dca                serial_slave_init
+                0x0000000000000dc8        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x0000000000000dc8                serial_slave_init
  .text.serial_update_buffers
-                0x0000000000000dd6       0x7a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000000dd6                serial_update_buffers
+                0x0000000000000dd4       0x7a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x0000000000000dd4                serial_update_buffers
  .text.matrix_init_kb
-                0x0000000000000e50        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/rev1/rev1.o
-                0x0000000000000e50                matrix_init_kb
+                0x0000000000000e4e        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/rev1/rev1.o
+                0x0000000000000e4e                matrix_init_kb
  .text.oled_init_user
-                0x0000000000000e54        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000e54                oled_init_user
+                0x0000000000000e52        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000e52                oled_init_user
  .text.render_space
-                0x0000000000000e58        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000e58                render_space
+                0x0000000000000e56        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000e56                render_space
  .text.render_mod_status_gui_alt
-                0x0000000000000e62       0xb0 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000e62                render_mod_status_gui_alt
+                0x0000000000000e60       0xb0 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000e60                render_mod_status_gui_alt
  .text.render_mod_status_ctrl_shift
-                0x0000000000000f12       0xb0 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000f12                render_mod_status_ctrl_shift
+                0x0000000000000f10       0xb0 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000f10                render_mod_status_ctrl_shift
  .text.render_logo
-                0x0000000000000fc2       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000fc2                render_logo
+                0x0000000000000fc0       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000fc0                render_logo
  .text.render_logo2
-                0x0000000000000fd6       0x3c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000000fd6                render_logo2
+                0x0000000000000fd4       0x3c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000000fd4                render_logo2
  .text.render_layer_state
-                0x0000000000001012       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000001012                render_layer_state
+                0x0000000000001010       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000001010                render_layer_state
  .text.render_status_main
-                0x000000000000103e       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x000000000000103e                render_status_main
+                0x000000000000103c       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x000000000000103c                render_status_main
  .text.render_status_secondary
-                0x0000000000001072       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x0000000000001072                render_status_secondary
+                0x0000000000001070       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000001070                render_status_secondary
  .text.oled_task_user
-                0x00000000000010a6       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x00000000000010a6                oled_task_user
+                0x00000000000010a4       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x00000000000010a4                oled_task_user
  .text.process_record_user
-                0x00000000000010da       0x5e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x00000000000010da                process_record_user
+                0x00000000000010d8       0x5e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x00000000000010d8                process_record_user
  .text.do_code16
-                0x0000000000001138       0x6e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x0000000000001136       0x6e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
  .text.register_code16
-                0x00000000000011a6       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000011a6                register_code16
+                0x00000000000011a4       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000011a4                register_code16
  .text.unregister_code16
-                0x00000000000011d0       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000011d0                unregister_code16
+                0x00000000000011ce       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000011ce                unregister_code16
  .text.process_action_kb
-                0x00000000000011fa        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000011fa                process_action_kb
+                0x00000000000011f8        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000011f8                process_action_kb
  .text.process_record_kb
-                0x00000000000011fe        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000011fe                process_record_kb
+                0x00000000000011fc        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000011fc                process_record_kb
  .text.post_process_record_user
-                0x0000000000001202        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x0000000000001202                post_process_record_user
+                0x0000000000001200        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x0000000000001200                post_process_record_user
  .text.post_process_record_kb
-                0x0000000000001204        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x0000000000001204                post_process_record_kb
+                0x0000000000001202        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x0000000000001202                post_process_record_kb
  .text.get_event_keycode
-                0x0000000000001208       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x0000000000001208                get_event_keycode
+                0x0000000000001206       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x0000000000001206                get_event_keycode
  .text.get_record_keycode
-                0x000000000000126e       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x000000000000126e                get_record_keycode
+                0x000000000000126c       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x000000000000126c                get_record_keycode
  .text.post_process_record_quantum
-                0x0000000000001280       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x0000000000001280                post_process_record_quantum
+                0x000000000000127e       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x000000000000127e                post_process_record_quantum
  .text.matrix_init_quantum
-                0x0000000000001296       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x0000000000001296                matrix_init_quantum
+                0x0000000000001294       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x0000000000001294                matrix_init_quantum
  .text.matrix_scan_quantum
-                0x00000000000012a6        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000012a6                matrix_scan_quantum
+                0x00000000000012a4        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000012a4                matrix_scan_quantum
  .text.shutdown_user
-                0x00000000000012b2        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000012b2                shutdown_user
+                0x00000000000012b0        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000012b0                shutdown_user
  .text.reset_keyboard
-                0x00000000000012b4       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000012b4                reset_keyboard
+                0x00000000000012b2       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000012b2                reset_keyboard
  .text.process_record_quantum
-                0x00000000000012d2       0x76 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
-                0x00000000000012d2                process_record_quantum
+                0x00000000000012d0       0x76 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+                0x00000000000012d0                process_record_quantum
  .text.led_set_user
-                0x0000000000001348        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
-                0x0000000000001348                led_set_user
+                0x0000000000001346        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
+                0x0000000000001346                led_set_user
  .text.led_set_kb
-                0x000000000000134a        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
-                0x000000000000134a                led_set_kb
+                0x0000000000001348        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
+                0x0000000000001348                led_set_kb
  .text.led_update_user
-                0x000000000000134e        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
-                0x000000000000134e                led_update_user
+                0x000000000000134c        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
+                0x000000000000134c                led_update_user
  .text.led_update_kb
-                0x0000000000001352        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
-                0x0000000000001352                led_update_kb
- .text.led_set  0x0000000000001356       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
-                0x0000000000001356                led_set
+                0x0000000000001350        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
+                0x0000000000001350                led_update_kb
+ .text.led_set  0x0000000000001354       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
+                0x0000000000001354                led_set
  .text.keymap_key_to_keycode
-                0x0000000000001366       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
-                0x0000000000001366                keymap_key_to_keycode
+                0x0000000000001364       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
+                0x0000000000001364                keymap_key_to_keycode
  .text.action_for_key
-                0x000000000000138e      0x1d8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
-                0x000000000000138e                action_for_key
+                0x000000000000138c      0x1d8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
+                0x000000000000138c                action_for_key
  .text.keycode_config
-                0x0000000000001566      0x12e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keycode_config.o
-                0x0000000000001566                keycode_config
+                0x0000000000001564      0x12e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keycode_config.o
+                0x0000000000001564                keycode_config
  .text.mod_config
-                0x0000000000001694       0x86 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keycode_config.o
-                0x0000000000001694                mod_config
+                0x0000000000001692       0x86 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keycode_config.o
+                0x0000000000001692                mod_config
  .text.get_current_wpm
-                0x000000000000171a        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
-                0x000000000000171a                get_current_wpm
+                0x0000000000001718        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x0000000000001718                get_current_wpm
  .text.wpm_keycode_user
-                0x0000000000001720       0x4e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
-                0x0000000000001720                wpm_keycode_user
+                0x000000000000171e       0x4e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x000000000000171e                wpm_keycode_user
  .text.wpm_keycode_kb
-                0x000000000000176e        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
-                0x000000000000176e                wpm_keycode_kb
+                0x000000000000176c        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x000000000000176c                wpm_keycode_kb
  .text.update_wpm
-                0x0000000000001772       0xac .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
-                0x0000000000001772                update_wpm
+                0x0000000000001770       0xac .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x0000000000001770                update_wpm
  .text.decay_wpm
-                0x000000000000181e       0x84 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
-                0x000000000000181e                decay_wpm
+                0x000000000000181c       0x84 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x000000000000181c                decay_wpm
  .text.i2c_transmit_P.constprop.2
-                0x00000000000018a2       0x60 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x00000000000018a0       0x60 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .text.oled_clear
-                0x0000000000001902       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001902                oled_clear
+                0x0000000000001900       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001900                oled_clear
  .text.oled_init
-                0x000000000000192c       0x8c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x000000000000192c                oled_init
+                0x000000000000192a       0x8c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x000000000000192a                oled_init
  .text.oled_set_cursor
-                0x00000000000019b8       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x00000000000019b8                oled_set_cursor
+                0x00000000000019b6       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x00000000000019b6                oled_set_cursor
  .text.oled_advance_char
-                0x00000000000019e6       0x3e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x00000000000019e6                oled_advance_char
+                0x00000000000019e4       0x3e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x00000000000019e4                oled_advance_char
  .text.oled_write_char
-                0x0000000000001a24       0xf4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001a24                oled_write_char
+                0x0000000000001a22       0xf4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001a22                oled_write_char
  .text.oled_advance_page
-                0x0000000000001b18       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001b18                oled_advance_page
+                0x0000000000001b16       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001b16                oled_advance_page
  .text.oled_write
-                0x0000000000001b7e       0x38 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001b7e                oled_write
+                0x0000000000001b7c       0x38 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001b7c                oled_write
  .text.oled_write_P
-                0x0000000000001bb6       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001bb6                oled_write_P
- .text.oled_on  0x0000000000001bda       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001bda                oled_on
+                0x0000000000001bb4       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001bb4                oled_write_P
+ .text.oled_on  0x0000000000001bd8       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001bd8                oled_on
  .text.oled_render
-                0x0000000000001c1c      0x1e6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001c1c                oled_render
+                0x0000000000001c1a      0x1e6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001c1a                oled_render
  .text.oled_off
-                0x0000000000001e02       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001e02                oled_off
+                0x0000000000001e00       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001e00                oled_off
  .text.oled_task
-                0x0000000000001e2e       0x52 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000001e2e                oled_task
+                0x0000000000001e2c       0x52 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000001e2c                oled_task
  .text.process_tap_dance_action_on_dance_finished.part.0
-                0x0000000000001e80       0x36 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x0000000000001e7e       0x36 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
  .text.qk_tap_dance_pair_on_each_tap
-                0x0000000000001eb6       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x0000000000001eb6                qk_tap_dance_pair_on_each_tap
+                0x0000000000001eb4       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x0000000000001eb4                qk_tap_dance_pair_on_each_tap
  .text.qk_tap_dance_pair_finished
-                0x0000000000001ed6       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x0000000000001ed6                qk_tap_dance_pair_finished
+                0x0000000000001ed4       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x0000000000001ed4                qk_tap_dance_pair_finished
  .text.qk_tap_dance_pair_reset
-                0x0000000000001ef6       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x0000000000001ef6                qk_tap_dance_pair_reset
+                0x0000000000001ef4       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x0000000000001ef4                qk_tap_dance_pair_reset
  .text.reset_tap_dance
-                0x0000000000001f16       0x8a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x0000000000001f16                reset_tap_dance
+                0x0000000000001f14       0x8a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x0000000000001f14                reset_tap_dance
  .text.preprocess_tap_dance
-                0x0000000000001fa0       0x8c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x0000000000001fa0                preprocess_tap_dance
+                0x0000000000001f9e       0x8c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x0000000000001f9e                preprocess_tap_dance
  .text.process_tap_dance
-                0x000000000000202c       0xb4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x000000000000202c                process_tap_dance
+                0x000000000000202a       0xb4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x000000000000202a                process_tap_dance
  .text.matrix_scan_tap_dance
-                0x00000000000020e0       0xae .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
-                0x00000000000020e0                matrix_scan_tap_dance
+                0x00000000000020de       0xae .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x00000000000020de                matrix_scan_tap_dance
  .text.sync_recv
-                0x000000000000218e       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x000000000000218c       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .text.sync_send
-                0x000000000000219e        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x000000000000219c        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .text.serial_read_chunk
-                0x00000000000021aa       0x5a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x00000000000021a8       0x5a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .text.serial_recive_packet
-                0x0000000000002204       0x50 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x0000000000002202       0x50 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .text.soft_serial_initiator_init
-                0x0000000000002254       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
-                0x0000000000002254                soft_serial_initiator_init
+                0x0000000000002252       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x0000000000002252                soft_serial_initiator_init
  .text.soft_serial_target_init
-                0x0000000000002266       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
-                0x0000000000002266                soft_serial_target_init
+                0x0000000000002264       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x0000000000002264                soft_serial_target_init
  .text.serial_write_chunk
-                0x0000000000002284       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
-                0x0000000000002284                serial_write_chunk
+                0x0000000000002282       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x0000000000002282                serial_write_chunk
  .text.serial_send_packet
-                0x00000000000022c6       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x00000000000022c4       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .text.__vector_3
-                0x00000000000022fa      0x11e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
-                0x00000000000022fa                __vector_3
+                0x00000000000022f8      0x11e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x00000000000022f8                __vector_3
  .text.soft_serial_transaction
-                0x0000000000002418       0xfc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
-                0x0000000000002418                soft_serial_transaction
+                0x0000000000002416       0xfc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x0000000000002416                soft_serial_transaction
  .text.i2c_init
-                0x0000000000002514        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
-                0x0000000000002514                i2c_init
+                0x0000000000002512        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+                0x0000000000002512                i2c_init
  .text.i2c_start
-                0x0000000000002520       0xb8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
-                0x0000000000002520                i2c_start
+                0x000000000000251e       0xb8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+                0x000000000000251e                i2c_start
  .text.i2c_write
-                0x00000000000025d8       0x5e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
-                0x00000000000025d8                i2c_write
+                0x00000000000025d6       0x5e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+                0x00000000000025d6                i2c_write
  .text.i2c_transmit
-                0x0000000000002636       0x4e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
-                0x0000000000002636                i2c_transmit
+                0x0000000000002634       0x4e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+                0x0000000000002634                i2c_transmit
  .text.i2c_writeReg
-                0x0000000000002684       0x5a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
-                0x0000000000002684                i2c_writeReg
+                0x0000000000002682       0x5a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+                0x0000000000002682                i2c_writeReg
  .text.i2c_stop
-                0x00000000000026de        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
-                0x00000000000026de                i2c_stop
+                0x00000000000026dc        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+                0x00000000000026dc                i2c_stop
  .text.host_set_driver
-                0x00000000000026e6        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
-                0x00000000000026e6                host_set_driver
+                0x00000000000026e4        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x00000000000026e4                host_set_driver
  .text.host_keyboard_leds
-                0x00000000000026f0       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
-                0x00000000000026f0                host_keyboard_leds
+                0x00000000000026ee       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x00000000000026ee                host_keyboard_leds
  .text.host_keyboard_send
-                0x0000000000002708       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
-                0x0000000000002708                host_keyboard_send
+                0x0000000000002706       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x0000000000002706                host_keyboard_send
  .text.host_system_send
-                0x000000000000273c       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
-                0x000000000000273c                host_system_send
+                0x000000000000273a       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x000000000000273a                host_system_send
  .text.host_consumer_send
-                0x0000000000002768       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
-                0x0000000000002768                host_consumer_send
+                0x0000000000002766       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x0000000000002766                host_consumer_send
  .text.disable_jtag
-                0x0000000000002794        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x0000000000002794                disable_jtag
+                0x0000000000002792        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x0000000000002792                disable_jtag
  .text.keyboard_pre_init_user
-                0x00000000000027a2        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027a2                keyboard_pre_init_user
+                0x00000000000027a0        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027a0                keyboard_pre_init_user
  .text.matrix_setup
-                0x00000000000027a4        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027a4                matrix_setup
+                0x00000000000027a2        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027a2                matrix_setup
  .text.keyboard_pre_init_kb
-                0x00000000000027a6        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027a6                keyboard_pre_init_kb
+                0x00000000000027a4        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027a4                keyboard_pre_init_kb
  .text.keyboard_post_init_user
-                0x00000000000027aa        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027aa                keyboard_post_init_user
+                0x00000000000027a8        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027a8                keyboard_post_init_user
  .text.keyboard_post_init_kb
-                0x00000000000027ac        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027ac                keyboard_post_init_kb
+                0x00000000000027aa        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027aa                keyboard_post_init_kb
  .text.keyboard_setup
-                0x00000000000027b0        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027b0                keyboard_setup
+                0x00000000000027ae        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027ae                keyboard_setup
  .text.is_keyboard_master
-                0x00000000000027bc        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027bc                is_keyboard_master
+                0x00000000000027ba        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027ba                is_keyboard_master
  .text.should_process_keypress
-                0x00000000000027c0        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027c0                should_process_keypress
+                0x00000000000027be        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027be                should_process_keypress
  .text.keyboard_init
-                0x00000000000027c4       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027c4                keyboard_init
+                0x00000000000027c2       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027c2                keyboard_init
  .text.keyboard_task
-                0x00000000000027da      0x13e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
-                0x00000000000027da                keyboard_task
+                0x00000000000027d8      0x13e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x00000000000027d8                keyboard_task
  .text.action_exec
-                0x0000000000002918       0x54 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002918                action_exec
+                0x0000000000002916       0x54 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002916                action_exec
  .text.process_record_tap_hint
-                0x000000000000296c        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x000000000000296c                process_record_tap_hint
+                0x000000000000296a        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x000000000000296a                process_record_tap_hint
  .text.register_code
-                0x0000000000002976       0x8c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002976                register_code
+                0x0000000000002974       0x8c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002974                register_code
  .text.unregister_code
-                0x0000000000002a02       0x50 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002a02                unregister_code
+                0x0000000000002a00       0x50 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002a00                unregister_code
  .text.register_mods
-                0x0000000000002a52        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002a52                register_mods
+                0x0000000000002a50        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002a50                register_mods
  .text.unregister_mods
-                0x0000000000002a60        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002a60                unregister_mods
+                0x0000000000002a5e        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002a5e                unregister_mods
  .text.process_action
-                0x0000000000002a6e      0x3f4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002a6e                process_action
+                0x0000000000002a6c      0x3f4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002a6c                process_action
  .text.process_record_handler
-                0x0000000000002e62       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002e62                process_record_handler
+                0x0000000000002e60       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002e60                process_record_handler
  .text.process_record
-                0x0000000000002e90       0x50 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002e90                process_record
+                0x0000000000002e8e       0x50 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002e8e                process_record
  .text.register_weak_mods
-                0x0000000000002ee0        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002ee0                register_weak_mods
+                0x0000000000002ede        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002ede                register_weak_mods
  .text.unregister_weak_mods
-                0x0000000000002eee        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002eee                unregister_weak_mods
+                0x0000000000002eec        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002eec                unregister_weak_mods
  .text.clear_keyboard_but_mods_and_keys
-                0x0000000000002efc       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002efc                clear_keyboard_but_mods_and_keys
+                0x0000000000002efa       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002efa                clear_keyboard_but_mods_and_keys
  .text.clear_keyboard_but_mods
-                0x0000000000002f18        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002f18                clear_keyboard_but_mods
+                0x0000000000002f16        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002f16                clear_keyboard_but_mods
  .text.clear_keyboard
-                0x0000000000002f20        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002f20                clear_keyboard
+                0x0000000000002f1e        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002f1e                clear_keyboard
  .text.is_tap_action
-                0x0000000000002f28       0x3e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002f28                is_tap_action
+                0x0000000000002f26       0x3e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002f26                is_tap_action
  .text.is_tap_key
-                0x0000000000002f66        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002f66                is_tap_key
+                0x0000000000002f64        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002f64                is_tap_key
  .text.debug_event
-                0x0000000000002f6e       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002f6e                debug_event
+                0x0000000000002f6c       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002f6c                debug_event
  .text.debug_record
-                0x0000000000002f8c       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000002f8c                debug_record
+                0x0000000000002f8a       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000002f8a                debug_record
  .text.debug_waiting_buffer
-                0x0000000000002fac       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000002faa       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .text.debug_tapping_key
-                0x0000000000002fee       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000002fec       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .text.waiting_buffer_scan_tap
-                0x000000000000300a       0xac .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000003008       0xac .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .text.process_tapping
-                0x00000000000030b6      0x356 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x00000000000030b4      0x356 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .text.get_tapping_term
-                0x000000000000340c        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
-                0x000000000000340c                get_tapping_term
+                0x000000000000340a        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x000000000000340a                get_tapping_term
  .text.action_tapping_process
-                0x0000000000003412      0x134 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
-                0x0000000000003412                action_tapping_process
+                0x0000000000003410      0x134 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000003410                action_tapping_process
  .text.default_layer_state_set_user
-                0x0000000000003546        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003546                default_layer_state_set_user
+                0x0000000000003544        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003544                default_layer_state_set_user
  .text.default_layer_state_set_kb
-                0x0000000000003548        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003548                default_layer_state_set_kb
+                0x0000000000003546        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003546                default_layer_state_set_kb
  .text.default_layer_state_set
-                0x000000000000354c       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x000000000000354a       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
  .text.default_layer_debug
-                0x0000000000003564        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003564                default_layer_debug
+                0x0000000000003562        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003562                default_layer_debug
  .text.default_layer_set
-                0x0000000000003566        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003566                default_layer_set
+                0x0000000000003564        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003564                default_layer_set
  .text.default_layer_or
-                0x000000000000356a       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x000000000000356a                default_layer_or
+                0x0000000000003568       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003568                default_layer_or
  .text.default_layer_and
-                0x000000000000358e       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x000000000000358e                default_layer_and
+                0x000000000000358c       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x000000000000358c                default_layer_and
  .text.default_layer_xor
-                0x00000000000035b2       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000035b2                default_layer_xor
+                0x00000000000035b0       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000035b0                default_layer_xor
  .text.layer_state_set_user
-                0x00000000000035d6        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000035d6                layer_state_set_user
+                0x00000000000035d4        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000035d4                layer_state_set_user
  .text.layer_state_set_kb
-                0x00000000000035da        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000035da                layer_state_set_kb
+                0x00000000000035d8        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000035d8                layer_state_set_kb
  .text.layer_state_set
-                0x00000000000035de       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000035de                layer_state_set
+                0x00000000000035dc       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000035dc                layer_state_set
  .text.layer_clear
-                0x00000000000035f6        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000035f6                layer_clear
+                0x00000000000035f4        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000035f4                layer_clear
  .text.layer_state_cmp
-                0x0000000000003600       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003600                layer_state_cmp
+                0x00000000000035fe       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000035fe                layer_state_cmp
  .text.layer_state_is
-                0x000000000000362a       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x000000000000362a                layer_state_is
+                0x0000000000003628       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003628                layer_state_is
  .text.layer_move
-                0x0000000000003640       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003640                layer_move
+                0x000000000000363e       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x000000000000363e                layer_move
  .text.layer_on
-                0x000000000000366a       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x000000000000366a                layer_on
+                0x0000000000003668       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003668                layer_on
  .text.layer_off
-                0x00000000000036ac       0x46 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000036ac                layer_off
+                0x00000000000036aa       0x46 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000036aa                layer_off
  .text.layer_invert
-                0x00000000000036f2       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000036f2                layer_invert
+                0x00000000000036f0       0x42 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000036f0                layer_invert
  .text.layer_or
-                0x0000000000003734       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003734                layer_or
+                0x0000000000003732       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003732                layer_or
  .text.layer_and
-                0x0000000000003758       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003758                layer_and
+                0x0000000000003756       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000003756                layer_and
  .text.layer_xor
-                0x000000000000377c       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x000000000000377c                layer_xor
+                0x000000000000377a       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x000000000000377a                layer_xor
  .text.layer_debug
-                0x00000000000037a0        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000037a0                layer_debug
+                0x000000000000379e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x000000000000379e                layer_debug
  .text.update_source_layers_cache
-                0x00000000000037a2       0x5c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000037a2                update_source_layers_cache
+                0x00000000000037a0       0x5c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000037a0                update_source_layers_cache
  .text.read_source_layers_cache
-                0x00000000000037fe       0x52 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000037fe                read_source_layers_cache
+                0x00000000000037fc       0x52 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000037fc                read_source_layers_cache
  .text.layer_switch_get_layer
-                0x0000000000003850       0x84 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x0000000000003850                layer_switch_get_layer
+                0x000000000000384e       0x84 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x000000000000384e                layer_switch_get_layer
  .text.layer_switch_get_action
-                0x00000000000038d4       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000038d4                layer_switch_get_action
+                0x00000000000038d2       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000038d2                layer_switch_get_action
  .text.store_or_get_action
-                0x00000000000038e8       0x48 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000000038e8                store_or_get_action
- .text.add_key  0x0000000000003930        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003930                add_key
- .text.del_key  0x000000000000393e        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x000000000000393e                del_key
+                0x00000000000038e6       0x48 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000000038e6                store_or_get_action
+ .text.add_key  0x000000000000392e        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000392e                add_key
+ .text.del_key  0x000000000000393c        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000393c                del_key
  .text.clear_keys
-                0x000000000000394c        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x000000000000394c                clear_keys
+                0x000000000000394a        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000394a                clear_keys
  .text.get_oneshot_layer
-                0x0000000000003958        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003958                get_oneshot_layer
+                0x0000000000003956        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003956                get_oneshot_layer
  .text.get_oneshot_layer_state
-                0x0000000000003964        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003964                get_oneshot_layer_state
+                0x0000000000003962        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003962                get_oneshot_layer_state
  .text.is_oneshot_layer_active
-                0x000000000000396c        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x000000000000396c                is_oneshot_layer_active
+                0x000000000000396a        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000396a                is_oneshot_layer_active
  .text.get_mods
-                0x000000000000397a        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x000000000000397a                get_mods
+                0x0000000000003978        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003978                get_mods
  .text.add_mods
-                0x0000000000003980        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003980                add_mods
+                0x000000000000397e        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000397e                add_mods
  .text.del_mods
-                0x000000000000398c        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x000000000000398c                del_mods
+                0x000000000000398a        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000398a                del_mods
  .text.clear_mods
-                0x000000000000399a        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x000000000000399a                clear_mods
+                0x0000000000003998        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003998                clear_mods
  .text.get_weak_mods
-                0x00000000000039a0        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039a0                get_weak_mods
+                0x000000000000399e        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x000000000000399e                get_weak_mods
  .text.add_weak_mods
-                0x00000000000039a6        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039a6                add_weak_mods
+                0x00000000000039a4        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039a4                add_weak_mods
  .text.del_weak_mods
-                0x00000000000039b2        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039b2                del_weak_mods
+                0x00000000000039b0        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039b0                del_weak_mods
  .text.clear_weak_mods
-                0x00000000000039c0        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039c0                clear_weak_mods
+                0x00000000000039be        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039be                clear_weak_mods
  .text.clear_macro_mods
-                0x00000000000039c6        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039c6                clear_macro_mods
+                0x00000000000039c4        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039c4                clear_macro_mods
  .text.get_oneshot_mods
-                0x00000000000039cc        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039cc                get_oneshot_mods
+                0x00000000000039ca        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039ca                get_oneshot_mods
  .text.oneshot_mods_changed_user
-                0x00000000000039d2        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039d2                oneshot_mods_changed_user
+                0x00000000000039d0        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039d0                oneshot_mods_changed_user
  .text.oneshot_mods_changed_kb
-                0x00000000000039d4        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039d4                oneshot_mods_changed_kb
+                0x00000000000039d2        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039d2                oneshot_mods_changed_kb
  .text.set_oneshot_mods
-                0x00000000000039d8       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039d8                set_oneshot_mods
+                0x00000000000039d6       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039d6                set_oneshot_mods
  .text.clear_oneshot_mods
-                0x00000000000039ea       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039ea                clear_oneshot_mods
+                0x00000000000039e8       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039e8                clear_oneshot_mods
  .text.send_keyboard_report
-                0x00000000000039fe       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x00000000000039fe                send_keyboard_report
+                0x00000000000039fc       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000000039fc                send_keyboard_report
  .text.oneshot_layer_changed_user
-                0x0000000000003a64        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003a64                oneshot_layer_changed_user
+                0x0000000000003a62        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003a62                oneshot_layer_changed_user
  .text.oneshot_layer_changed_kb
-                0x0000000000003a66        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003a66                oneshot_layer_changed_kb
+                0x0000000000003a64        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003a64                oneshot_layer_changed_kb
  .text.set_oneshot_layer
-                0x0000000000003a6a       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003a6a                set_oneshot_layer
+                0x0000000000003a68       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003a68                set_oneshot_layer
  .text.reset_oneshot_layer
-                0x0000000000003a8a        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003a8a                reset_oneshot_layer
+                0x0000000000003a88        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003a88                reset_oneshot_layer
  .text.clear_oneshot_layer_state
-                0x0000000000003a94       0x30 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
-                0x0000000000003a94                clear_oneshot_layer_state
+                0x0000000000003a92       0x30 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x0000000000003a92                clear_oneshot_layer_state
  .text.eeconfig_is_enabled
-                0x0000000000003ac4       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003ac4                eeconfig_is_enabled
+                0x0000000000003ac2       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003ac2                eeconfig_is_enabled
  .text.eeconfig_read_debug
-                0x0000000000003ada        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003ada                eeconfig_read_debug
+                0x0000000000003ad8        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003ad8                eeconfig_read_debug
  .text.eeconfig_read_default_layer
-                0x0000000000003ae2        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003ae2                eeconfig_read_default_layer
+                0x0000000000003ae0        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003ae0                eeconfig_read_default_layer
  .text.eeconfig_read_keymap
-                0x0000000000003aea       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003aea                eeconfig_read_keymap
+                0x0000000000003ae8       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003ae8                eeconfig_read_keymap
  .text.eeconfig_update_kb
-                0x0000000000003b06        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003b06                eeconfig_update_kb
+                0x0000000000003b04        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003b04                eeconfig_update_kb
  .text.eeconfig_update_user
-                0x0000000000003b12        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003b12                eeconfig_update_user
+                0x0000000000003b10        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003b10                eeconfig_update_user
  .text.eeconfig_init_user
-                0x0000000000003b1e        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003b1e                eeconfig_init_user
+                0x0000000000003b1c        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003b1c                eeconfig_init_user
  .text.eeconfig_init_kb
-                0x0000000000003b28        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003b28                eeconfig_init_kb
+                0x0000000000003b26        0xe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003b26                eeconfig_init_kb
  .text.eeconfig_init_quantum
-                0x0000000000003b36       0xae .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003b36                eeconfig_init_quantum
+                0x0000000000003b34       0xae .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003b34                eeconfig_init_quantum
  .text.eeconfig_init
-                0x0000000000003be4        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
-                0x0000000000003be4                eeconfig_init
+                0x0000000000003be2        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+                0x0000000000003be2                eeconfig_init
  .text.has_anykey
-                0x0000000000003be8       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003be8                has_anykey
+                0x0000000000003be6       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003be6                has_anykey
  .text.is_key_pressed
-                0x0000000000003c10       0x60 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003c10                is_key_pressed
+                0x0000000000003c0e       0x60 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003c0e                is_key_pressed
  .text.add_key_byte
-                0x0000000000003c70       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003c70                add_key_byte
+                0x0000000000003c6e       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003c6e                add_key_byte
  .text.del_key_byte
-                0x0000000000003ca4       0x1a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003ca4                del_key_byte
+                0x0000000000003ca2       0x1a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003ca2                del_key_byte
  .text.add_key_bit
-                0x0000000000003cbe       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003cbe                add_key_bit
+                0x0000000000003cbc       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003cbc                add_key_bit
  .text.del_key_bit
-                0x0000000000003ce6       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003ce6                del_key_bit
+                0x0000000000003ce4       0x2a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003ce4                del_key_bit
  .text.add_key_to_report
-                0x0000000000003d10       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003d10                add_key_to_report
+                0x0000000000003d0e       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003d0e                add_key_to_report
  .text.del_key_from_report
-                0x0000000000003d26       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003d26                del_key_from_report
+                0x0000000000003d24       0x16 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003d24                del_key_from_report
  .text.clear_keys_from_report
-                0x0000000000003d3c       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
-                0x0000000000003d3c                clear_keys_from_report
+                0x0000000000003d3a       0x24 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+                0x0000000000003d3a                clear_keys_from_report
  .text.matrix_power_up
-                0x0000000000003d60        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003d60                matrix_power_up
+                0x0000000000003d5e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003d5e                matrix_power_up
  .text.suspend_power_down_user
-                0x0000000000003d62        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003d62                suspend_power_down_user
+                0x0000000000003d60        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003d60                suspend_power_down_user
  .text.suspend_power_down_kb
-                0x0000000000003d64        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003d64                suspend_power_down_kb
+                0x0000000000003d62        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003d62                suspend_power_down_kb
  .text.suspend_power_down
-                0x0000000000003d68       0x60 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003d68                suspend_power_down
+                0x0000000000003d66       0x60 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003d66                suspend_power_down
  .text.matrix_power_down
-                0x0000000000003dc8        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003dc8                matrix_power_down
+                0x0000000000003dc6        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003dc6                matrix_power_down
  .text.suspend_wakeup_condition
-                0x0000000000003dca       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003dca                suspend_wakeup_condition
+                0x0000000000003dc8       0x28 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003dc8                suspend_wakeup_condition
  .text.suspend_wakeup_init_user
-                0x0000000000003df2        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003df2                suspend_wakeup_init_user
+                0x0000000000003df0        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003df0                suspend_wakeup_init_user
  .text.suspend_wakeup_init_kb
-                0x0000000000003df4        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003df4                suspend_wakeup_init_kb
+                0x0000000000003df2        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003df2                suspend_wakeup_init_kb
  .text.suspend_wakeup_init
-                0x0000000000003df8       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003df8                suspend_wakeup_init
+                0x0000000000003df6       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003df6                suspend_wakeup_init
  .text.__vector_12
-                0x0000000000003e08       0x4e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
-                0x0000000000003e08                __vector_12
+                0x0000000000003e06       0x4e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x0000000000003e06                __vector_12
  .text.timer_init
-                0x0000000000003e56       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x0000000000003e56                timer_init
+                0x0000000000003e54       0x12 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000003e54                timer_init
  .text.timer_read
-                0x0000000000003e68       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x0000000000003e68                timer_read
+                0x0000000000003e66       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000003e66                timer_read
  .text.timer_read32
-                0x0000000000003e80       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x0000000000003e80                timer_read32
+                0x0000000000003e7e       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000003e7e                timer_read32
  .text.timer_elapsed
-                0x0000000000003e98       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x0000000000003e98                timer_elapsed
+                0x0000000000003e96       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000003e96                timer_elapsed
  .text.timer_elapsed32
-                0x0000000000003eb6       0x38 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x0000000000003eb6                timer_elapsed32
+                0x0000000000003eb4       0x38 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000003eb4                timer_elapsed32
  .text.__vector_21
-                0x0000000000003eee       0x48 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x0000000000003eee                __vector_21
+                0x0000000000003eec       0x48 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000003eec                __vector_21
  .text.bootloader_jump
-                0x0000000000003f36       0x22 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
-                0x0000000000003f36                bootloader_jump
- .text.magic    0x0000000000003f58       0x44 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/magic.o
-                0x0000000000003f58                magic
+                0x0000000000003f34       0x22 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
+                0x0000000000003f34                bootloader_jump
+ .text.magic    0x0000000000003f56       0x44 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/magic.o
+                0x0000000000003f56                magic
  .text.keyboard_leds
-                0x0000000000003f9c        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000003f9a        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .text.send_mouse
-                0x0000000000003fa2        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000003fa0        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .text.send_extra
-                0x0000000000003fa4       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000003fa2       0x66 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .text.send_consumer
-                0x000000000000400a        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000004008        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .text.send_system
-                0x0000000000004012        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000004010        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .text.send_keyboard
-                0x000000000000401a       0x80 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000004018       0x80 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .text.EVENT_USB_Device_Connect
-                0x000000000000409a       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x000000000000409a                EVENT_USB_Device_Connect
+                0x0000000000004098       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000004098                EVENT_USB_Device_Connect
  .text.EVENT_USB_Device_Disconnect
-                0x00000000000040b6        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000040b6                EVENT_USB_Device_Disconnect
+                0x00000000000040b4        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000040b4                EVENT_USB_Device_Disconnect
  .text.EVENT_USB_Device_Reset
-                0x00000000000040bc        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000040bc                EVENT_USB_Device_Reset
+                0x00000000000040ba        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000040ba                EVENT_USB_Device_Reset
  .text.EVENT_USB_Device_Suspend
-                0x00000000000040be        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000040be                EVENT_USB_Device_Suspend
+                0x00000000000040bc        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000040bc                EVENT_USB_Device_Suspend
  .text.EVENT_USB_Device_WakeUp
-                0x00000000000040c0        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000040c0                EVENT_USB_Device_WakeUp
+                0x00000000000040be        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000040be                EVENT_USB_Device_WakeUp
  .text.EVENT_USB_Device_ConfigurationChanged
-                0x00000000000040c4       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000040c4                EVENT_USB_Device_ConfigurationChanged
+                0x00000000000040c2       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000040c2                EVENT_USB_Device_ConfigurationChanged
  .text.EVENT_USB_Device_ControlRequest
-                0x00000000000040d8      0x16e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000040d8                EVENT_USB_Device_ControlRequest
+                0x00000000000040d6      0x16e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000040d6                EVENT_USB_Device_ControlRequest
  .text.startup.main
-                0x0000000000004246       0x7e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x0000000000004246                main
+                0x0000000000004244       0x7e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x0000000000004244                main
  .text.CALLBACK_USB_GetDescriptor
-                0x00000000000042c4        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000000042c4                CALLBACK_USB_GetDescriptor
+                0x00000000000042c2        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000000042c2                CALLBACK_USB_GetDescriptor
  .text.get_usb_descriptor
-                0x00000000000042c8       0xbc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
-                0x00000000000042c8                get_usb_descriptor
+                0x00000000000042c6       0xbc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+                0x00000000000042c6                get_usb_descriptor
  .text.USB_Device_SendRemoteWakeup
-                0x0000000000004384       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
-                0x0000000000004384                USB_Device_SendRemoteWakeup
+                0x0000000000004382       0x2c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
+                0x0000000000004382                USB_Device_SendRemoteWakeup
  .text.Endpoint_Write_Stream_LE
-                0x00000000000043b0       0x9e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
-                0x00000000000043b0                Endpoint_Write_Stream_LE
+                0x00000000000043ae       0x9e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+                0x00000000000043ae                Endpoint_Write_Stream_LE
  .text.Endpoint_Write_Control_Stream_LE
-                0x000000000000444e       0xbc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
-                0x000000000000444e                Endpoint_Write_Control_Stream_LE
+                0x000000000000444c       0xbc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+                0x000000000000444c                Endpoint_Write_Control_Stream_LE
  .text.Endpoint_Write_Control_PStream_LE
-                0x000000000000450a       0xbe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
-                0x000000000000450a                Endpoint_Write_Control_PStream_LE
+                0x0000000000004508       0xbe .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+                0x0000000000004508                Endpoint_Write_Control_PStream_LE
  .text.Endpoint_ConfigureEndpoint_Prv
-                0x00000000000045c8       0x68 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
-                0x00000000000045c8                Endpoint_ConfigureEndpoint_Prv
+                0x00000000000045c6       0x68 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+                0x00000000000045c6                Endpoint_ConfigureEndpoint_Prv
  .text.Endpoint_ClearStatusStage
-                0x0000000000004630       0x3e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
-                0x0000000000004630                Endpoint_ClearStatusStage
+                0x000000000000462e       0x3e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+                0x000000000000462e                Endpoint_ClearStatusStage
  .text.Endpoint_WaitUntilReady
-                0x000000000000466e       0x62 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
-                0x000000000000466e                Endpoint_WaitUntilReady
+                0x000000000000466c       0x62 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+                0x000000000000466c                Endpoint_WaitUntilReady
  .text.USB_Disable
-                0x00000000000046d0       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
-                0x00000000000046d0                USB_Disable
+                0x00000000000046ce       0x34 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+                0x00000000000046ce                USB_Disable
  .text.USB_ResetInterface
-                0x0000000000004704       0x86 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
-                0x0000000000004704                USB_ResetInterface
+                0x0000000000004702       0x86 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+                0x0000000000004702                USB_ResetInterface
  .text.USB_Init
-                0x000000000000478a       0x22 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
-                0x000000000000478a                USB_Init
+                0x0000000000004788       0x22 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+                0x0000000000004788                USB_Init
  .text.USB_INT_DisableAllInterrupts
-                0x00000000000047ac       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x00000000000047ac                USB_INT_DisableAllInterrupts
+                0x00000000000047aa       0x10 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x00000000000047aa                USB_INT_DisableAllInterrupts
  .text.USB_INT_ClearAllInterrupts
-                0x00000000000047bc        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x00000000000047bc                USB_INT_ClearAllInterrupts
+                0x00000000000047ba        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x00000000000047ba                USB_INT_ClearAllInterrupts
  .text.__vector_10
-                0x00000000000047c6      0x1a8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x00000000000047c6                __vector_10
+                0x00000000000047c4      0x1a8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x00000000000047c4                __vector_10
  .text.__vector_11
-                0x000000000000496e       0x88 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
-                0x000000000000496e                __vector_11
+                0x000000000000496c       0x88 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+                0x000000000000496c                __vector_11
  .text.USB_Device_ProcessControlRequest
-                0x00000000000049f6      0x2a4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
-                0x00000000000049f6                USB_Device_ProcessControlRequest
+                0x00000000000049f4      0x2a4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+                0x00000000000049f4                USB_Device_ProcessControlRequest
  .text.USB_Event_Stub
-                0x0000000000004c9a        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/Events.o
-                0x0000000000004c9a                EVENT_USB_Device_StartOfFrame
-                0x0000000000004c9a                USB_Event_Stub
+                0x0000000000004c98        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/Events.o
+                0x0000000000004c98                EVENT_USB_Device_StartOfFrame
+                0x0000000000004c98                USB_Event_Stub
  .text.USB_USBTask
-                0x0000000000004c9c       0x36 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
-                0x0000000000004c9c                USB_USBTask
+                0x0000000000004c9a       0x36 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
+                0x0000000000004c9a                USB_USBTask
  .text.avr-libc.fplib
-                0x0000000000004cd2        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
-                0x0000000000004cd2                __subsf3
-                0x0000000000004cd4                __addsf3
+                0x0000000000004cd0        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
+                0x0000000000004cd0                __subsf3
+                0x0000000000004cd2                __addsf3
  .text.avr-libc.fplib
-                0x0000000000004ce0       0xcc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
-                0x0000000000004d02                __addsf3x
+                0x0000000000004cde       0xcc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
+                0x0000000000004d00                __addsf3x
  .text.avr-libc.fplib
-                0x0000000000004dac       0x5e c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
-                0x0000000000004dac                __fixunssfsi
+                0x0000000000004daa       0x5e c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
+                0x0000000000004daa                __fixunssfsi
  .text.avr-libc.fplib
-                0x0000000000004e0a       0x7a c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
-                0x0000000000004e0a                __floatunsisf
-                0x0000000000004e0e                __floatsisf
+                0x0000000000004e08       0x7a c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
+                0x0000000000004e08                __floatunsisf
+                0x0000000000004e0c                __floatsisf
  .text.avr-libc.fplib
-                0x0000000000004e84        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
-                0x0000000000004e84                __fp_inf
+                0x0000000000004e82        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
+                0x0000000000004e82                __fp_inf
  .text.avr-libc.fplib
-                0x0000000000004e90        0x6 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
-                0x0000000000004e90                __fp_nan
+                0x0000000000004e8e        0x6 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
+                0x0000000000004e8e                __fp_nan
  .text.avr-libc.fplib
-                0x0000000000004e96        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
-                0x0000000000004e96                __fp_pscA
+                0x0000000000004e94        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
+                0x0000000000004e94                __fp_pscA
  .text.avr-libc.fplib
-                0x0000000000004ea4        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
-                0x0000000000004ea4                __fp_pscB
+                0x0000000000004ea2        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
+                0x0000000000004ea2                __fp_pscB
  .text.avr-libc.fplib
-                0x0000000000004eb2       0x22 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
-                0x0000000000004eb2                __fp_round
+                0x0000000000004eb0       0x22 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
+                0x0000000000004eb0                __fp_round
  .text.avr-libc.fplib
-                0x0000000000004ed4       0x44 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x0000000000004ed4                __fp_split3
-                0x0000000000004ee4                __fp_splitA
+                0x0000000000004ed2       0x44 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+                0x0000000000004ed2                __fp_split3
+                0x0000000000004ee2                __fp_splitA
  .text.avr-libc.fplib
-                0x0000000000004f18        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x0000000000004f18                __fp_zero
-                0x0000000000004f1a                __fp_szero
+                0x0000000000004f16        0xe c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+                0x0000000000004f16                __fp_zero
+                0x0000000000004f18                __fp_szero
  .text.avr-libc.fplib
-                0x0000000000004f26        0x8 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
-                0x0000000000004f26                __mulsf3
+                0x0000000000004f24        0x8 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
+                0x0000000000004f24                __mulsf3
  .text.avr-libc.fplib
-                0x0000000000004f2e       0xd2 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
-                0x0000000000004f4c                __mulsf3x
-                0x0000000000004f52                __mulsf3_pse
+                0x0000000000004f2c       0xd2 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
+                0x0000000000004f4a                __mulsf3x
+                0x0000000000004f50                __mulsf3_pse
  .text.libgcc.div
-                0x0000000000005000       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodqi4.o)
-                0x0000000000005000                __udivmodqi4
+                0x0000000000004ffe       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodqi4.o)
+                0x0000000000004ffe                __udivmodqi4
  .text.libgcc.div
-                0x0000000000005018       0x28 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodhi4.o)
-                0x0000000000005018                __udivmodhi4
+                0x0000000000005016       0x28 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodhi4.o)
+                0x0000000000005016                __udivmodhi4
  .text.libgcc.div
-                0x0000000000005040       0x2e c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_divmodsi4.o)
-                0x0000000000005040                __divmodsi4
+                0x000000000000503e       0x2e c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_divmodsi4.o)
+                0x000000000000503e                __divmodsi4
  .text.libgcc.div
-                0x000000000000506e       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_negsi2.o)
-                0x000000000000506e                __negsi2
- .text.libgcc   0x000000000000507e        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x000000000000507e                __tablejump2__
+                0x000000000000506c       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_negsi2.o)
+                0x000000000000506c                __negsi2
+ .text.libgcc   0x000000000000507c        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x000000000000507c                __tablejump2__
  .text.libgcc.div
-                0x000000000000508a       0x44 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x000000000000508a                __udivmodsi4
+                0x0000000000005088       0x44 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_udivmodsi4.o)
+                0x0000000000005088                __udivmodsi4
  .text.avr-libc
-                0x00000000000050ce       0x12 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
-                0x00000000000050ce                memcpy_P
+                0x00000000000050cc       0x12 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+                0x00000000000050cc                memcpy_P
  .text.avr-libc
-                0x00000000000050e0       0x1a c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcmp.o)
-                0x00000000000050e0                memcmp
+                0x00000000000050de       0x1a c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(memcmp.o)
+                0x00000000000050de                memcmp
  .text.avr-libc
-                0x00000000000050fa       0x46 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00000000000050fa                sprintf
+                0x00000000000050f8       0x46 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(sprintf.o)
+                0x00000000000050f8                sprintf
  .text.avr-libc
-                0x0000000000005140      0x396 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x0000000000005140                vfprintf
+                0x000000000000513e      0x396 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x000000000000513e                vfprintf
  .text.avr-libc
-                0x00000000000054d6       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x00000000000054d6                strnlen_P
+                0x00000000000054d4       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00000000000054d4                strnlen_P
  .text.avr-libc
-                0x00000000000054ec       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00000000000054ec                strnlen
+                0x00000000000054ea       0x16 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00000000000054ea                strnlen
  .text.avr-libc
-                0x0000000000005502       0x60 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x0000000000005502                fputc
+                0x0000000000005500       0x60 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x0000000000005500                fputc
  .text.avr-libc
-                0x0000000000005562       0xbc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x0000000000005562                __ultoa_invert
+                0x0000000000005560       0xbc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x0000000000005560                __ultoa_invert
  .text.avr-libc
-                0x000000000000561e       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_byte.o)
-                0x000000000000561e                eeprom_read_byte
+                0x000000000000561c       0x10 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_byte.o)
+                0x000000000000561c                eeprom_read_byte
  .text.avr-libc
-                0x000000000000562e        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_word.o)
-                0x000000000000562e                eeprom_read_word
+                0x000000000000562c        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_word.o)
+                0x000000000000562c                eeprom_read_word
  .text.avr-libc
-                0x000000000000563a       0x24 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_byte.o)
-                0x000000000000563a                eeprom_update_byte
-                0x000000000000563c                eeprom_update_r18
+                0x0000000000005638       0x24 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_byte.o)
+                0x0000000000005638                eeprom_update_byte
+                0x000000000000563a                eeprom_update_r18
  .text.avr-libc
-                0x000000000000565e       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_dword.o)
-                0x000000000000565e                eeprom_update_float
-                0x000000000000565e                eeprom_update_dword
+                0x000000000000565c       0x18 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_dword.o)
+                0x000000000000565c                eeprom_update_float
+                0x000000000000565c                eeprom_update_dword
  .text.avr-libc
-                0x0000000000005676        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_word.o)
-                0x0000000000005676                eeprom_update_word
+                0x0000000000005674        0xc c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eeupd_word.o)
+                0x0000000000005674                eeprom_update_word
  .text.avr-libc
-                0x0000000000005682       0x20 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_block.o)
-                0x0000000000005682                eeprom_read_block
-                0x0000000000005686                eeprom_read_blraw
+                0x0000000000005680       0x20 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5\libatmega32u4.a(eerd_block.o)
+                0x0000000000005680                eeprom_read_block
+                0x0000000000005684                eeprom_read_blraw
  .text.libgcc.prologue
-                0x00000000000056a2       0x38 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_prologue.o)
-                0x00000000000056a2                __prologue_saves__
+                0x00000000000056a0       0x38 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_prologue.o)
+                0x00000000000056a0                __prologue_saves__
  .text.libgcc.prologue
-                0x00000000000056da       0x36 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_epilogue.o)
-                0x00000000000056da                __epilogue_restores__
-                0x0000000000005710                . = ALIGN (0x2)
+                0x00000000000056d8       0x36 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_epilogue.o)
+                0x00000000000056d8                __epilogue_restores__
+                0x000000000000570e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000000000005710        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
-                0x0000000000005710                _exit
-                0x0000000000005710                exit
+ .fini9         0x000000000000570e        0x0 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
+                0x000000000000570e                _exit
+                0x000000000000570e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -2222,23 +2221,23 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000000000005710        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x000000000000570e        0x4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
  *(.hightext)
  *(.hightext*)
  *(.progmemx.*)
-                0x0000000000005714                . = ALIGN (0x2)
+                0x0000000000005712                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
  .jumptables.gcc.process_action
-                0x0000000000005714       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000005712       0x18 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
  .jumptables.gcc.is_tap_action
-                0x000000000000572c       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x000000000000572a       0x1c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
  .jumptables.gcc.USB_Device_ProcessControlRequest
-                0x0000000000005748       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
-                0x000000000000575c                _etext = .
+                0x0000000000005746       0x14 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+                0x000000000000575a                _etext = .
 
-.data           0x0000000000800100      0x1ec load address 0x000000000000575c
+.data           0x0000000000800100      0x1e8 load address 0x000000000000575a
                 0x0000000000800100                PROVIDE (__data_start = .)
  *(.data)
  *(.data*)
@@ -2304,172 +2303,171 @@ END GROUP
  .rodata.row_pins
                 0x000000000080026f        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
  .rodata.render_logo2.str1.1
-                0x0000000000800277        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000800277        0x7 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .rodata.CSWTCH.1
-                0x0000000000800281       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
+                0x000000000080027e       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
  .rodata.CSWTCH.0
-                0x00000000008002af        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
+                0x00000000008002ac        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
  .rodata.source_map.2073
-                0x00000000008002b2        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x00000000008002af        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .rodata.target_map.2074
-                0x00000000008002b6        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x00000000008002b3        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .rodata.CSWTCH.11
-                0x00000000008002ba       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x00000000008002b7       0x2e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
  .rodata.CSWTCH.10
-                0x00000000008002e8        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x00000000008002e5        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
  *(.gnu.linkonce.r*)
-                0x00000000008002ec                . = ALIGN (0x2)
- *fill*         0x00000000008002eb        0x1 
-                0x00000000008002ec                _edata = .
-                0x00000000008002ec                PROVIDE (__data_end = .)
+                0x00000000008002e8                . = ALIGN (0x2)
+                0x00000000008002e8                _edata = .
+                0x00000000008002e8                PROVIDE (__data_end = .)
 
-.bss            0x00000000008002ec      0x335
-                0x00000000008002ec                PROVIDE (__bss_start = .)
+.bss            0x00000000008002e8      0x331
+                0x00000000008002e8                PROVIDE (__bss_start = .)
  *(.bss)
  *(.bss*)
  .bss.matrix_debouncing
-                0x00000000008002ec        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
- .bss.matrix    0x00000000008002f4        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x00000000008002e8        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+ .bss.matrix    0x00000000008002f0        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
  .bss.is_master
-                0x00000000008002fc        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
-                0x00000000008002fc                is_master
+                0x00000000008002f8        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x00000000008002f8                is_master
  .bss.error_count
-                0x00000000008002fd        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
+                0x00000000008002f9        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
  .bss.usbstate.1898
-                0x00000000008002fe        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
+                0x00000000008002fa        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
  .bss.need_retry.1591
-                0x00000000008002ff        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x00000000008002fb        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
  .bss.slave_buffer_change_count
-                0x0000000000800301        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000800301                slave_buffer_change_count
- .bss.status1   0x0000000000800302        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000800302                status1
+                0x00000000008002fd        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x00000000008002fd                slave_buffer_change_count
+ .bss.status1   0x00000000008002fe        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x00000000008002fe                status1
  .bss.status_com
-                0x0000000000800303        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000800303                status_com
+                0x00000000008002ff        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x00000000008002ff                status_com
  .bss.serial_master_buffer
-                0x0000000000800304        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000800304                serial_master_buffer
+                0x0000000000800300        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x0000000000800300                serial_master_buffer
  .bss.serial_slave_buffer
-                0x0000000000800308        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
-                0x0000000000800308                serial_slave_buffer
+                0x0000000000800304        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
+                0x0000000000800304                serial_slave_buffer
  .bss.oled_timer
-                0x000000000080030c        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x0000000000800308        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
  .bss.wpm_timer
-                0x0000000000800310        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x000000000080030c        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
  .bss.current_wpm
-                0x0000000000800312        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+                0x000000000080030e        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
  .bss.oled_temp_buffer.2102
-                0x0000000000800313        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x000000000080030f        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .bss.temp_buffer.2075
-                0x0000000000800319       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800315       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
  .bss.oled_rotation_width
-                0x0000000000800339        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000800339                oled_rotation_width
+                0x0000000000800335        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800335                oled_rotation_width
  .bss.oled_rotation
-                0x000000000080033a        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x000000000080033a                oled_rotation
+                0x0000000000800336        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800336                oled_rotation
  .bss.oled_scrolling
-                0x000000000080033b        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x000000000080033b                oled_scrolling
+                0x0000000000800337        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800337                oled_scrolling
  .bss.oled_active
-                0x000000000080033c        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x000000000080033c                oled_active
+                0x0000000000800338        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800338                oled_active
  .bss.oled_initialized
-                0x000000000080033d        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x000000000080033d                oled_initialized
+                0x0000000000800339        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800339                oled_initialized
  .bss.oled_dirty
-                0x000000000080033e        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x000000000080033e                oled_dirty
- .bss.last_td   0x0000000000800340        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+                0x000000000080033a        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x000000000080033a                oled_dirty
+ .bss.last_td   0x000000000080033c        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
  .bss.Transaction_table_size
-                0x0000000000800342        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x000000000080033e        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .bss.Transaction_table
-                0x0000000000800343        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+                0x000000000080033f        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
  .bss.last_consumer_report
-                0x0000000000800345        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x0000000000800341        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
  .bss.last_system_report
-                0x0000000000800347        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
- .bss.driver    0x0000000000800349        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+                0x0000000000800343        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+ .bss.driver    0x0000000000800345        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
  .bss.led_status.5729
-                0x000000000080034b        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x0000000000800347        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
  .bss.matrix_prev.5728
-                0x000000000080034c        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+                0x0000000000800348        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
  .bss.disable_action_cache
-                0x0000000000800354        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
-                0x0000000000800354                disable_action_cache
+                0x0000000000800350        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+                0x0000000000800350                disable_action_cache
  .bss.waiting_buffer_tail
-                0x0000000000800355        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000800351        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .bss.waiting_buffer_head
-                0x0000000000800356        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000800352        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .bss.waiting_buffer
-                0x0000000000800357       0x30 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000800353       0x30 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .bss.tapping_key
-                0x0000000000800387        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+                0x0000000000800383        0x6 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
  .bss.source_layers_cache
-                0x000000000080038d       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x000000000080038d                source_layers_cache
+                0x0000000000800389       0x1e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x0000000000800389                source_layers_cache
  .bss.layer_state
-                0x00000000008003ab        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000008003ab                layer_state
+                0x00000000008003a7        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000008003a7                layer_state
  .bss.default_layer_state
-                0x00000000008003af        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
-                0x00000000008003af                default_layer_state
+                0x00000000008003ab        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+                0x00000000008003ab                default_layer_state
  .bss.oneshot_layer_data
-                0x00000000008003b3        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000008003af        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
  .bss.oneshot_mods
-                0x00000000008003b4        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000008003b0        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
  .bss.__compound_literal.0
-                0x00000000008003b5       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000008003b1       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
  .bss.macro_mods
-                0x00000000008003d5        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000008003d1        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
  .bss.weak_mods
-                0x00000000008003d6        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000008003d2        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
  .bss.real_mods
-                0x00000000008003d7        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+                0x00000000008003d3        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
  .bss.debug_config
-                0x00000000008003d8        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/debug.o
-                0x00000000008003d8                debug_config
+                0x00000000008003d4        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/debug.o
+                0x00000000008003d4                debug_config
  .bss.wdt_timeout
-                0x00000000008003d9        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+                0x00000000008003d5        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
  .bss.keyboard_report_sent
-                0x00000000008003da       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000008003d6       0x20 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .bss.keyboard_led_state
-                0x00000000008003fa        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000008003f6        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
  .bss.keyboard_idle
-                0x00000000008003fb        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
-                0x00000000008003fb                keyboard_idle
+                0x00000000008003f7        0x1 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+                0x00000000008003f7                keyboard_idle
  *(COMMON)
- COMMON         0x00000000008003fc        0xc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
-                0x00000000008003fc                RGB_current_mode
-                0x00000000008003fe                wpm_str
- COMMON         0x0000000000800408      0x206 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
-                0x0000000000800408                oled_buffer
-                0x0000000000800608                oled_timeout
-                0x000000000080060c                oled_cursor
- COMMON         0x000000000080060e        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
-                0x000000000080060e                timer_count
- COMMON         0x0000000000800612        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/magic.o
-                0x0000000000800612                keymap_config
- COMMON         0x0000000000800614        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
-                0x0000000000800614                USB_Device_ConfigurationNumber
-                0x0000000000800615                USB_Device_CurrentlySelfPowered
-                0x0000000000800616                USB_Device_RemoteWakeupEnabled
- COMMON         0x0000000000800617        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
-                0x0000000000800617                USB_IsInitialized
-                0x0000000000800618                USB_DeviceState
-                0x0000000000800619                USB_ControlRequest
-                0x0000000000800621                PROVIDE (__bss_end = .)
-                0x000000000000575c                __data_load_start = LOADADDR (.data)
-                0x0000000000005948                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00000000008003f8        0x8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+                0x00000000008003f8                RGB_current_mode
+                0x00000000008003fa                wpm_str
+ COMMON         0x0000000000800400      0x206 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+                0x0000000000800400                oled_buffer
+                0x0000000000800600                oled_timeout
+                0x0000000000800604                oled_cursor
+ COMMON         0x0000000000800606        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+                0x0000000000800606                timer_count
+ COMMON         0x000000000080060a        0x2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/magic.o
+                0x000000000080060a                keymap_config
+ COMMON         0x000000000080060c        0x3 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+                0x000000000080060c                USB_Device_ConfigurationNumber
+                0x000000000080060d                USB_Device_CurrentlySelfPowered
+                0x000000000080060e                USB_Device_RemoteWakeupEnabled
+ COMMON         0x000000000080060f        0xa .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
+                0x000000000080060f                USB_IsInitialized
+                0x0000000000800610                USB_DeviceState
+                0x0000000000800611                USB_ControlRequest
+                0x0000000000800619                PROVIDE (__bss_end = .)
+                0x000000000000575a                __data_load_start = LOADADDR (.data)
+                0x0000000000005942                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0000000000800621        0x4
+.noinit         0x0000000000800619        0x4
                 [!provide]                        PROVIDE (__noinit_start = .)
  *(.noinit*)
- .noinit        0x0000000000800621        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
-                0x0000000000800621                reset_key
+ .noinit        0x0000000000800619        0x4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
+                0x0000000000800619                reset_key
                 [!provide]                        PROVIDE (__noinit_end = .)
-                0x0000000000800625                _end = .
+                0x000000000080061d                _end = .
                 [!provide]                        PROVIDE (__heap_start = .)
 
 .eeprom         0x0000000000810000        0x0
@@ -2651,46 +2649,46 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x1f633
+.debug_info     0x0000000000000000    0x1f61e
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000      0x9f4 c:/msys64/mingw64/bin/../lib/gcc/avr/8.4.0/../../../../avr/lib/avr5/crtatmega32u4.o
  .debug_info    0x00000000000009f4     0x10fb .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/matrix.o
  .debug_info    0x0000000000001aef      0x35e .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_util.o
  .debug_info    0x0000000000001e4d      0x2eb .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/split_scomm.o
  .debug_info    0x0000000000002138      0x8d2 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/rev1/rev1.o
- .debug_info    0x0000000000002a0a     0x249a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
- .debug_info    0x0000000000004ea4     0x2afc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
- .debug_info    0x00000000000079a0      0x955 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
- .debug_info    0x00000000000082f5     0x20bc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
- .debug_info    0x000000000000a3b1      0x63c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keycode_config.o
- .debug_info    0x000000000000a9ed     0x1822 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
- .debug_info    0x000000000000c20f     0x14eb .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
- .debug_info    0x000000000000d6fa     0x1ab8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
- .debug_info    0x000000000000f1b2      0xf0d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
- .debug_info    0x00000000000100bf      0x718 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
- .debug_info    0x00000000000107d7      0x88d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
- .debug_info    0x0000000000011064      0x96c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
- .debug_info    0x00000000000119d0     0x1fca .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
- .debug_info    0x000000000001399a      0xf99 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
- .debug_info    0x0000000000014933      0xc9a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
- .debug_info    0x00000000000155cd      0xd97 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
- .debug_info    0x0000000000016364      0x110 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/debug.o
- .debug_info    0x0000000000016474      0x8e9 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
- .debug_info    0x0000000000016d5d      0xc7f .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
- .debug_info    0x00000000000179dc      0x771 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
- .debug_info    0x000000000001814d      0x443 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
- .debug_info    0x0000000000018590      0x357 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
- .debug_info    0x00000000000188e7      0x550 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/magic.o
- .debug_info    0x0000000000018e37     0x16c7 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
- .debug_info    0x000000000001a4fe      0x9ee .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
- .debug_info    0x000000000001aeec      0x1c0 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
- .debug_info    0x000000000001b0ac     0x1da4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
- .debug_info    0x000000000001ce50      0x75d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
- .debug_info    0x000000000001d5ad      0x606 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
- .debug_info    0x000000000001dbb3      0xa43 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
- .debug_info    0x000000000001e5f6      0xc59 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
- .debug_info    0x000000000001f24f       0xe9 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/Events.o
- .debug_info    0x000000000001f338      0x2fb .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
+ .debug_info    0x0000000000002a0a     0x2485 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.o
+ .debug_info    0x0000000000004e8f     0x2afc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/quantum.o
+ .debug_info    0x000000000000798b      0x955 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/led.o
+ .debug_info    0x00000000000082e0     0x20bc .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keymap_common.o
+ .debug_info    0x000000000000a39c      0x63c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/keycode_config.o
+ .debug_info    0x000000000000a9d8     0x1822 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/wpm.o
+ .debug_info    0x000000000000c1fa     0x14eb .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/oled_driver.o
+ .debug_info    0x000000000000d6e5     0x1ab8 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/quantum/process_keycode/process_tap_dance.o
+ .debug_info    0x000000000000f19d      0xf0d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/serial.a(serial.o)
+ .debug_info    0x00000000000100aa      0x718 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/i2c_master.a(i2c_master.o)
+ .debug_info    0x00000000000107c2      0x88d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/host.o
+ .debug_info    0x000000000001104f      0x96c .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/keyboard.o
+ .debug_info    0x00000000000119bb     0x1fca .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action.o
+ .debug_info    0x0000000000013985      0xf99 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_tapping.o
+ .debug_info    0x000000000001491e      0xc9a .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_layer.o
+ .debug_info    0x00000000000155b8      0xd97 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/action_util.o
+ .debug_info    0x000000000001634f      0x110 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/debug.o
+ .debug_info    0x000000000001645f      0x8e9 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/eeconfig.o
+ .debug_info    0x0000000000016d48      0xc7f .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/report.o
+ .debug_info    0x00000000000179c7      0x771 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/suspend.o
+ .debug_info    0x0000000000018138      0x443 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/timer.o
+ .debug_info    0x000000000001857b      0x357 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/avr/bootloader.o
+ .debug_info    0x00000000000188d2      0x550 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/common/magic.o
+ .debug_info    0x0000000000018e22     0x16c7 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lufa.o
+ .debug_info    0x000000000001a4e9      0x9ee .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/usb_descriptor.o
+ .debug_info    0x000000000001aed7      0x1c0 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
+ .debug_info    0x000000000001b097     0x1da4 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+ .debug_info    0x000000000001ce3b      0x75d .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+ .debug_info    0x000000000001d598      0x606 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+ .debug_info    0x000000000001db9e      0xa43 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+ .debug_info    0x000000000001e5e1      0xc59 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+ .debug_info    0x000000000001f23a       0xe9 .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/Events.o
+ .debug_info    0x000000000001f323      0x2fb .build/obj_crkbd_rev1_legacy_rene_prog_dvorak/lib/lufa/LUFA/Drivers/USB/Core/USBTask.o
 
 .debug_abbrev   0x0000000000000000     0x6a8d
  *(.debug_abbrev)

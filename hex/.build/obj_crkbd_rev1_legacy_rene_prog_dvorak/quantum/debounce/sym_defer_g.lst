@@ -242,16 +242,16 @@
  195               		.file 21 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sym_defer_g.c
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:13     .text.debounce_init:0000000000000000 debounce_init
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:33     .text.debounce:0000000000000000 debounce
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:172    .bss.debouncing:0000000000000000 debouncing
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:167    .bss.debouncing_time:0000000000000000 debouncing_time
-C:\Users\renep\AppData\Local\Temp\ccTTVdTR.s:148    .text.debounce_active:0000000000000000 debounce_active
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:13     .text.debounce_init:0000000000000000 debounce_init
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:33     .text.debounce:0000000000000000 debounce
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:172    .bss.debouncing:0000000000000000 debouncing
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:167    .bss.debouncing_time:0000000000000000 debouncing_time
+C:\Users\renep\AppData\Local\Temp\cc3dVkhg.s:148    .text.debounce_active:0000000000000000 debounce_active
 
 UNDEFINED SYMBOLS
 timer_read

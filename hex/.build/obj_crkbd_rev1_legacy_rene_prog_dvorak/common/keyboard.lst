@@ -1053,26 +1053,26 @@
  606               		.file 20 "tmk_core/common/magic.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keyboard.c
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:13     .text.disable_jtag:0000000000000000 disable_jtag
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:41     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:41     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user.localalias.0
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:60     .text.matrix_setup:0000000000000000 matrix_setup
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:75     .text.keyboard_pre_init_kb:0000000000000000 keyboard_pre_init_kb
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:92     .text.keyboard_post_init_user:0000000000000000 keyboard_post_init_user
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:107    .text.keyboard_post_init_kb:0000000000000000 keyboard_post_init_kb
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:124    .text.keyboard_setup:0000000000000000 keyboard_setup
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:147    .text.is_keyboard_master:0000000000000000 is_keyboard_master
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:166    .text.should_process_keypress:0000000000000000 should_process_keypress
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:184    .text.keyboard_init:0000000000000000 keyboard_init
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:214    .text.keyboard_task:0000000000000000 keyboard_task
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:584    .bss.matrix_prev.5728:0000000000000000 matrix_prev.5728
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:579    .bss.led_status.5729:0000000000000000 led_status.5729
-C:\Users\renep\AppData\Local\Temp\cci17VXJ.s:556    .text.keyboard_set_leds:0000000000000000 keyboard_set_leds
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:13     .text.disable_jtag:0000000000000000 disable_jtag
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:41     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:41     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user.localalias.0
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:60     .text.matrix_setup:0000000000000000 matrix_setup
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:75     .text.keyboard_pre_init_kb:0000000000000000 keyboard_pre_init_kb
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:92     .text.keyboard_post_init_user:0000000000000000 keyboard_post_init_user
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:107    .text.keyboard_post_init_kb:0000000000000000 keyboard_post_init_kb
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:124    .text.keyboard_setup:0000000000000000 keyboard_setup
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:147    .text.is_keyboard_master:0000000000000000 is_keyboard_master
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:166    .text.should_process_keypress:0000000000000000 should_process_keypress
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:184    .text.keyboard_init:0000000000000000 keyboard_init
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:214    .text.keyboard_task:0000000000000000 keyboard_task
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:584    .bss.matrix_prev.5728:0000000000000000 matrix_prev.5728
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:579    .bss.led_status.5729:0000000000000000 led_status.5729
+C:\Users\renep\AppData\Local\Temp\ccjiuGHk.s:556    .text.keyboard_set_leds:0000000000000000 keyboard_set_leds
 
 UNDEFINED SYMBOLS
 timer_init

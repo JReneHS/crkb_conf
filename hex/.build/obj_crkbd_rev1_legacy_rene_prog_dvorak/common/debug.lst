@@ -18,12 +18,12 @@
   20               		.file 3 "tmk_core/common/debug.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 debug.c
-C:\Users\renep\AppData\Local\Temp\cc9RYOTi.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cc9RYOTi.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cc9RYOTi.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cc9RYOTi.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cc9RYOTi.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cc9RYOTi.s:14     .bss.debug_config:0000000000000000 debug_config
+C:\Users\renep\AppData\Local\Temp\ccRQMBgD.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccRQMBgD.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccRQMBgD.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccRQMBgD.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccRQMBgD.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccRQMBgD.s:14     .bss.debug_config:0000000000000000 debug_config
 
 UNDEFINED SYMBOLS
 __do_clear_bss

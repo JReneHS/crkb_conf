@@ -667,19 +667,19 @@
  446               		.file 4 "tmk_core/common/timer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 timer.c
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:13     .text.timer_init:0000000000000000 timer_init
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:48     .text.timer_clear:0000000000000000 timer_clear
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:13     .text.timer_init:0000000000000000 timer_init
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:48     .text.timer_clear:0000000000000000 timer_clear
                             *COM*:0000000000000004 timer_count
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:109    .text.timer_read:0000000000000000 timer_read
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:171    .text.timer_read32:0000000000000000 timer_read32
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:233    .text.timer_elapsed:0000000000000000 timer_elapsed
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:300    .text.timer_elapsed32:0000000000000000 timer_elapsed32
-C:\Users\renep\AppData\Local\Temp\cc07dkNQ.s:396    .text.__vector_21:0000000000000000 __vector_21
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:109    .text.timer_read:0000000000000000 timer_read
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:171    .text.timer_read32:0000000000000000 timer_read32
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:233    .text.timer_elapsed:0000000000000000 timer_elapsed
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:300    .text.timer_elapsed32:0000000000000000 timer_elapsed32
+C:\Users\renep\AppData\Local\Temp\ccHtQuXe.s:396    .text.__vector_21:0000000000000000 __vector_21
                             *ABS*:0000000000000003 __gcc_isr.n_pushed.001
 
 UNDEFINED SYMBOLS

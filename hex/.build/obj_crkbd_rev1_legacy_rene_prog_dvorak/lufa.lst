@@ -5641,31 +5641,31 @@
  1274               		.file 35 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../AVR8/EndpointStream_AVR8.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lufa.c
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:12     .text.keyboard_leds:0000000000000000 keyboard_leds
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1231   .bss.keyboard_led_state:0000000000000000 keyboard_led_state
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:31     .text.send_mouse:0000000000000000 send_mouse
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:48     .text.send_extra:0000000000000000 send_extra
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:208    .text.send_consumer:0000000000000000 send_consumer
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:230    .text.send_system:0000000000000000 send_system
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:252    .text.send_keyboard:0000000000000000 send_keyboard
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1237   .data.keyboard_protocol:0000000000000000 keyboard_protocol
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1226   .bss.keyboard_report_sent:0000000000000000 keyboard_report_sent
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:433    .text.EVENT_USB_Device_Connect:0000000000000000 EVENT_USB_Device_Connect
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:489    .text.EVENT_USB_Device_Disconnect:0000000000000000 EVENT_USB_Device_Disconnect
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:510    .text.EVENT_USB_Device_Reset:0000000000000000 EVENT_USB_Device_Reset
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:525    .text.EVENT_USB_Device_Suspend:0000000000000000 EVENT_USB_Device_Suspend
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:543    .text.EVENT_USB_Device_WakeUp:0000000000000000 EVENT_USB_Device_WakeUp
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:561    .text.EVENT_USB_Device_ConfigurationChanged:0000000000000000 EVENT_USB_Device_ConfigurationChanged
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:632    .text.EVENT_USB_Device_ControlRequest:0000000000000000 EVENT_USB_Device_ControlRequest
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1243   .bss.keyboard_idle:0000000000000000 keyboard_idle
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1022   .text.startup.main:0000000000000000 main
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1217   .data.lufa_driver:0000000000000000 lufa_driver
-C:\Users\renep\AppData\Local\Temp\cc0gHhYp.s:1196   .text.CALLBACK_USB_GetDescriptor:0000000000000000 CALLBACK_USB_GetDescriptor
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:12     .text.keyboard_leds:0000000000000000 keyboard_leds
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1231   .bss.keyboard_led_state:0000000000000000 keyboard_led_state
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:31     .text.send_mouse:0000000000000000 send_mouse
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:48     .text.send_extra:0000000000000000 send_extra
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:208    .text.send_consumer:0000000000000000 send_consumer
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:230    .text.send_system:0000000000000000 send_system
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:252    .text.send_keyboard:0000000000000000 send_keyboard
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1237   .data.keyboard_protocol:0000000000000000 keyboard_protocol
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1226   .bss.keyboard_report_sent:0000000000000000 keyboard_report_sent
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:433    .text.EVENT_USB_Device_Connect:0000000000000000 EVENT_USB_Device_Connect
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:489    .text.EVENT_USB_Device_Disconnect:0000000000000000 EVENT_USB_Device_Disconnect
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:510    .text.EVENT_USB_Device_Reset:0000000000000000 EVENT_USB_Device_Reset
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:525    .text.EVENT_USB_Device_Suspend:0000000000000000 EVENT_USB_Device_Suspend
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:543    .text.EVENT_USB_Device_WakeUp:0000000000000000 EVENT_USB_Device_WakeUp
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:561    .text.EVENT_USB_Device_ConfigurationChanged:0000000000000000 EVENT_USB_Device_ConfigurationChanged
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:632    .text.EVENT_USB_Device_ControlRequest:0000000000000000 EVENT_USB_Device_ControlRequest
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1243   .bss.keyboard_idle:0000000000000000 keyboard_idle
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1022   .text.startup.main:0000000000000000 main
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1217   .data.lufa_driver:0000000000000000 lufa_driver
+C:\Users\renep\AppData\Local\Temp\ccWxxYWl.s:1196   .text.CALLBACK_USB_GetDescriptor:0000000000000000 CALLBACK_USB_GetDescriptor
 
 UNDEFINED SYMBOLS
 USB_DeviceState

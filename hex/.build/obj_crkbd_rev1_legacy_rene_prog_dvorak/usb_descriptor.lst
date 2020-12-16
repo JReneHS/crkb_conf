@@ -1721,19 +1721,19 @@
  582               		.file 12 "tmk_core/protocol/usb_descriptor.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_descriptor.c
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:13     .text.get_usb_descriptor:0000000000000000 get_usb_descriptor
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:505    .progmem.data.KeyboardReport:0000000000000000 KeyboardReport
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:391    .progmem.data.SharedReport:0000000000000000 SharedReport
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:237    .progmem.data.SerialNumberString:0000000000000000 SerialNumberString
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:307    .progmem.data.LanguageString:0000000000000000 LanguageString
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:291    .progmem.data.ManufacturerString:0000000000000000 ManufacturerString
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:247    .progmem.data.ProductString:0000000000000000 ProductString
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:315    .progmem.data.ConfigurationDescriptor:0000000000000000 ConfigurationDescriptor
-C:\Users\renep\AppData\Local\Temp\ccgORYiN.s:372    .progmem.data.DeviceDescriptor:0000000000000000 DeviceDescriptor
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:13     .text.get_usb_descriptor:0000000000000000 get_usb_descriptor
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:505    .progmem.data.KeyboardReport:0000000000000000 KeyboardReport
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:391    .progmem.data.SharedReport:0000000000000000 SharedReport
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:237    .progmem.data.SerialNumberString:0000000000000000 SerialNumberString
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:307    .progmem.data.LanguageString:0000000000000000 LanguageString
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:291    .progmem.data.ManufacturerString:0000000000000000 ManufacturerString
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:247    .progmem.data.ProductString:0000000000000000 ProductString
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:315    .progmem.data.ConfigurationDescriptor:0000000000000000 ConfigurationDescriptor
+C:\Users\renep\AppData\Local\Temp\ccjz7A5m.s:372    .progmem.data.DeviceDescriptor:0000000000000000 DeviceDescriptor
 
 NO UNDEFINED SYMBOLS

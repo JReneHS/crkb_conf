@@ -1771,14 +1771,14 @@
  416               		.file 11 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../AVR8/../Device.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 USBController_AVR8.c
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:13     .text.USB_Disable:0000000000000000 USB_Disable
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:107    .text.USB_ResetInterface:0000000000000000 USB_ResetInterface
-C:\Users\renep\AppData\Local\Temp\ccPh9qdb.s:357    .text.USB_Init:0000000000000000 USB_Init
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:13     .text.USB_Disable:0000000000000000 USB_Disable
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:107    .text.USB_ResetInterface:0000000000000000 USB_ResetInterface
+C:\Users\renep\AppData\Local\Temp\ccB94ETC.s:357    .text.USB_Init:0000000000000000 USB_Init
 
 UNDEFINED SYMBOLS
 USB_INT_DisableAllInterrupts

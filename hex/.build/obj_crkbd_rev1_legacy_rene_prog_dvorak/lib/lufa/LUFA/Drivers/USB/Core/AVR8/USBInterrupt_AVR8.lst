@@ -2996,15 +2996,15 @@
  978               		.file 12 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../AVR8/../Events.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 USBInterrupt_AVR8.c
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:13     .text.USB_INT_DisableAllInterrupts:0000000000000000 USB_INT_DisableAllInterrupts
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:41     .text.USB_INT_ClearAllInterrupts:0000000000000000 USB_INT_ClearAllInterrupts
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:64     .text.__vector_10:0000000000000000 __vector_10
-C:\Users\renep\AppData\Local\Temp\ccU3UpkC.s:740    .text.__vector_11:0000000000000000 __vector_11
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:13     .text.USB_INT_DisableAllInterrupts:0000000000000000 USB_INT_DisableAllInterrupts
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:41     .text.USB_INT_ClearAllInterrupts:0000000000000000 USB_INT_ClearAllInterrupts
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:64     .text.__vector_10:0000000000000000 __vector_10
+C:\Users\renep\AppData\Local\Temp\ccO9Ftyf.s:740    .text.__vector_11:0000000000000000 __vector_11
 
 UNDEFINED SYMBOLS
 EVENT_USB_Device_StartOfFrame

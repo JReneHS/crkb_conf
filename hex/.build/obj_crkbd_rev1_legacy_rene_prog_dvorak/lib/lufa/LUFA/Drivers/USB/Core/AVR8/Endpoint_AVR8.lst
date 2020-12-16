@@ -1719,16 +1719,16 @@
  718               		.file 9 "lib/lufa/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/../Device.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Endpoint_AVR8.c
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:13     .text.Endpoint_ConfigureEndpoint_Prv:0000000000000000 Endpoint_ConfigureEndpoint_Prv
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:185    .text.Endpoint_ConfigureEndpointTable:0000000000000000 Endpoint_ConfigureEndpointTable
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:382    .text.Endpoint_ClearEndpoints:0000000000000000 Endpoint_ClearEndpoints
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:453    .text.Endpoint_ClearStatusStage:0000000000000000 Endpoint_ClearStatusStage
-C:\Users\renep\AppData\Local\Temp\cc1squWM.s:549    .text.Endpoint_WaitUntilReady:0000000000000000 Endpoint_WaitUntilReady
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:13     .text.Endpoint_ConfigureEndpoint_Prv:0000000000000000 Endpoint_ConfigureEndpoint_Prv
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:185    .text.Endpoint_ConfigureEndpointTable:0000000000000000 Endpoint_ConfigureEndpointTable
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:382    .text.Endpoint_ClearEndpoints:0000000000000000 Endpoint_ClearEndpoints
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:453    .text.Endpoint_ClearStatusStage:0000000000000000 Endpoint_ClearStatusStage
+C:\Users\renep\AppData\Local\Temp\ccOfYYca.s:549    .text.Endpoint_WaitUntilReady:0000000000000000 Endpoint_WaitUntilReady
 
 UNDEFINED SYMBOLS
 USB_ControlRequest

@@ -3959,37 +3959,37 @@
  2107               		.file 21 "tmk_core/common/action_tapping.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 action.c
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:13     .text.action_exec:0000000000000000 action_exec
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:94     .text.process_record_quantum:0000000000000000 process_record_quantum
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:116    .text.post_process_record_quantum:0000000000000000 post_process_record_quantum
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:135    .text.process_record_tap_hint:0000000000000000 process_record_tap_hint
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:160    .text.register_code:0000000000000000 register_code
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:2078   .rodata.CSWTCH.10:0000000000000000 CSWTCH.10
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:2051   .rodata.CSWTCH.11:0000000000000000 CSWTCH.11
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:313    .text.unregister_code:0000000000000000 unregister_code
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:403    .text.tap_code:0000000000000000 tap_code
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:468    .text.register_mods:0000000000000000 register_mods
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:497    .text.unregister_mods:0000000000000000 unregister_mods
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:526    .text.process_action:0000000000000000 process_action
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1575   .text.process_record:0000000000000000 process_record
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1503   .text.process_record_handler:0000000000000000 process_record_handler
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1675   .text.process_record_nocache:0000000000000000 process_record_nocache
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:2086   .bss.disable_action_cache:0000000000000000 disable_action_cache
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1703   .text.register_weak_mods:0000000000000000 register_weak_mods
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1732   .text.unregister_weak_mods:0000000000000000 unregister_weak_mods
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1761   .text.clear_keyboard_but_mods_and_keys:0000000000000000 clear_keyboard_but_mods_and_keys
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1794   .text.clear_keyboard_but_mods:0000000000000000 clear_keyboard_but_mods
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1814   .text.clear_keyboard:0000000000000000 clear_keyboard
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1834   .text.is_tap_action:0000000000000000 is_tap_action
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1922   .text.is_tap_key:0000000000000000 is_tap_key
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1945   .text.debug_event:0000000000000000 debug_event
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:1987   .text.debug_record:0000000000000000 debug_record
-C:\Users\renep\AppData\Local\Temp\cchQKSfi.s:2031   .text.debug_action:0000000000000000 debug_action
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:13     .text.action_exec:0000000000000000 action_exec
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:94     .text.process_record_quantum:0000000000000000 process_record_quantum
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:116    .text.post_process_record_quantum:0000000000000000 post_process_record_quantum
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:135    .text.process_record_tap_hint:0000000000000000 process_record_tap_hint
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:160    .text.register_code:0000000000000000 register_code
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:2078   .rodata.CSWTCH.10:0000000000000000 CSWTCH.10
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:2051   .rodata.CSWTCH.11:0000000000000000 CSWTCH.11
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:313    .text.unregister_code:0000000000000000 unregister_code
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:403    .text.tap_code:0000000000000000 tap_code
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:468    .text.register_mods:0000000000000000 register_mods
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:497    .text.unregister_mods:0000000000000000 unregister_mods
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:526    .text.process_action:0000000000000000 process_action
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1575   .text.process_record:0000000000000000 process_record
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1503   .text.process_record_handler:0000000000000000 process_record_handler
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1675   .text.process_record_nocache:0000000000000000 process_record_nocache
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:2086   .bss.disable_action_cache:0000000000000000 disable_action_cache
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1703   .text.register_weak_mods:0000000000000000 register_weak_mods
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1732   .text.unregister_weak_mods:0000000000000000 unregister_weak_mods
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1761   .text.clear_keyboard_but_mods_and_keys:0000000000000000 clear_keyboard_but_mods_and_keys
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1794   .text.clear_keyboard_but_mods:0000000000000000 clear_keyboard_but_mods
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1814   .text.clear_keyboard:0000000000000000 clear_keyboard
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1834   .text.is_tap_action:0000000000000000 is_tap_action
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1922   .text.is_tap_key:0000000000000000 is_tap_key
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1945   .text.debug_event:0000000000000000 debug_event
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:1987   .text.debug_record:0000000000000000 debug_record
+C:\Users\renep\AppData\Local\Temp\cckCMs4W.s:2031   .text.debug_action:0000000000000000 debug_action
                             *COM*:0000000000000002 tp_buttons
 
 UNDEFINED SYMBOLS

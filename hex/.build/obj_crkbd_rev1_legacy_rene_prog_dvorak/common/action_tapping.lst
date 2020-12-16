@@ -733,7 +733,7 @@
  235 0078 5B0B      		sbc r21,r27
  379:tmk_core/common/action_tapping.c ****             tapping_key.tap.count       = 1;
  236               		.loc 1 379 93 discriminator 4 view .LVU49
- 237 007a 403A      		cpi r20,-96
+ 237 007a 4639      		cpi r20,-106
  238 007c 5105      		cpc r21,__zero_reg__
  239 007e 00F4      		brsh .L8
  380:tmk_core/common/action_tapping.c ****             waiting_buffer[i].tap.count = 1;
@@ -936,7 +936,7 @@
  414 0082 307F      		andi r19,lo8(-16)
  104:tmk_core/common/action_tapping.c ****             if (tapping_key.tap.count == 0) {
  415               		.loc 1 104 12 is_stmt 0 view .LVU79
- 416 0084 E03A      		cpi r30,-96
+ 416 0084 E639      		cpi r30,-106
  417 0086 F105      		cpc r31,__zero_reg__
  418 0088 00F0      		brlo .+2
  419 008a 00C0      		rjmp .L25
@@ -1534,7 +1534,7 @@
  871               		.loc 1 242 9 discriminator 1 view .LVU221
  242:tmk_core/common/action_tapping.c ****             if (event.pressed) {
  872               		.loc 1 242 12 is_stmt 0 discriminator 1 view .LVU222
- 873 0274 E03A      		cpi r30,-96
+ 873 0274 E639      		cpi r30,-106
  874 0276 F105      		cpc r31,__zero_reg__
  875 0278 00F0      		brlo .+2
  876 027a 00C0      		rjmp .L47
@@ -1798,7 +1798,7 @@
  1077               		.loc 1 22 90 view .LVU282
   22:tmk_core/common/action_tapping.c **** 
  1078               		.loc 1 22 1 is_stmt 0 view .LVU283
- 1079 0000 80EA      		ldi r24,lo8(-96)
+ 1079 0000 86E9      		ldi r24,lo8(-106)
  1080 0002 90E0      		ldi r25,0
  1081               	.LVL74:
  1082               	/* epilogue start */
@@ -2160,21 +2160,21 @@
  1384               		.file 9 "tmk_core/common/debug.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 action_tapping.c
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:12     .text.debug_waiting_buffer:0000000000000000 debug_waiting_buffer
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:1359   .bss.waiting_buffer_tail:0000000000000000 waiting_buffer_tail
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:1364   .bss.waiting_buffer_head:0000000000000000 waiting_buffer_head
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:1369   .bss.waiting_buffer:0000000000000000 waiting_buffer
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:96     .text.debug_tapping_key:0000000000000000 debug_tapping_key
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:1374   .bss.tapping_key:0000000000000000 tapping_key
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:119    .text.waiting_buffer_scan_tap:0000000000000000 waiting_buffer_scan_tap
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:282    .text.process_tapping:0000000000000000 process_tapping
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:1068   .text.get_tapping_term:0000000000000000 get_tapping_term
-C:\Users\renep\AppData\Local\Temp\ccRG9TJh.s:1091   .text.action_tapping_process:0000000000000000 action_tapping_process
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:12     .text.debug_waiting_buffer:0000000000000000 debug_waiting_buffer
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:1359   .bss.waiting_buffer_tail:0000000000000000 waiting_buffer_tail
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:1364   .bss.waiting_buffer_head:0000000000000000 waiting_buffer_head
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:1369   .bss.waiting_buffer:0000000000000000 waiting_buffer
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:96     .text.debug_tapping_key:0000000000000000 debug_tapping_key
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:1374   .bss.tapping_key:0000000000000000 tapping_key
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:119    .text.waiting_buffer_scan_tap:0000000000000000 waiting_buffer_scan_tap
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:282    .text.process_tapping:0000000000000000 process_tapping
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:1068   .text.get_tapping_term:0000000000000000 get_tapping_term
+C:\Users\renep\AppData\Local\Temp\ccHxdtoV.s:1091   .text.action_tapping_process:0000000000000000 action_tapping_process
 
 UNDEFINED SYMBOLS
 debug_record

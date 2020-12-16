@@ -847,19 +847,19 @@
  709               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 util.c
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:13     .text.bitpop:0000000000000000 bitpop
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:61     .text.bitpop16:0000000000000000 bitpop16
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:112    .text.bitpop32:0000000000000000 bitpop32
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:191    .text.biton:0000000000000000 biton
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:255    .text.biton16:0000000000000000 biton16
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:351    .text.biton32:0000000000000000 biton32
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:514    .text.bitrev:0000000000000000 bitrev
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:574    .text.bitrev16:0000000000000000 bitrev16
-C:\Users\renep\AppData\Local\Temp\ccmMgQOd.s:618    .text.bitrev32:0000000000000000 bitrev32
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:13     .text.bitpop:0000000000000000 bitpop
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:61     .text.bitpop16:0000000000000000 bitpop16
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:112    .text.bitpop32:0000000000000000 bitpop32
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:191    .text.biton:0000000000000000 biton
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:255    .text.biton16:0000000000000000 biton16
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:351    .text.biton32:0000000000000000 biton32
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:514    .text.bitrev:0000000000000000 bitrev
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:574    .text.bitrev16:0000000000000000 bitrev16
+C:\Users\renep\AppData\Local\Temp\ccmAnPVK.s:618    .text.bitrev32:0000000000000000 bitrev32
 
 NO UNDEFINED SYMBOLS

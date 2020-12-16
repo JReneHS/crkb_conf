@@ -1150,19 +1150,19 @@
  653               		.file 25 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap_common.c
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:13     .text.action_get_macro:0000000000000000 action_get_macro
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:37     .text.action_function:0000000000000000 action_function
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:56     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:113    .text.action_for_key:0000000000000000 action_for_key
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:593    .rodata.CSWTCH.1:0000000000000000 CSWTCH.1
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:620    .rodata.CSWTCH.0:0000000000000000 CSWTCH.0
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:552    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
-C:\Users\renep\AppData\Local\Temp\ccG1QHYB.s:628    .progmem.data.fn_actions:0000000000000000 fn_actions
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:13     .text.action_get_macro:0000000000000000 action_get_macro
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:37     .text.action_function:0000000000000000 action_function
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:56     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:113    .text.action_for_key:0000000000000000 action_for_key
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:593    .rodata.CSWTCH.1:0000000000000000 CSWTCH.1
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:620    .rodata.CSWTCH.0:0000000000000000 CSWTCH.0
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:552    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
+C:\Users\renep\AppData\Local\Temp\ccaWfwSW.s:628    .progmem.data.fn_actions:0000000000000000 fn_actions
 
 UNDEFINED SYMBOLS
 keymaps

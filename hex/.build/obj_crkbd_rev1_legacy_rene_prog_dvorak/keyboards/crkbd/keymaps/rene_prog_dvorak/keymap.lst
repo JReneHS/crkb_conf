@@ -18,7 +18,7 @@
    3:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** #include QMK_KEYBOARD_H
    4:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** 
    5:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** extern keymap_config_t keymap_config;
-   6:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** char wpm_str[10];
+   6:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** char wpm_str[6];
    7:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** #ifdef RGBLIGHT_ENABLE
    8:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** //Following line allows macro to read current RGB settings
    9:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** extern rgblight_config_t rgblight_config;
@@ -82,11 +82,11 @@
   67:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c **** 
   68:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     [_LOWER] = LAYOUT(
   69:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****   //|-----------------------------------------------------|                    |-------------------
-  70:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     KC_P7,   KC_P8,   KC_P9,    KC_LBRC,  KC_LCBR,  KC_LPRN,                     KC_RPRN, KC_RCBR, 
+  70:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     KC_7,   KC_8,   KC_9,    KC_LBRC,  KC_LCBR,  KC_LPRN,                     KC_RPRN, KC_RCBR, KC_
   71:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
-  72:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     KC_P4,      KC_P5,   KC_P6,   KC_DLR, KC_AMPR, KC_HASH,                      KC_LEFT , KC_DOWN,
+  72:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     KC_4,      KC_5,   KC_6,   KC_DLR, KC_AMPR, KC_HASH,                      KC_LEFT , KC_DOWN, KC
   73:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+-
-  74:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     KC_P1,    KC_P2,    KC_P3,  KC_P0, TD(TD_BACKF), KC_ESC,                       KC_APP , KC_ASTR
+  74:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     KC_1,    KC_2,    KC_3,  KC_0, TD(TD_BACKF), KC_ESC,                       KC_APP , KC_ASTR, KC
   75:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+-
   76:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****                                         KC_LGUI, KC_TRNS, KC_SPC,        KC_ENT, RAISE, TD(TD_ALT)
   77:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****                                       //|--------------------------|  |--------------------------|
@@ -746,7 +746,7 @@
  445 0004 90E0      		ldi r25,hi8(corne_logo.6255)
  446 0006 0E94 0000 		call oled_write_P
  447               	.LVL33:
- 259:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     oled_write_P(PSTR("GioKim"), false);
+ 259:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     oled_write_P(PSTR("gio.k"), false);
  448               		.loc 1 259 5 view .LVU140
  449               	.LBB3:
  450               		.loc 1 259 18 view .LVU141
@@ -762,9 +762,8 @@
  460               	.LFE121:
  462               		.section	.rodata.render_logo2.str1.1,"aMS",@progbits,1
  463               	.LC0:
- 464 0000 5750 4D3A 		.string	"WPM: %03d"
- 464      2025 3033 
- 464      6400 
+ 464 0000 3E3E 2530 		.string	">>%03d"
+ 464      3364 00
  465               		.section	.text.render_logo2,"ax",@progbits
  466               	.global	render_logo2
  468               	render_logo2:
@@ -790,9 +789,9 @@
  480 0004 90E0      		ldi r25,hi8(corne_logo.6261)
  481 0006 0E94 0000 		call oled_write_P
  482               	.LVL35:
- 268:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     sprintf(wpm_str,"WPM: %03d", get_current_wpm());
+ 268:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     sprintf(wpm_str,">>%03d", get_current_wpm());
  483               		.loc 1 268 5 view .LVU147
- 484               		.loc 1 268 34 is_stmt 0 view .LVU148
+ 484               		.loc 1 268 31 is_stmt 0 view .LVU148
  485 000a 0E94 0000 		call get_current_wpm
  486               	.LVL36:
  487               		.loc 1 268 5 view .LVU149
@@ -1061,7 +1060,7 @@
  706               	/* frame size = 0 */
  707               	/* stack size = 0 */
  708               	.L__stack_usage = 0
- 314:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     if (timer_elapsed32(oled_timer) > 1000000) {
+ 314:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****     if (timer_elapsed32(oled_timer) >  1500000) {
  709               		.loc 1 314 5 view .LVU197
  710               		.loc 1 314 9 is_stmt 0 view .LVU198
  711 0000 6091 0000 		lds r22,oled_timer
@@ -1071,9 +1070,9 @@
  715 0010 0E94 0000 		call timer_elapsed32
  716               	.LVL62:
  717               		.loc 1 314 8 view .LVU199
- 718 0014 6134      		cpi r22,65
- 719 0016 7244      		sbci r23,66
- 720 0018 8F40      		sbci r24,15
+ 718 0014 6136      		cpi r22,97
+ 719 0016 734E      		sbci r23,-29
+ 720 0018 8641      		sbci r24,22
  721 001a 9105      		cpc r25,__zero_reg__
  722 001c 00F0      		brlo .L50
  315:keyboards/crkbd/keymaps/rene_prog_dvorak/keymap.c ****         oled_off();
@@ -1325,8 +1324,8 @@
  928 000f 00        		.byte	0
  929               		.section	.progmem.data.__c.6256,"a"
  932               	__c.6256:
- 933 0000 4769 6F4B 		.string	"GioKim"
- 933      696D 00
+ 933 0000 6769 6F2E 		.string	"gio.k"
+ 933      6B00 
  934               		.section	.progmem.data.corne_logo.6255,"a"
  937               	corne_logo.6255:
  938 0000 80        		.byte	-128
@@ -1684,22 +1683,22 @@
  1343 005a 0A57      		.word	22282
  1344 005c 2A5D      		.word	23850
  1345 005e 2800      		.word	40
- 1346 0060 5F00      		.word	95
- 1347 0062 6000      		.word	96
- 1348 0064 6100      		.word	97
+ 1346 0060 2400      		.word	36
+ 1347 0062 2500      		.word	37
+ 1348 0064 2600      		.word	38
  1349 0066 2F00      		.word	47
  1350 0068 2F02      		.word	559
  1351 006a 2602      		.word	550
- 1352 006c 5C00      		.word	92
- 1353 006e 5D00      		.word	93
- 1354 0070 5E00      		.word	94
+ 1352 006c 2100      		.word	33
+ 1353 006e 2200      		.word	34
+ 1354 0070 2300      		.word	35
  1355 0072 2102      		.word	545
  1356 0074 2402      		.word	548
  1357 0076 2002      		.word	544
- 1358 0078 5900      		.word	89
- 1359 007a 5A00      		.word	90
- 1360 007c 5B00      		.word	91
- 1361 007e 6200      		.word	98
+ 1358 0078 1E00      		.word	30
+ 1359 007a 1F00      		.word	31
+ 1360 007c 2000      		.word	32
+ 1361 007e 2700      		.word	39
  1362 0080 0B57      		.word	22283
  1363 0082 2900      		.word	41
  1364 0084 0000      		.word	0
@@ -1783,7 +1782,7 @@
  1442               		.section	.bss.oled_timer,"aw",@nobits
  1445               	oled_timer:
  1446 0000 0000 0000 		.zero	4
- 1447               		.comm	wpm_str,10,1
+ 1447               		.comm	wpm_str,6,1
  1448               		.text
  1449               	.Letext0:
  1450               		.file 2 "c:\\msys64\\mingw64\\avr\\include\\stdint.h"
@@ -1816,76 +1815,76 @@
  1477               		.file 29 "quantum/wpm.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap.c
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:2      *ABS*:000000000000003e __SP_H__
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:3      *ABS*:000000000000003d __SP_L__
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:4      *ABS*:000000000000003f __SREG__
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:5      *ABS*:0000000000000000 __tmp_reg__
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:6      *ABS*:0000000000000001 __zero_reg__
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:13     .text.oled_init_user:0000000000000000 oled_init_user
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:36     .text.render_space:0000000000000000 render_space
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1153   .progmem.data.__c.6212:0000000000000000 __c.6212
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:61     .text.render_mod_status_gui_alt:0000000000000000 render_mod_status_gui_alt
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1146   .progmem.data.gui_on_1.6219:0000000000000000 gui_on_1.6219
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1127   .progmem.data.on_off_1.6227:0000000000000000 on_off_1.6227
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1133   .progmem.data.on_on_1.6231:0000000000000000 on_on_1.6231
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1108   .progmem.data.alt_on_1.6223:0000000000000000 alt_on_1.6223
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1094   .progmem.data.gui_on_2.6220:0000000000000000 gui_on_2.6220
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1081   .progmem.data.on_off_2.6228:0000000000000000 on_off_2.6228
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1055   .progmem.data.alt_off_2.6222:0000000000000000 alt_off_2.6222
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1139   .progmem.data.gui_off_1.6217:0000000000000000 gui_off_1.6217
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1115   .progmem.data.off_off_1.6225:0000000000000000 off_off_1.6225
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1101   .progmem.data.alt_off_1.6221:0000000000000000 alt_off_1.6221
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1121   .progmem.data.off_on_1.6229:0000000000000000 off_on_1.6229
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1087   .progmem.data.gui_off_2.6218:0000000000000000 gui_off_2.6218
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1075   .progmem.data.off_on_2.6230:0000000000000000 off_on_2.6230
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1062   .progmem.data.alt_on_2.6224:0000000000000000 alt_on_2.6224
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1069   .progmem.data.off_off_2.6226:0000000000000000 off_off_2.6226
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:247    .text.render_mod_status_ctrl_shift:0000000000000000 render_mod_status_ctrl_shift
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1048   .progmem.data.ctrl_on_1.6238:0000000000000000 ctrl_on_1.6238
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1029   .progmem.data.on_off_1.6246:0000000000000000 on_off_1.6246
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1035   .progmem.data.on_on_1.6250:0000000000000000 on_on_1.6250
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1010   .progmem.data.shift_on_1.6242:0000000000000000 shift_on_1.6242
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:996    .progmem.data.ctrl_on_2.6239:0000000000000000 ctrl_on_2.6239
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:983    .progmem.data.on_off_2.6247:0000000000000000 on_off_2.6247
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:957    .progmem.data.shift_off_2.6241:0000000000000000 shift_off_2.6241
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1041   .progmem.data.ctrl_off_1.6236:0000000000000000 ctrl_off_1.6236
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1017   .progmem.data.off_off_1.6244:0000000000000000 off_off_1.6244
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1003   .progmem.data.shift_off_1.6240:0000000000000000 shift_off_1.6240
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1023   .progmem.data.off_on_1.6248:0000000000000000 off_on_1.6248
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:989    .progmem.data.ctrl_off_2.6237:0000000000000000 ctrl_off_2.6237
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:977    .progmem.data.off_on_2.6249:0000000000000000 off_on_2.6249
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:964    .progmem.data.shift_on_2.6243:0000000000000000 shift_on_2.6243
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:971    .progmem.data.off_off_2.6245:0000000000000000 off_off_2.6245
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:433    .text.render_logo:0000000000000000 render_logo
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:937    .progmem.data.corne_logo.6255:0000000000000000 corne_logo.6255
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:932    .progmem.data.__c.6256:0000000000000000 __c.6256
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:468    .text.render_logo2:0000000000000000 render_logo2
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:912    .progmem.data.corne_logo.6261:0000000000000000 corne_logo.6261
-                            *COM*:000000000000000a wpm_str
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:532    .text.render_layer_state:0000000000000000 render_layer_state
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:892    .progmem.data.lower_layer.6267:0000000000000000 lower_layer.6267
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:872    .progmem.data.raise_layer.6266:0000000000000000 raise_layer.6266
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:852    .progmem.data.default_layer.6265:0000000000000000 default_layer.6265
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:585    .text.render_status_main:0000000000000000 render_status_main
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:643    .text.render_status_secondary:0000000000000000 render_status_secondary
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:701    .text.oled_task_user:0000000000000000 oled_task_user
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1445   .bss.oled_timer:0000000000000000 oled_timer
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:747    .text.process_record_user:0000000000000000 process_record_user
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:2      *ABS*:000000000000003e __SP_H__
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:3      *ABS*:000000000000003d __SP_L__
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:4      *ABS*:000000000000003f __SREG__
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:5      *ABS*:0000000000000000 __tmp_reg__
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:6      *ABS*:0000000000000001 __zero_reg__
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:13     .text.oled_init_user:0000000000000000 oled_init_user
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:36     .text.render_space:0000000000000000 render_space
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1153   .progmem.data.__c.6212:0000000000000000 __c.6212
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:61     .text.render_mod_status_gui_alt:0000000000000000 render_mod_status_gui_alt
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1146   .progmem.data.gui_on_1.6219:0000000000000000 gui_on_1.6219
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1127   .progmem.data.on_off_1.6227:0000000000000000 on_off_1.6227
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1133   .progmem.data.on_on_1.6231:0000000000000000 on_on_1.6231
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1108   .progmem.data.alt_on_1.6223:0000000000000000 alt_on_1.6223
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1094   .progmem.data.gui_on_2.6220:0000000000000000 gui_on_2.6220
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1081   .progmem.data.on_off_2.6228:0000000000000000 on_off_2.6228
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1055   .progmem.data.alt_off_2.6222:0000000000000000 alt_off_2.6222
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1139   .progmem.data.gui_off_1.6217:0000000000000000 gui_off_1.6217
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1115   .progmem.data.off_off_1.6225:0000000000000000 off_off_1.6225
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1101   .progmem.data.alt_off_1.6221:0000000000000000 alt_off_1.6221
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1121   .progmem.data.off_on_1.6229:0000000000000000 off_on_1.6229
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1087   .progmem.data.gui_off_2.6218:0000000000000000 gui_off_2.6218
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1075   .progmem.data.off_on_2.6230:0000000000000000 off_on_2.6230
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1062   .progmem.data.alt_on_2.6224:0000000000000000 alt_on_2.6224
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1069   .progmem.data.off_off_2.6226:0000000000000000 off_off_2.6226
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:247    .text.render_mod_status_ctrl_shift:0000000000000000 render_mod_status_ctrl_shift
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1048   .progmem.data.ctrl_on_1.6238:0000000000000000 ctrl_on_1.6238
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1029   .progmem.data.on_off_1.6246:0000000000000000 on_off_1.6246
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1035   .progmem.data.on_on_1.6250:0000000000000000 on_on_1.6250
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1010   .progmem.data.shift_on_1.6242:0000000000000000 shift_on_1.6242
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:996    .progmem.data.ctrl_on_2.6239:0000000000000000 ctrl_on_2.6239
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:983    .progmem.data.on_off_2.6247:0000000000000000 on_off_2.6247
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:957    .progmem.data.shift_off_2.6241:0000000000000000 shift_off_2.6241
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1041   .progmem.data.ctrl_off_1.6236:0000000000000000 ctrl_off_1.6236
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1017   .progmem.data.off_off_1.6244:0000000000000000 off_off_1.6244
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1003   .progmem.data.shift_off_1.6240:0000000000000000 shift_off_1.6240
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1023   .progmem.data.off_on_1.6248:0000000000000000 off_on_1.6248
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:989    .progmem.data.ctrl_off_2.6237:0000000000000000 ctrl_off_2.6237
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:977    .progmem.data.off_on_2.6249:0000000000000000 off_on_2.6249
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:964    .progmem.data.shift_on_2.6243:0000000000000000 shift_on_2.6243
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:971    .progmem.data.off_off_2.6245:0000000000000000 off_off_2.6245
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:433    .text.render_logo:0000000000000000 render_logo
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:937    .progmem.data.corne_logo.6255:0000000000000000 corne_logo.6255
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:932    .progmem.data.__c.6256:0000000000000000 __c.6256
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:468    .text.render_logo2:0000000000000000 render_logo2
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:912    .progmem.data.corne_logo.6261:0000000000000000 corne_logo.6261
+                            *COM*:0000000000000006 wpm_str
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:532    .text.render_layer_state:0000000000000000 render_layer_state
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:892    .progmem.data.lower_layer.6267:0000000000000000 lower_layer.6267
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:872    .progmem.data.raise_layer.6266:0000000000000000 raise_layer.6266
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:852    .progmem.data.default_layer.6265:0000000000000000 default_layer.6265
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:585    .text.render_status_main:0000000000000000 render_status_main
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:643    .text.render_status_secondary:0000000000000000 render_status_secondary
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:701    .text.oled_task_user:0000000000000000 oled_task_user
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1445   .bss.oled_timer:0000000000000000 oled_timer
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:747    .text.process_record_user:0000000000000000 process_record_user
                             *COM*:0000000000000002 RGB_current_mode
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1160   .data.tap_dance_actions:0000000000000000 tap_dance_actions
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1290   .data.__compound_literal.0:0000000000000000 __compound_literal.0
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1272   .data.__compound_literal.3:0000000000000000 __compound_literal.3
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1266   .data.__compound_literal.4:0000000000000000 __compound_literal.4
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1260   .data.__compound_literal.5:0000000000000000 __compound_literal.5
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1254   .data.__compound_literal.6:0000000000000000 __compound_literal.6
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1248   .data.__compound_literal.7:0000000000000000 __compound_literal.7
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1236   .data.__compound_literal.9:0000000000000000 __compound_literal.9
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1278   .data.__compound_literal.2:0000000000000000 __compound_literal.2
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1230   .data.__compound_literal.10:0000000000000000 __compound_literal.10
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1284   .data.__compound_literal.1:0000000000000000 __compound_literal.1
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1224   .data.__compound_literal.11:0000000000000000 __compound_literal.11
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1242   .data.__compound_literal.8:0000000000000000 __compound_literal.8
-C:\Users\renep\AppData\Local\Temp\cclUNhbb.s:1297   .progmem.data.keymaps:0000000000000000 keymaps
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1160   .data.tap_dance_actions:0000000000000000 tap_dance_actions
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1290   .data.__compound_literal.0:0000000000000000 __compound_literal.0
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1272   .data.__compound_literal.3:0000000000000000 __compound_literal.3
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1266   .data.__compound_literal.4:0000000000000000 __compound_literal.4
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1260   .data.__compound_literal.5:0000000000000000 __compound_literal.5
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1254   .data.__compound_literal.6:0000000000000000 __compound_literal.6
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1248   .data.__compound_literal.7:0000000000000000 __compound_literal.7
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1236   .data.__compound_literal.9:0000000000000000 __compound_literal.9
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1278   .data.__compound_literal.2:0000000000000000 __compound_literal.2
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1230   .data.__compound_literal.10:0000000000000000 __compound_literal.10
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1284   .data.__compound_literal.1:0000000000000000 __compound_literal.1
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1224   .data.__compound_literal.11:0000000000000000 __compound_literal.11
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1242   .data.__compound_literal.8:0000000000000000 __compound_literal.8
+C:\Users\renep\AppData\Local\Temp\ccsg9Upx.s:1297   .progmem.data.keymaps:0000000000000000 keymaps
 
 UNDEFINED SYMBOLS
 oled_write_P
