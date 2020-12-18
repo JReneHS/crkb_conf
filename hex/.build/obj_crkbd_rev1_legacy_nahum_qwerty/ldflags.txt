@@ -1,1 +1,0 @@
--Wl,--gc-sections -Wl,-Map=.build/crkbd_rev1_legacy_nahum_qwerty.map,--cref     -lm 
