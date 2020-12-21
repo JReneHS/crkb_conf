@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include QMK_KEYBOARD_H
 
@@ -49,6 +48,7 @@ enum {
     TD_ALT,
     TD_BACKF,
     TD_SPC,
+    TD_ARR,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -58,9 +58,9 @@ TD(TD_TAB), TD(TD_SCLN), TD(TD_COMM), TD(TD_DOT), KC_P, KC_Y,                   
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 TD(TD_CAPLOCK), KC_A,   KC_O,    KC_E,    KC_U,    KC_I,                          KC_D,    KC_H,    KC_T,    KC_N,  KC_S,     KC_DEL,
   //---------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    KC_LCTL, TD(TD_QUOT),   KC_Q,    KC_J,    KC_K,    KC_X,                       KC_B,    KC_M,    KC_W,   KC_V,    KC_Z,   KC_RCTL,
+    KC_LCTL, TD(TD_QUOT), TD(TD_ARR), KC_J, KC_K,  KC_X,                          KC_B,    KC_M,    KC_W,   KC_V,    KC_Z,   KC_RCTL,
   //---------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_LGUI,   LOWER, TD(TD_SPC),   TD(TD_SPC), RAISE, TD(TD_ALT)
+                                        TD(TD_ALT),LOWER,TD(TD_SPC),  TD(TD_SPC), RAISE, KC_RALT
                                       //|--------------------------|  |--------------------------|
 
 
@@ -74,19 +74,19 @@ TD(TD_CAPLOCK), KC_A,   KC_O,    KC_E,    KC_U,    KC_I,                        
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     KC_1,    KC_2,    KC_3,  KC_0, TD(TD_BACKF), KC_ESC,                       KC_APP , KC_ASTR, KC_CIRC, KC_EXLM,TD(TD_MINS), KC_RCTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_LGUI, KC_TRNS, TD(TD_SPC),  TD(TD_SPC), RAISE, TD(TD_ALT)
+                                        KC_LALT, KC_TRNS, TD(TD_SPC),  TD(TD_SPC), RAISE, KC_RALT
                                       //|--------------------------|  |--------------------------|
     ),
 
     [_RAISE] = LAYOUT(
   //|-----------------------------------------------------|                    |-----------------------------------------------------|
-    KC_F1,    KC_F2,     KC_F3,   KC_F4,   KC_F5,   KC_F6,                        KC_CUT, KC_COPY, KC_PSTE, KC_UNDO, KC_AGIN, KC_RALT,
+    KC_F1,    KC_F2,     KC_F3,   KC_F4,   KC_F5,   KC_F6,                       KC_PGUP, KC_PGDN, KC_HOME, KC_END, KC_UNDO, KC_AGAIN,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,                       KC_MPLY, KC_MUTE, KC_VOLD, KC_VOLU, KC_BRID, KC_BRIU,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    RESET,    KC_NO,   KC_NO,   KC_MYCM, KC_CALC, KC_PSCR,                       KC_MPRV, KC_MNXT, KC_MSTP,  KC_NO,  KC_NO,  KC_NO,
+    RESET,    KC_NO,   KC_NO,   KC_CALC, KC_MYCM, KC_PSCR,                       KC_MPRV, KC_MNXT, KC_NO,   KC_NO,  KC_SLEP ,  KC_PWR,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_LGUI, LOWER,  TD(TD_SPC),    TD(TD_SPC), KC_TRNS, TD(TD_ALT)
+                                        KC_LALT, LOWER,  TD(TD_SPC),    TD(TD_SPC), KC_TRNS, KC_RALT
                                       //|--------------------------|  |--------------------------|
     )
 };
@@ -106,7 +106,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_BACKF] = ACTION_TAP_DANCE_DOUBLE(KC_GRV, LSFT(KC_GRV)),
     [TD_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
     [TD_CAPLOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
-    [TD_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_LALT),
+    [TD_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_LALT,KC_LGUI),
+    [TD_ARR] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_AT),
     [TD_SPC] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_ENT),
 };
 
