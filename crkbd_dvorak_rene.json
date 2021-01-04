@@ -19,9 +19,9 @@
             "KC_LALT", "KC_TRNS", "KC_SPC", "KC_SPC", "MO(2)", "KC_RALT"
         ],
         [
-            "KC_F1", "KC_F2", "KC_F3", "KC_F4", "KC_F5", "KC_F6", "KC_PGUP", "KC_PGDN", "KC_HOME", "KC_END", "KC_UNDO", "KC_AGAIN",
-            "KC_F7", "KC_F8", "KC_F9", "KC_F10", "KC_F11", "KC_F12", "KC_MPLY", "KC_MUTE", "KC_VOLD", "KC_VOLU", "KC_BRID", "KC_BRIU",
-            "RESET", "KC_NO", "KC_NO", "KC_CALC", "KC_MYCM", "KC_PSCR", "KC_MPRV", "KC_MNXT", "KC_NO", "KC_NO", "KC_SLEP", "KC_PWR",
+            "KC_F1", "KC_F2", "KC_F3", "KC_F4", "KC_F5", "KC_F6", "KC_END", "KC_PGDN", "KC_PGUP", "KC_HOME", "KC_UNDO", "KC_AGAIN",
+            "KC_F7", "KC_F8", "KC_F9", "KC_F10", "KC_F11", "KC_F12", "KC_LEFT", "KC_DOWN", "KC_UP", "KC_RGHT", "KC_BRID", "KC_BRIU",
+            "RESET", "KC_SLEP", "KC_PWR", "KC_CALC", "KC_MYCM", "KC_PSCR", "KC_MPLY", "KC_MUTE", "KC_VOLD", "KC_VOLU", "KC_MPRV", "KC_MNXT",
             "KC_LALT", "MO(1)", "KC_SPC", "KC_SPC", "KC_TRNS", "KC_RALT"
         ]
     ],
