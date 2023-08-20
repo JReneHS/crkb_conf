@@ -3,16 +3,23 @@
 
 extern keymap_config_t keymap_config;
 char wpm_str[6];
+
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
 extern rgblight_config_t rgblight_config;
 #endif
 
-#ifdef OLED_DRIVER_ENABLE
-static uint32_t oled_timer = 0;
+#ifdef OLED_ENABLE
+    static uint32_t oled_timer = 0;
+    bool process_record_oled(uint16_t keycode, keyrecord_t *record);
+    oled_rotation_t oled_init_user(oled_rotation_t rotation);
+    void render_layer_symbol(void);
+    void render_layer_name(void);
+    void render_mod_state(uint8_t modifiers);
+    void render_status(void);
+    bool oled_task_user(void);
 #endif
 
-extern uint8_t is_master;
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -84,7 +91,7 @@ TD(TD_CAPLOCK), KC_A,   KC_O,    KC_E,    KC_U,    KC_I,                        
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,                       KC_LEFT , KC_DOWN, KC_UP, KC_RGHT , KC_BRID, KC_BRIU,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    RESET,  KC_SLEP ,  KC_PWR,  KC_CALC, KC_MYCM, KC_PSCR,                      KC_MPLY, KC_MUTE, KC_VOLD, KC_VOLU , KC_MPRV, KC_MNXT,
+    KC_ESC,  KC_SLEP ,  KC_PWR,  KC_CALC, KC_MYCM, KC_PSCR,                      KC_MPLY, KC_MUTE, KC_VOLD, KC_VOLU , KC_MPRV, KC_MNXT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         KC_LALT, LOWER,  TD(TD_SPC),    TD(TD_SPC), KC_TRNS, KC_RALT
                                       //|--------------------------|  |--------------------------|
@@ -93,7 +100,7 @@ TD(TD_CAPLOCK), KC_A,   KC_O,    KC_E,    KC_U,    KC_I,                        
 
 
 // Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     // Tap once for ;, twice for :
     [TD_SLSH] = ACTION_TAP_DANCE_DOUBLE(KC_SLSH, LSFT(KC_SLSH)),
     [TD_QUOT] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, LSFT(KC_QUOT)),
@@ -113,7 +120,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 int RGB_current_mode;
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
 
 void render_space(void) {
@@ -313,23 +320,26 @@ void render_status_secondary(void) {
     render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (timer_elapsed32(oled_timer) >  1500000) {
         oled_off();
-        return;
+        return false;
     }
 #ifndef SPLIT_KEYBOARD
     else { oled_on(); }
 #endif
 
-    if (is_master) {
+    if (is_keyboard_master()) {
         render_status_main();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     } else {
         render_status_secondary();
     }
+
+    return false;
 }
 
 #endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef OLED_DRIVER_ENABLE

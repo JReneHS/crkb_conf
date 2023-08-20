@@ -1,3 +1,4 @@
+#define ENABLE_COMPILE_KEYCODE
 #pragma once
 
 //#define USE_MATRIX_I2C
@@ -16,8 +17,9 @@
 
 // #define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 140
+#define TAPPING_TERM_PER_KEY
 //#define RETRO_TAPPING
-#define IGNORE_MOD_TAP_INTERRUPT
+//#define IGNORE_MOD_TAP_INTERRUPT
 
 #define OLED_FONT_H "keyboards/crkbd/keymaps/rene_prog_dvorak/glcdfont.c"
 // #define OLED_FONT_WIDTH 5
